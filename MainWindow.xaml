@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Munchkin"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Height="1200" 
+        Width="1800"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Border CornerRadius="15" Background="#523018">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-    </Grid>
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" Margin="0,370,0,0">
+                <Button Content="Open the game"
+                        Height="50" Width="370"
+                        Foreground="White"
+                        FontSize="25"
+                        Margin="0,15,0,0"
+                        Style="{StaticResource MainMenuButtonTheme}"/>
+                <Button Content="Settings"
+                        Height="50" Width="370"
+                        Foreground="White"
+                        FontSize="25"
+                        Margin="0,15,0,0"
+                        Style="{StaticResource MainMenuButtonTheme}"/>
+                <Button Content="Guide"
+                        Height="50" Width="370"
+                        Foreground="White"
+                        FontSize="25"
+                        Margin="0,15,0,0"
+                        Style="{StaticResource MainMenuButtonTheme}"/>
+                <Button Content="Exit"
+                        Height="50" Width="370"
+                        Foreground="White"
+                        FontSize="25"
+                        Margin="0,15,0,0"
+                        Style="{StaticResource MainMenuButtonTheme}"/>
+
+            </StackPanel>
+            
+
+        </Grid>
+
+    </Border>
 </Window>

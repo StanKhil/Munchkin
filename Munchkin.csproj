@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Recources\MenuAssets\" />
+    <Folder Include="Recources\Cards\" />
+  </ItemGroup>
+
 </Project>
