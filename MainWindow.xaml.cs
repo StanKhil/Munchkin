@@ -29,5 +29,10 @@ namespace Munchkin
         {
             sceneContainer.Content = new GameTable();
         }
+        public void ToGuide()
+        {
+            sceneContainer.Content = new Guide();
+    
+        }
     }
 }

@@ -27,7 +27,7 @@
                     FontSize="25"
                     Margin="0,15,0,0"
                     Style="{StaticResource MainMenuButtonTheme}"/>
-                <Button Content="Guide"
+                <Button Click="ToGuide" Content="Guide"
                     Height="50" Width="370"
                     Foreground="White"
                     FontSize="25"

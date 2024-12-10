@@ -16,31 +16,18 @@ using System.Windows.Shapes;
 namespace Munchkin
 {
     /// <summary>
-    /// Interaction logic for MainMenu.xaml
+    /// Interaction logic for Guide.xaml
     /// </summary>
-    public partial class MainMenu : UserControl
+    public partial class Guide : UserControl
     {
-        public MainMenu()
+        public Guide()
         {
             InitializeComponent();
         }
-       
-        private void ToGame(object sender, RoutedEventArgs e)
+        private void ToMainMenu(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.ToGame();
-        }
-
-        private void Close(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.Close();
-        }
-
-        private void ToGuide(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.ToGuide();
+            mainWindow.ToMainMenu();
         }
     }
 }
