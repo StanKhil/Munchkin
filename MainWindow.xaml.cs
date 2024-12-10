@@ -19,6 +19,15 @@ namespace Munchkin
         public MainWindow()
         {
             InitializeComponent();
+            sceneContainer.Content = new MainMenu();
+        }
+        public void ToMainMenu()
+        {
+            sceneContainer.Content = new MainMenu();
+        }
+        public void ToGame()
+        {
+            sceneContainer.Content = new GameTable();
         }
     }
 }
