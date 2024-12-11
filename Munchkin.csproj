@@ -9,9 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Assets\" />
+    <None Remove="Resources\Assets\Door.png" />
+    <None Remove="Resources\Assets\Treasure.png" />
+    <None Remove="Resources\Fonts\munchkin.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Resources\Cards\" />
-    <Folder Include="Resources\Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Assets\Door.png" />
+    <Resource Include="Resources\Assets\Treasure.png" />
+    <Resource Include="Resources\Fonts\munchkin.ttf" />
   </ItemGroup>
 
 </Project>

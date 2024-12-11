@@ -7,9 +7,91 @@
              mc:Ignorable="d" 
              d:DesignHeight="1200" d:DesignWidth="1800"
              Background="Transparent">
-    <Border CornerRadius="15" Background="#523018">
-        <Grid>
-            <Button Click="ToMainMenu" Height="50" Content="This is guide to rules" Margin="798,575,735,575"/>
-        </Grid>
-    </Border>
+    <Grid Background="#523018">
+        <Button Height="50"
+                Width="50"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10,10,0,0"
+                Click="ToMainMenu">
+            Close
+        </Button>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10">
+            <StackPanel>
+                <TextBlock Text="Munchkin Game Rules" 
+                           Foreground="White" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           TextAlignment="Center" 
+                           Margin="0,10,0,20"
+                           Padding="0,50,0,100"/>
+                <TextBlock Text="Objective:" 
+                           Foreground="White" 
+                           FontSize="18" 
+                           FontWeight="Bold" 
+                           Margin="0,10,0,5"
+                           Padding="200,0,0,0"/>
+                <TextBlock Text="Reach level 10 before the computer does by defeating monsters, collecting treasures, and avoiding traps." 
+                           Foreground="White" 
+                           FontSize="14" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,15"
+                           Padding="100,0,0,0"/>
+
+                <TextBlock Text="Game Setup:" 
+                           Foreground="White" 
+                           FontSize="18" 
+                           FontWeight="Bold" 
+                           Margin="0,10,0,5" 
+                           Padding="200,0,0,0"/>
+                <TextBlock Text="1. Shuffle the deck and draw your starting hand of 5 cards."
+                           Foreground="White" 
+                           FontSize="14" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,5" 
+                           Padding="100,0,0,0"/>
+                <TextBlock Text="2. The player always takes the first turn." 
+                           Foreground="White" 
+                           FontSize="14" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,15" 
+                           Padding="100,0,0,0"/>
+
+                <TextBlock Text="Gameplay:" 
+                           Foreground="White" 
+                           FontSize="18" 
+                           FontWeight="Bold" 
+                           Margin="0,10,0,5" Padding="200,0,0,0"/>
+                <TextBlock Text="1. On your turn, draw a card and decide your action (e.g., fight a monster, play an item)."
+                           Foreground="White" 
+                           FontSize="14" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,5" Padding="100,0,0,0"/>
+                <TextBlock Text="2. When fighting a monster, compare your level and bonuses with the monster's level."
+                           Foreground="White" 
+                           FontSize="14" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,5" Padding="100,0,0,0"/>
+                <TextBlock Text="3. If you win, gain a level and draw treasure. If you lose, suffer the bad stuff!"
+                           Foreground="White" 
+                           FontSize="14" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,15" 
+                           Padding="100,0,0,0"/>
+
+                <TextBlock Text="Winning the Game:" 
+                           Foreground="White" 
+                           FontSize="18" 
+                           FontWeight="Bold" 
+                           Margin="0,10,0,5" 
+                           Padding="200,0,0,0"/>
+                <TextBlock Text="If a player gets 10 points, he wins the game. Good luck and watch out for backstabbing!"
+                           Foreground="White" 
+                           FontSize="14" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,15" 
+                           Padding="100,0,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>
