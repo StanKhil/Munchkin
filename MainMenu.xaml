@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Munchkin"
              mc:Ignorable="d" 
              d:DesignHeight="1200" d:DesignWidth="1800"
-             Background="Transparent">
+             Background="White">
     <Border CornerRadius="15" Background="#523018">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -15,25 +15,25 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" HorizontalAlignment="Center" Margin="0,370,0,0">
-                <Button Click="ToGame" Content="Open the game"
+                <Button FontFamily="/Resources/Fonts/#munchkin" Click="ToGame" Content="Open the game"
                     Height="50" Width="370"
                     Foreground="White"
                     FontSize="25"
                     Margin="0,15,0,0"
                     Style="{StaticResource MainMenuButtonTheme}"/>
-                <Button Content="Settings"
+                <Button FontFamily="/Resources/Fonts/#munchkin" Content="Settings"
                     Height="50" Width="370"
                     Foreground="White"
                     FontSize="25"
                     Margin="0,15,0,0"
                     Style="{StaticResource MainMenuButtonTheme}"/>
-                <Button Click="ToGuide" Content="Guide"
+                <Button FontFamily="/Resources/Fonts/#munchkin" Click="ToGuide" Content="Guide"
                     Height="50" Width="370"
                     Foreground="White"
                     FontSize="25"
                     Margin="0,15,0,0"
                     Style="{StaticResource MainMenuButtonTheme}"/>
-                <Button Click="Close" Content="Exit"
+                <Button FontFamily="/Resources/Fonts/#munchkin" Click="Close" Content="Exit"
                     Height="50" Width="370"
                     Foreground="White"
                     FontSize="25"

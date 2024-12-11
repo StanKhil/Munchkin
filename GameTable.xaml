@@ -7,10 +7,90 @@
              mc:Ignorable="d" 
              d:DesignHeight="1200" d:DesignWidth="1800"
              Background="Transparent">
-    <Border CornerRadius="15" Background="#523018">
+    <Border BorderThickness="10" BorderBrush="#252525" CornerRadius="15" Background="#523018">
         <Grid>
-            <Button Click="ToMainMenu" Width="100" Height="50" Content="TBA"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Image Name="doorsDeck"  Source="Resources/Assets/Door.png" Grid.Column="3" Grid.Row="0" Width="150" Height="200"></Image>
+            <Image Source="Resources/Assets/Door.png" Grid.Column="2" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-180"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+
+
+            <Image Name="treasuredDeck" Source="Resources/Assets/Treasure.png" Grid.Column="5" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-180"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image Source="Resources/Assets/Treasure.png" Grid.Column="6" Grid.Row="0" Width="150" Height="200"/>
+
+            <Button Margin="120,0,0,140" Grid.Column="9" Grid.Row="0" Width="50" Height="50">Info</Button>
+            <Button Margin="0,0,120,140" Grid.Column="0" Grid.Row="0" Width="50" Height="50">Exit</Button>
+
+            <Button Grid.Column="4" Grid.Row="1" Width="150" Height="200">Monster</Button>
+
+            <Button Grid.Column="1" Grid.Row="2" Width="150" Height="200"></Button>
+            <Button Grid.Column="2" Grid.Row="2" Width="150" Height="200"></Button>
+            <Button Grid.Column="3" Grid.Row="2" Width="150" Height="200"></Button>
+            <Button Grid.Column="4" Grid.Row="2" Width="150" Height="200"></Button>
+            <Button Grid.Column="5" Grid.Row="2" Width="150" Height="200"></Button>
+            <Button Grid.Column="6" Grid.Row="2" Width="150" Height="200"></Button>
+            <Button Grid.Column="7" Grid.Row="2" Width="150" Height="200"></Button>
+
+            <Button Grid.Column="0" Grid.Row="3" Width="150" Height="200">Rave1</Button>
+            <Button Grid.Column="1" Grid.Row="3" Width="150" Height="200">Race2</Button>
+            <Button Grid.Column="2" Grid.Row="3" Width="150" Height="200">Class2</Button>
+            <Button Grid.Column="3" Grid.Row="3" Width="150" Height="200">Class1</Button>
+            <Button Grid.Column="1" Grid.Row="4" Width="150" Height="200">Half-Blood</Button>
+            <Button Grid.Column="2" Grid.Row="4" Width="150" Height="200">Supermunchkin</Button>
+
+            <Border Background="#FF7E3F00" BorderThickness="0" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="5" Margin="10,10,10,10" Grid.RowSpan="2"/>
+            <Button Grid.Column="4" Grid.Row="3" Width="150" Height="200"></Button>
+            <Button Grid.Column="4" Grid.Row="4" Width="150" Height="200"></Button>
+            <Button Grid.Column="5" Grid.Row="3" Width="150" Height="200"></Button>
+            <Button Grid.Column="6" Grid.Row="3" Width="150" Height="200"></Button>
+            <Button Grid.Column="7" Grid.Row="3" Width="150" Height="200"></Button>
+            <Button Grid.Column="8" Grid.Row="3" Width="150" Height="200"></Button>
+            <Button Grid.Column="5" Grid.Row="4" Width="150" Height="200"></Button>
+            <Button Grid.Column="6" Grid.Row="4" Width="150" Height="200"></Button>
+            <Button Grid.Column="7" Grid.Row="4" Width="150" Height="200"></Button>
+            <Button Grid.Column="8" Grid.Row="4" Width="150" Height="200"></Button>
+
+
+
+
+
         </Grid>
+
 
     </Border>
 </UserControl>

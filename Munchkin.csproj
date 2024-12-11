@@ -9,8 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Recources\MenuAssets\" />
-    <Folder Include="Recources\Cards\" />
+    <Folder Include="Resources\Assets\" />
+    <Folder Include="Resources\Cards\" />
+    <Folder Include="Resources\Fonts\" />
   </ItemGroup>
 
 </Project>
