@@ -53,8 +53,8 @@
             </Image>
             <Image Source="Resources/Assets/Treasure.png" Grid.Column="6" Grid.Row="0" Width="150" Height="200"/>
 
-            <Button Margin="120,0,0,140" Grid.Column="9" Grid.Row="0" Width="50" Height="50">Info</Button>
-            <Button Margin="0,0,120,140" Grid.Column="0" Grid.Row="0" Width="50" Height="50">Exit</Button>
+            <Button Margin="120,0,0,140" Grid.Column="9" Grid.Row="0" Width="50" Height="50" Click="ToGuide">Info</Button>
+            <Button Margin="0,0,120,140" Grid.Column="0" Grid.Row="0" Width="50" Height="50" Click="ToMainMenu">Exit</Button>
 
             <Button Grid.Column="4" Grid.Row="1" Width="150" Height="200">Monster</Button>
 

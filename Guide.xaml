@@ -7,17 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="1200" d:DesignWidth="1800"
              Background="Transparent">
+    
     <Grid Background="#523018">
-        <Button Height="50"
-                Width="50"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="10,10,0,0"
-                Click="ToMainMenu">
-            Close
-        </Button>
+        
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10">
             <StackPanel>
+                <Button Height="50"
+                        Width="50"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="10,10,0,0"
+                        Click="ToMainMenu">
+                    Close
+                </Button>
                 <TextBlock Text="Munchkin Game Rules" 
                            Foreground="White" 
                            FontSize="24" 

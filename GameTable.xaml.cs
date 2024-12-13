@@ -29,5 +29,11 @@ namespace Munchkin
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.ToMainMenu();
         }
+
+        private void ToGuide(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow.ToGuide();
+        }
     }
 }
