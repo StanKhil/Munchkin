@@ -13,9 +13,10 @@ namespace Munchkin.Cards
     }
     internal class Treasure : Card
     {
-        int price;
-        bool active;
+        protected int price;
+        protected bool active = false;
         //Effect effect
         //Specific specific
+
     }
 }

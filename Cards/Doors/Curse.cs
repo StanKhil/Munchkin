@@ -11,5 +11,10 @@ namespace Munchkin.Cards.Doors
         //Effect bonus
         bool active;
         //Specific specific
+        public Curse(string name, bool active)
+        {
+            this.name = name;
+            this.active = active;
+        }
     }
 }

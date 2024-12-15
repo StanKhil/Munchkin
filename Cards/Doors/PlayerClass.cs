@@ -11,5 +11,11 @@ namespace Munchkin.Cards.Doors
         //Effect bonus
         bool active;
         //Specific specific
+
+        public PlayerClass(string name,bool active)
+        {
+            this.name = name;
+            this.active = active;
+        }
     }
 }

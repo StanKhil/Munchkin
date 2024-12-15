@@ -10,9 +10,18 @@ namespace Munchkin.Cards.Doors
     {
         int level;
         int levels;
-        int treasuser;
+        int treasusers;
         int power;
 
         public void Fight() { }
+
+        public Monster(string name,int level,int levels,int treasures,int power)
+        {
+            this.name = name;
+            this.level = level;
+            this.levels = levels;
+            this.treasusers = treasures;
+            this.power = power;
+        }
     }
 }

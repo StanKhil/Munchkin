@@ -8,7 +8,7 @@ namespace Munchkin.Cards
 {
     internal class Card
     {
-        string name;
+        protected string name;
         //Imagine
     }
 }

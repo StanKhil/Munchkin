@@ -9,5 +9,12 @@ namespace Munchkin.Cards.Treasures
     internal class Armor :Treasure
     {
         Size size;
+
+        public Armor(string name,int price,Size size)
+        {
+            this.name = name;
+            this.price = price;
+            this.size = size;
+        }
     }
 }

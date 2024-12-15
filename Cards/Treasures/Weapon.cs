@@ -11,5 +11,14 @@ namespace Munchkin.Cards.Treasures
     {
         Size size;
         int hands;
+
+        public Weapon(string name,int price,Size size,int hands)
+        {
+            this.name = name;
+            this.price = price;
+            this.size = size;
+            this.hands = hands;
+
+        }
     }
 }
