@@ -12,13 +12,16 @@
         
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10">
             <StackPanel>
-                <Button Height="50"
-                        Width="50"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Margin="10,10,0,0"
-                        Click="ToMainMenu">
-                    Close
+                <Button FontFamily="Resources/Fonts/#munchkin" Foreground="White" 
+                        Background="#8f1300" Grid.Column="0" 
+                        Grid.Row="0" Width="50" Height="50" Click="ToMainMenu" Content="Exit"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="100"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </Button.Resources>
                 </Button>
                 <TextBlock Text="Munchkin Game Rules" 
                            Foreground="White" 

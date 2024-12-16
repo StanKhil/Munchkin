@@ -53,42 +53,101 @@
             </Image>
             <Image Source="Resources/Assets/Treasure.png" Grid.Column="6" Grid.Row="0" Width="150" Height="200"/>
 
-            <Button Margin="120,0,0,140" Grid.Column="9" Grid.Row="0" Width="50" Height="50" Click="ToGuide">Info</Button>
-            <Button Margin="0,0,120,140" Grid.Column="0" Grid.Row="0" Width="50" Height="50" Click="ToMainMenu">Exit</Button>
+            <Button FontFamily="Resources/Fonts/#munchkin" Background="#003b99" Foreground="White" Margin="120,0,0,140" Grid.Column="9" Grid.Row="0" Width="50" Height="50" Click="ToGuide" Content="Info">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="100"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button FontFamily="Resources/Fonts/#munchkin" Foreground="White" Background="#8f1300" Margin="0,0,120,140" Grid.Column="0" Grid.Row="0" Width="50" Height="50" Click="ToMainMenu" Content="Exit">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="100"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
-            <Button Grid.Column="4" Grid.Row="1" Width="150" Height="200">Monster</Button>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="4" Grid.Row="1" Background="#87480c">
+                <Image Name="monsterImage" Width="150" Height="200"></Image>
+            </Border>
 
-            <Button Grid.Column="1" Grid.Row="2" Width="150" Height="200"></Button>
-            <Button Grid.Column="2" Grid.Row="2" Width="150" Height="200"></Button>
-            <Button Grid.Column="3" Grid.Row="2" Width="150" Height="200"></Button>
-            <Button Grid.Column="4" Grid.Row="2" Width="150" Height="200"></Button>
-            <Button Grid.Column="5" Grid.Row="2" Width="150" Height="200"></Button>
-            <Button Grid.Column="6" Grid.Row="2" Width="150" Height="200"></Button>
-            <Button Grid.Column="7" Grid.Row="2" Width="150" Height="200"></Button>
-
-            <Button Grid.Column="0" Grid.Row="3" Width="150" Height="200">Rave1</Button>
-            <Button Grid.Column="1" Grid.Row="3" Width="150" Height="200">Race2</Button>
-            <Button Grid.Column="2" Grid.Row="3" Width="150" Height="200">Class2</Button>
-            <Button Grid.Column="3" Grid.Row="3" Width="150" Height="200">Class1</Button>
-            <Button Grid.Column="1" Grid.Row="4" Width="150" Height="200">Half-Blood</Button>
-            <Button Grid.Column="2" Grid.Row="4" Width="150" Height="200">Supermunchkin</Button>
-
-            <Border Background="#FF7E3F00" BorderThickness="0" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="5" Margin="10,10,10,10" Grid.RowSpan="2"/>
-            <Button Grid.Column="4" Grid.Row="3" Width="150" Height="200"></Button>
-            <Button Grid.Column="4" Grid.Row="4" Width="150" Height="200"></Button>
-            <Button Grid.Column="5" Grid.Row="3" Width="150" Height="200"></Button>
-            <Button Grid.Column="6" Grid.Row="3" Width="150" Height="200"></Button>
-            <Button Grid.Column="7" Grid.Row="3" Width="150" Height="200"></Button>
-            <Button Grid.Column="8" Grid.Row="3" Width="150" Height="200"></Button>
-            <Button Grid.Column="5" Grid.Row="4" Width="150" Height="200"></Button>
-            <Button Grid.Column="6" Grid.Row="4" Width="150" Height="200"></Button>
-            <Button Grid.Column="7" Grid.Row="4" Width="150" Height="200"></Button>
-            <Button Grid.Column="8" Grid.Row="4" Width="150" Height="200"></Button>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="2" Background="#87480c">
+                <Image Name="hand1" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="2" Grid.Row="2" Background="#87480c">
+                <Image Name="hand2" Grid.Column="2" Grid.Row="2" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="3" Grid.Row="2" Background="#87480c">
+                <Image Name="headgear" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="4" Grid.Row="2" Background="#87480c">
+                <Image Name="armor" Grid.Column="4" Grid.Row="2" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="5" Grid.Row="2" Background="#87480c">
+                <Image Name="footgear" Grid.Column="5" Grid.Row="2" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="6" Grid.Row="2" Background="#87480c">
+                <Image Name="curse"  Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="7" Grid.Row="2" Background="#87480c">
+                <Image Name="accessory"  Width="150" Height="200"></Image>
+            </Border>
 
 
-
-
-
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="0" Grid.Row="3" Background="#87480c">
+                <Image Name="race1" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="3" Background="#87480c">
+                <Image Name="race2"  Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="2" Grid.Row="3" Background="#87480c">
+                <Image Name="class1" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="3" Grid.Row="3" Background="#87480c">
+                <Image Name="class2" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="4" Background="#87480c">
+                <Image Name="isHalfBlood" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="2" Grid.Row="4" Background="#87480c">
+                <Image Name="isSupermunchkin" Width="150" Height="200"></Image>
+            </Border>
+            
+            <Border Background="#FF7E3F00" BorderThickness="0" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="5" Margin="10,8,10,8" Grid.RowSpan="2"/>
+            <Border BorderThickness="5" Grid.Column="4" Grid.Row="3" Width="160" Height="210" Background="#87480c">
+                <Image Name="card1"  Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Grid.Column="4" Grid.Row="4" Width="160" Height="210" Background="#87480c">
+                <Image Name="card2" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Grid.Column="5" Grid.Row="3" Width="160" Height="210" Background="#87480c">
+                <Image Name="card3" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="6" Grid.Row="3" Background="#87480c">
+                <Image Name="card4"  Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210"  Grid.Column="7" Grid.Row="3" Background="#87480c">
+                <Image Name="card5" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="8" Grid.Row="3" Background="#87480c">
+                <Image Name="card6" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="5" Grid.Row="4" Background="#87480c">
+                <Image Name="card7" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="6" Grid.Row="4"  Background="#87480c">
+                <Image Name="card8" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Height="210" Grid.Column="7" Grid.Row="4" Background="#87480c">
+                <Image Name="card9" Width="150" Height="200"></Image>
+            </Border>
+            <Border BorderThickness="5" Width="160" Grid.Column="8" Grid.Row="4" Height="210" Background="#87480c">
+                <Image Name="card10"  Width="150" Height="200"></Image>
+            </Border>
+            
         </Grid>
 
 
