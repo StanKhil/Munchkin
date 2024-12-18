@@ -9,6 +9,14 @@
         Width="1800"
         Background="Transparent"
         WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding CanExecute="ExitCanExecute" Command="local:NavigationCommands.Exit" Executed="ToMainMenuCommand"></CommandBinding>
+        <CommandBinding Command="local:NavigationCommands.Info" Executed="ToGuideCommand"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="E" Modifiers="Ctrl" Command="local:NavigationCommands.Exit"/>
+        <KeyBinding Key="I" Modifiers="Ctrl" Command="local:NavigationCommands.Info"/>
+    </Window.InputBindings>
     <Grid>
         <ContentControl Name="sceneContainer"/>
     </Grid>

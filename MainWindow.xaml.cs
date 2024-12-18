@@ -32,7 +32,31 @@ namespace Munchkin
         public void ToGuide()
         {
             sceneContainer.Content = new Guide();
-    
+        }
+
+        private void ToMainMenuCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            sceneContainer.Content = new MainMenu();
+        }
+        private void ToGuideCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            sceneContainer.Content = new Guide();
+        }
+        private void ExitCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (sceneContainer.Content.ToString() == "Munchkin.MainMenu") e.CanExecute = false;
+            else e.CanExecute = true;
+            return;
+        }
+    }
+    public class NavigationCommands
+    {
+        public static RoutedCommand Exit { get; set; }
+        public static RoutedCommand Info { get; set; }
+        static NavigationCommands()
+        {
+            Exit = new RoutedCommand("Exit", typeof(NavigationCommands));
+            Info = new RoutedCommand("Info", typeof(NavigationCommands));
         }
     }
 }
