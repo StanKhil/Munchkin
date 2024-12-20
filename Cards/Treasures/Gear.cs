@@ -8,10 +8,7 @@ namespace Munchkin.Cards.Treasures
 {
     internal class Gear : Treasure
     {
-        public Gear(string name,int price)
-        {
-            this.name = name;
-            this.price = price;
-        }
+        public Gear(string source, string name, Active action, int price) : base(source, name, action, price) { }
+
     }
 }

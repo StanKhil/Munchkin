@@ -8,10 +8,6 @@ namespace Munchkin.Cards.Treasures
 {
     internal class Spell : Treasure
     {
-        public Spell(string name,int price)
-        {
-            this.name = name;
-            this.price = price;
-        }
+        public Spell(string source, string name, Active action, int price) : base(source, name, action, price) { }
     }
 }

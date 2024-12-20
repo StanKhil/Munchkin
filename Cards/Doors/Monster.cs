@@ -8,16 +8,16 @@ namespace Munchkin.Cards.Doors
 {
     internal class Monster : Door
     {
-        int level;
-        int levels;
-        int treasusers;
-        int power;
+        private int level;
+        private int levels;
+        private int treasusers;
+        private int power;
 
-        public void Fight() { }
+        //public void Fight() { }
 
-        public Monster(string name,int level,int levels,int treasures,int power)
+        public Monster(string source, string name, Active action, int level, int levels, int treasures, int power) 
+            : base(source, name, action)
         {
-            this.name = name;
             this.level = level;
             this.levels = levels;
             this.treasusers = treasures;

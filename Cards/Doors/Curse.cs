@@ -8,13 +8,10 @@ namespace Munchkin.Cards.Doors
 {
     internal class Curse : Door
     {
-        //Effect bonus
-        bool active;
         //Specific specific
-        public Curse(string name, bool active)
+        public Curse(string source, string name, Active action) : base(source, name, action)
         {
-            this.name = name;
-            this.active = active;
+           
         }
     }
 }

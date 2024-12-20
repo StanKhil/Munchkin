@@ -19,11 +19,11 @@ namespace Munchkin.User
         int money;
         int power;
         State state;
-        List<Treasure> treasures;
-        List<Door> doors;
-        Armor body;
-        Armor head;
-        Armor legs;
+        List<Treasure> treasures = new List<Treasure>();
+        List<Door> doors = new List<Door>();
+        Armor? body;
+        Armor? head;
+        Armor? legs;
 
         public void Fight() { }
     }
