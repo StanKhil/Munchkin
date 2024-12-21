@@ -13,7 +13,7 @@ namespace Munchkin.Cards
         Small,
         Big
     }
-    internal class Treasure : Card
+    public  class Treasure : Card
     {
         
         public int Price { get; set; }
@@ -25,7 +25,7 @@ namespace Munchkin.Cards
             this.action = action;
             image.Source = new ImageSourceConverter().ConvertFromString(source) as ImageSource;
             Price = price;
-            this.name = name;
+            Name = name;
         }
     }
 }

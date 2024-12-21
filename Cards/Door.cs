@@ -8,11 +8,11 @@ using System.Windows.Media;
 
 namespace Munchkin.Cards
 {
-    internal class Door : Card
+    public class Door : Card
     {
         public Door(string source, string name, Active action)
         {
-            this.name = name;
+            Name = name;
             image.Source = new ImageSourceConverter().ConvertFromString(source) as ImageSource;
             this.action = action;
         }

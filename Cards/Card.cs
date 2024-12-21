@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,23 @@ using System.Windows.Controls;
 namespace Munchkin.Cards
 {
     public delegate void Active();
-    internal class Card
+    public class Card : INotifyPropertyChanged
     {
         protected bool? active = false;
         protected Active? action;
-        protected string? name;
+        private string name;
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
         protected Image? image;
 
         public bool? Activated
@@ -21,5 +34,11 @@ namespace Munchkin.Cards
             set { active = value; }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="1200" d:DesignWidth="1800"
              Background="Transparent">
+    <UserControl.DataContext>
+        <local:GameManager />
+    </UserControl.DataContext>
+    
     <Border BorderThickness="10" BorderBrush="#252525" CornerRadius="15" Background="#523018">
         <Grid>
             <Grid.ColumnDefinitions>

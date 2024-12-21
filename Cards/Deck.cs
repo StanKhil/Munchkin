@@ -12,10 +12,10 @@ using System.Xml.Linq;
 
 namespace Munchkin.Cards
 {
-    internal class Deck
+    public class Deck
     {
-        List<Treasure> treasures = new List<Treasure>(20);
-        List<Door> doors = new List<Door>(20);
+        public List<Treasure> treasures = new List<Treasure>(20);
+        public List<Door> doors = new List<Door>(20);
 
         public Deck()
         {
