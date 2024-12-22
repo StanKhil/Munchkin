@@ -24,7 +24,22 @@ namespace Munchkin.Cards
             treasures[2] = new Weapon("BowWithRibbons.png", "Bow With Ribbons", null, 800, Size.Small, 2, 4);
             treasures[3] = new Weapon("DaggerOfTreachery.png", "Dagger Of Treachery", null, 400, Size.Small, 1, 3);
             treasures[4] = new Weapon("ElevenFootPole.png", "Eleven-Foot Pole", null, 200, Size.Small, 2, 1);
-
+            treasures[5] = new Armor("FlamingArmor.png", "Flaming Armor", null, 400, Size.Small, 2);
+            treasures[6] = new Spell("FriendshipPotion.png", "Friendship Potion", null, 200);
+            treasures[7] = new Armor("LeatherArmor.png", "Leather Armor", null, 200, Size.Small, 1);
+            treasures[8] = new Spell("LoadedDie.png", "Loaded Die", null, 300);
+            treasures[9] = new Weapon("MaceOfSharpness.png", "Mace Of Sharpness", null, 600, Size.Small, 1, 4);
+            treasures[10] = new Spell("MagicLamp.png", "Magic Lamp", null, 500);
+            treasures[11] = new Weapon("RapierOfUnfairness.png", "Rapier Of Unfairness", null, 600, Size.Small, 1, 3);
+            treasures[12] = new Weapon("RatOnStick.png", "Rat On Stick", null, 0, Size.Small, 1, 1);
+            treasures[13] = new Gear("ReallyImpressiveTitle.png", "Really Impressive Title", null, 0);
+            treasures[14] = new Weapon("ShieldOfUbiquity.png", "Shield Of Ubiquity", null, 600, Size.Big, 1, 4);
+            treasures[15] = new Armor("ShortWideArmor.png", "Short Wid eArmor", null, 400, Size.Small, 3);
+            treasures[16] = new Gear("SingingAndDancingSword.png", "Singing And Dancing Sword", null, 400);
+            treasures[17] = new Armor("SneakyBastardSword.png", "Sneaky Bastard Sword", null, 200, Size.Small, 1);
+            treasures[18] = new Gear("SpikyKnees.png", "Spiky Knees", null, 200);
+            treasures[19] = new Weapon("StaffOfNapalm.png", "Staff Of Napalm", null, 800, Size.Small, 1, 5);
+            treasures[20] = new Weapon("SwissArmyPolearm.png", "Swiss Army Polearm", null, 600, Size.Big, 2, 4);
 
             doors[0] = new Monster("3872Orcs.png", "3872 Orcs", null, 10, 1, 3, 10);
             doors[1] = new Monster("Amazon.png", "Amazon", null, 8, 1, 2, 8);
@@ -45,7 +60,7 @@ namespace Munchkin.Cards
             doors[16] = new PlayerRace("Dwarf.png", "Dwarf", null);
             doors[17] = new PlayerRace("Elf.png", "Elf", null);
             doors[18] = new PlayerRace("Hafling.png", "Hafling", null);
-            doors[19] = new Door("Suoermunchkin.png", "Supermunchkin", null);
+            doors[19] = new Door("Supermunchkin.png", "Supermunchkin", null);
         }
     }
 }

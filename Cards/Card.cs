@@ -5,16 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Munchkin.Player;
 
 namespace Munchkin.Cards
 {
-    public delegate void Active();
+    public delegate void Active(/*User user*/);
     public class Card : INotifyPropertyChanged
     {
         protected bool? active = false;
         protected Active? action;
-        private string name;
-        public string Name
+        private string? name;
+        protected Image? image = new Image();
+
+        public string? Name
         {
             get => name;
             set
@@ -26,15 +29,13 @@ namespace Munchkin.Cards
                 }
             }
         }
-        protected Image? image;
-
         public bool? Activated
         {
             get { return active; }
             set { active = value; }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
         {

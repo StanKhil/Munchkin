@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Munchkin.User
+namespace Munchkin.Player
 {
     enum State
     {
         Men,
         Women
     }
-    internal class User
+    public class User
     {
         int level;
         int money;
