@@ -13,7 +13,7 @@ namespace Munchkin.Cards
         public Door(string source, string name, Active action)
         {
             Name = name;
-            image.Source = new ImageSourceConverter().ConvertFromString(source) as ImageSource;
+            image.Source = new ImageSourceConverter().ConvertFromString("D:\\WPF\\Munchkin\\Resources\\Cards\\Doors\\" + source) as ImageSource;
             this.action = action;
         }
 

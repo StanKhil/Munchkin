@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Munchkin;
 
 namespace Munchkin.Cards
 {
@@ -23,7 +24,7 @@ namespace Munchkin.Cards
         public Treasure(string source, string name, Active? action, int price)
         {
             this.action = action;
-            image.Source = new ImageSourceConverter().ConvertFromString(source) as ImageSource;
+            image.Source = new ImageSourceConverter().ConvertFromString("D:\\WPF\\Munchkin\\Resources\\Cards\\Treasures\\" + source) as ImageSource;
             Price = price;
             Name = name;
         }
