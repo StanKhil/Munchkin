@@ -74,6 +74,10 @@
                 </Button.Resources>
             </Button>
 
+            <TextBlock Name="State" Grid.Column="0" Grid.Row="4" 
+                       Text="{Binding User.State}" 
+                       FontSize="24" Foreground="White" />
+
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="4" Grid.Row="1" Background="#87480c">
                 <Image Name="monsterImage" Width="150" Height="200"></Image>
             </Border>
