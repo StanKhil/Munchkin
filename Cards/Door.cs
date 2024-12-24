@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Munchkin.Cards
         public Door(string source, string name, Active action)
         {
             Name = name;
-            image.Source = new ImageSourceConverter().ConvertFromString("D:\\WPF\\Munchkin\\Resources\\Cards\\Doors\\" + source) as ImageSource;
+            image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Doors\\" + source) as ImageSource;
             this.action = action;
         }
 
