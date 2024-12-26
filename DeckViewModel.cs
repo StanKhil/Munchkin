@@ -17,8 +17,8 @@ namespace Munchkin.Cards
 
         public DeckViewModel(Deck deck)
         {
-            Treasures = new ObservableCollection<Treasure>(deck.treasures);
-            Doors = new ObservableCollection<Door>(deck.doors);
+            Treasures = new ObservableCollection<Treasure>(deck.Treasures);
+            Doors = new ObservableCollection<Door>(deck.Doors);
         }
     }
 }

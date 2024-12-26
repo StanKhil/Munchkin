@@ -10,7 +10,7 @@ using Munchkin;
 namespace Munchkin.Cards
 {
     
-    enum Size
+    public enum Size
     {
         Small,
         Big

@@ -32,7 +32,8 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Image Name="doorsDeck"  Source="Resources/Assets/Door.png" Grid.Column="3" Grid.Row="0" Width="150" Height="200"></Image>
+            <Image Source="Resources/Assets/Door.png" Grid.Column="3" Grid.Row="0" Width="150" Height="200"/>
+            
             <Image Source="Resources/Assets/Door.png" Grid.Column="2" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -44,17 +45,19 @@
                 </Image.RenderTransform>
             </Image>
 
-
-            <Image Name="treasuredDeck" Source="Resources/Assets/Treasure.png" Grid.Column="5" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-180"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
+            <Button Grid.Column="5" Grid.Row="0" Width="150" Height="200" Click="TakeTreasure">
+                <Image Name="treasuredDeck" Source="Resources/Assets/Treasure.png" Grid.Column="5" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Button>
+            
             <Image Source="Resources/Assets/Treasure.png" Grid.Column="6" Grid.Row="0" Width="150" Height="200"/>
 
             <Button FontFamily="Resources/Fonts/#munchkin" Background="#003b99" Foreground="White" Margin="120,0,0,140" Grid.Column="9" Grid.Row="0" Width="50" Height="50" Click="ToGuide" Content="Info">
@@ -125,11 +128,15 @@
             </Border>
             
             <Border Background="#FF7E3F00" BorderThickness="0" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="5" Margin="10,8,10,8" Grid.RowSpan="2"/>
+            
+            
+            
+            
             <Border BorderThickness="5" Grid.Column="4" Grid.Row="3" Width="160" Height="210" Background="#87480c">
-                <Image Name="card1"  Width="150" Height="200"></Image>
+                <Image Name="card1"  Width="150" Height="200" Source="{Binding Table.TreasuresHand[0].image.Source}"></Image>
             </Border>
             <Border BorderThickness="5" Grid.Column="4" Grid.Row="4" Width="160" Height="210" Background="#87480c">
-                <Image Name="card2" Width="150" Height="200"></Image>
+                <Image Name="card2" Width="150" Height="200" Source="file:///C:/Users/user/source/repos/Munchkin/Resources/Cards/Treasures/RatOnStick.png"></Image>
             </Border>
             <Border BorderThickness="5" Grid.Column="5" Grid.Row="3" Width="160" Height="210" Background="#87480c">
                 <Image Name="card3" Width="150" Height="200"></Image>

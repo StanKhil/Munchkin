@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace Munchkin.Cards.Treasures
 {
-    internal class Armor : Treasure
+    public class Armor : Treasure
     {
         Size size;
         int bonus;

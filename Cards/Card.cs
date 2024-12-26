@@ -15,7 +15,7 @@ namespace Munchkin.Cards
         protected bool? active = false;
         protected Active? action;
         private string? name;
-        protected Image? image = new Image();
+        public Image? image = new Image();
 
         public string? Name
         {
