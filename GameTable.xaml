@@ -8,8 +8,16 @@
              d:DesignHeight="1200" d:DesignWidth="1800"
              Background="Transparent">
     <UserControl.DataContext>
-        <local:GameManager />
+        <local:GameManager/>
     </UserControl.DataContext>
+    
+    <UserControl.Resources>
+        <ContextMenu x:Key="CardContextMenu">
+            <MenuItem Header="Use" Click="Use"/>
+            <MenuItem Header="Discard"/>
+            <MenuItem Header="Sell"/>
+        </ContextMenu>
+    </UserControl.Resources>
     
     <Border BorderThickness="10" BorderBrush="#252525" CornerRadius="15" Background="#523018">
         <Grid>
@@ -42,24 +50,24 @@
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
-            <Button Grid.Column="3" Grid.Row="0" Width="150" Height="200" Click="TakeDoor" >
-                <Image Source="Resources/Assets/Door.png" Grid.Column="3" Grid.Row="0" Width="150" Height="200" Stretch="Fill"/>
-            </Button>
-            
+            <!--<Button Background="Transparent" Grid.Column="3" Grid.Row="0" Width="150" Height="200" Click="TakeDoor" >-->
+            <Image MouseUp="TakeDoor" Source="Resources/Assets/Door.png" Grid.Column="3" Grid.Row="0" Width="150" Height="200" Stretch="Fill"/>
+            <!--</Button>-->
 
-            <Button Grid.Column="5" Grid.Row="0" Width="150" Height="200" Click="TakeTreasure">
-                <Image Name="treasuredDeck" Source="Resources/Assets/Treasure.png" Grid.Column="5" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="-180"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-            </Button>
-            
+
+            <!--<Button Background="Transparent" Grid.Column="5" Grid.Row="0" Width="150" Height="200" Click="TakeTreasure">-->
+            <Image MouseUp="TakeTreasure" Name="treasuredDeck" Source="Resources/Assets/Treasure.png" Grid.Column="5" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-180"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <!--</Button>-->
+
             <Image Source="Resources/Assets/Treasure.png" Grid.Column="6" Grid.Row="0" Width="150" Height="200"/>
 
             <Button FontFamily="Resources/Fonts/#munchkin" Background="#003b99" Foreground="White" Margin="120,0,0,140" Grid.Column="9" Grid.Row="0" Width="50" Height="50" Click="ToGuide" Content="Info">
@@ -96,94 +104,90 @@
                         FontSize="24" Foreground="White" />
                 </StackPanel>
             </StackPanel>
-            
-            
-            
+
+
+
 
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="4" Grid.Row="1" Background="#87480c">
                 <Image Name="monsterImage" Width="150" Height="200"></Image>
             </Border>
-
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="2" Background="#87480c">
-                <Image Name="hand1" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="hand1" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="2" Grid.Row="2" Background="#87480c">
-                <Image Name="hand2" Grid.Column="2" Grid.Row="2" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="hand2" Grid.Column="2" Grid.Row="2" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="3" Grid.Row="2" Background="#87480c">
-                <Image Name="headgear" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="headgear" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="4" Grid.Row="2" Background="#87480c">
-                <Image Name="armor" Grid.Column="4" Grid.Row="2" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="armor" Grid.Column="4" Grid.Row="2" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="5" Grid.Row="2" Background="#87480c">
-                <Image Name="footgear" Grid.Column="5" Grid.Row="2" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="footgear" Grid.Column="5" Grid.Row="2" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="6" Grid.Row="2" Background="#87480c">
-                <Image Name="curse"  Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="curse"  Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="7" Grid.Row="2" Background="#87480c">
-                <Image Name="accessory"  Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="accessory"  Width="150" Height="200"></Image>
             </Border>
 
 
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="0" Grid.Row="3" Background="#87480c">
-                <Image Name="race1" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="race1" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="3" Background="#87480c">
-                <Image Name="race2"  Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="race2"  Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="2" Grid.Row="3" Background="#87480c">
-                <Image Name="class1" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="class1" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="3" Grid.Row="3" Background="#87480c">
-                <Image Name="class2" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="class2" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="4" Background="#87480c">
-                <Image Name="isHalfBlood" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="isHalfBlood" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="2" Grid.Row="4" Background="#87480c">
-                <Image Name="isSupermunchkin" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="isSupermunchkin" Width="150" Height="200"></Image>
             </Border>
-            
+
             <Border Background="#FF7E3F00" BorderThickness="0" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="5" Margin="10,8,10,8" Grid.RowSpan="2"/>
-            
-            
-            
-            
+
+
+
+
             <Border BorderThickness="5" Grid.Column="4" Grid.Row="3" Width="160" Height="210" Background="#87480c">
-                <Image Name="card1"  Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}"  Name="card1"  Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Grid.Column="4" Grid.Row="4" Width="160" Height="210" Background="#87480c">
-                <Image Name="card2" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected"  ContextMenu="{StaticResource CardContextMenu}" Name="card2" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Grid.Column="5" Grid.Row="3" Width="160" Height="210" Background="#87480c">
-                <Image Name="card3" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected"  ContextMenu="{StaticResource CardContextMenu}" Name="card3" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="6" Grid.Row="3" Background="#87480c">
-                <Image Name="card4"  Width="150" Height="200"></Image>
+                <Image MouseUp="Selected"  ContextMenu="{StaticResource CardContextMenu}" Name="card4"  Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210"  Grid.Column="7" Grid.Row="3" Background="#87480c">
-                <Image Name="card5" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="card5" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="8" Grid.Row="3" Background="#87480c">
-                <Image Name="card6" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Name="card6" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="5" Grid.Row="4" Background="#87480c">
-                <Image Name="card7" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected"  ContextMenu="{StaticResource CardContextMenu}" Name="card7" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="6" Grid.Row="4"  Background="#87480c">
-                <Image Name="card8" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected"  ContextMenu="{StaticResource CardContextMenu}" Name="card8" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="7" Grid.Row="4" Background="#87480c">
-                <Image Name="card9" Width="150" Height="200"></Image>
+                <Image MouseUp="Selected"  ContextMenu="{StaticResource CardContextMenu}" Name="card9" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Grid.Column="8" Grid.Row="4" Height="210" Background="#87480c">
-                <Image Name="card10"  Width="150" Height="200"></Image>
+                <Image MouseUp="Selected"  ContextMenu="{StaticResource CardContextMenu}" Name="card10"  Width="150" Height="200"></Image>
             </Border>
-            
         </Grid>
-
-
     </Border>
 </UserControl>

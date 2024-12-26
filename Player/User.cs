@@ -10,22 +10,22 @@ namespace Munchkin.Player
 {
     public enum State
     {
-        Men,
-        Women
+        Man,
+        Woman
     }
 
     public class User : INotifyPropertyChanged
     {
-        private int level=1;
+        private int level = 1;
         private int money;
-        private int power;
+        private int power = 0;
         private List<Treasure> treasures = new List<Treasure>();
         private List<Door> doors = new List<Door>();
         private Armor? body;
         private Armor? head;
         private Armor? legs;
 
-        private State state = State.Men;
+        private State state = State.Man;
 
         public int Level
         {

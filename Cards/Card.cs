@@ -9,13 +9,14 @@ using Munchkin.Player;
 
 namespace Munchkin.Cards
 {
-    public delegate void Active(/*User user*/);
+    public delegate void Active(User? user);
     public class Card : INotifyPropertyChanged
     {
         protected bool? active = false;
         protected Active? action;
         private string? name;
         public Image? image = new Image();
+        public string? Cell { get; set; }
 
         public string? Name
         {

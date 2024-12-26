@@ -4,6 +4,7 @@ using Munchkin.Cards.Doors;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Munchkin.Player;
 
 namespace Munchkin.Cards
 {
@@ -42,8 +43,16 @@ namespace Munchkin.Cards
         {
             Treasures = new ObservableCollection<Treasure>
             {
-                new Treasure("1000GoldPieces.png", "1000 Gold pieces", null, 1000),
-                new Armor("BootsOfButtKicking.png", "Boots Of Butt Kicking", null, 400, Size.Small, 2),
+                new Treasure("1000GoldPieces.png", "1000 Gold pieces", delegate(User? user) 
+                {
+                    if(user != null)
+                        if(user.Level < 9) user.Level++;
+                }, 1000),
+                new Armor("BootsOfButtKicking.png", "Boots Of Butt Kicking", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 1;
+                }, 400, Size.Small, 2),
                 new Weapon("BowWithRibbons.png", "Bow With Ribbons", null, 800, Size.Small, 2, 4),
                 new Weapon("DaggerOfTreachery.png", "Dagger Of Treachery", null, 400, Size.Small, 1, 3),
                 new Weapon("ElevenFootPole.png", "Eleven-Foot Pole", null, 200, Size.Small, 2, 1),
