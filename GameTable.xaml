@@ -32,8 +32,6 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Image Source="Resources/Assets/Door.png" Grid.Column="3" Grid.Row="0" Width="150" Height="200"/>
-            
             <Image Source="Resources/Assets/Door.png" Grid.Column="2" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -44,6 +42,10 @@
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
+            <Button Grid.Column="3" Grid.Row="0" Width="150" Height="200" Click="TakeDoor" >
+                <Image Source="Resources/Assets/Door.png" Grid.Column="3" Grid.Row="0" Width="150" Height="200" Stretch="Fill"/>
+            </Button>
+            
 
             <Button Grid.Column="5" Grid.Row="0" Width="150" Height="200" Click="TakeTreasure">
                 <Image Name="treasuredDeck" Source="Resources/Assets/Treasure.png" Grid.Column="5" Grid.Row="0" Width="150" Height="200" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
@@ -76,10 +78,27 @@
                     </Style>
                 </Button.Resources>
             </Button>
-
-            <TextBlock Name="State" Grid.Column="0" Grid.Row="4" 
-                       Text="{Binding User.State}" 
-                       FontSize="24" Foreground="White" />
+            <StackPanel Grid.Column="0" Grid.Row="4">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Grid.Column="0" Grid.Row="4" 
+                        Text="State: "
+                        FontSize="24" Foreground="White" />
+                    <TextBlock Name="State" Grid.Column="0" Grid.Row="4" 
+                        Text="{Binding User.State}"
+                        FontSize="24" Foreground="White" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Grid.Column="0" Grid.Row="4" 
+                        Text="Level: "
+                        FontSize="24" Foreground="White" />
+                    <TextBlock Name="Level" Grid.Column="0" Grid.Row="4" 
+                        Text="{Binding User.Level}"
+                        FontSize="24" Foreground="White" />
+                </StackPanel>
+            </StackPanel>
+            
+            
+            
 
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="4" Grid.Row="1" Background="#87480c">
                 <Image Name="monsterImage" Width="150" Height="200"></Image>
@@ -133,10 +152,10 @@
             
             
             <Border BorderThickness="5" Grid.Column="4" Grid.Row="3" Width="160" Height="210" Background="#87480c">
-                <Image Name="card1"  Width="150" Height="200" Source="{Binding Table.TreasuresHand[0].image.Source}"></Image>
+                <Image Name="card1"  Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Grid.Column="4" Grid.Row="4" Width="160" Height="210" Background="#87480c">
-                <Image Name="card2" Width="150" Height="200" Source="file:///C:/Users/user/source/repos/Munchkin/Resources/Cards/Treasures/RatOnStick.png"></Image>
+                <Image Name="card2" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Grid.Column="5" Grid.Row="3" Width="160" Height="210" Background="#87480c">
                 <Image Name="card3" Width="150" Height="200"></Image>

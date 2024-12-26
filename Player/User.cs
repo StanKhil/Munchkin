@@ -16,7 +16,7 @@ namespace Munchkin.Player
 
     public class User : INotifyPropertyChanged
     {
-        private int level;
+        private int level=1;
         private int money;
         private int power;
         private List<Treasure> treasures = new List<Treasure>();

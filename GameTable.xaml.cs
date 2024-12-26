@@ -44,24 +44,94 @@ namespace Munchkin
             var gameManager = this.DataContext as GameManager;
             gameManager.User.Treasures.Add(gameManager.Deck.Treasures.Last());
             gameManager.Deck.Treasures.RemoveAt(gameManager.Deck.Treasures.Count - 1);
-            //card1.Source = gameManager.User.Treasures.Last().image.Source;
 
-            string fieldName = "card" + (gameManager.User.Treasures.Count - 1); 
-
-            FieldInfo fieldInfo = typeof(Image).GetField(fieldName);
-
-            if (fieldInfo != null)
+            if(gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 1)
             {
-                MessageBox.Show(gameManager.User.Treasures.Last().image.Source + "");
-                fieldInfo.SetValue(card1, gameManager.User.Treasures.Last().image);
+                card1.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 2)
+            {
+                card2.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 3)
+            {
+                card3.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 4)
+            {
+                card4.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 5)
+            {
+                card5.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 6)
+            {
+                card6.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 7)
+            {
+                card7.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 8)
+            {
+                card8.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 9)
+            {
+                card9.Source = gameManager.User.Treasures.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 10)
+            {
+                card10.Source = gameManager.User.Treasures.Last().image.Source;
             }
         }
         private void TakeDoor(object sender, RoutedEventArgs e)
         {
             var gameManager = this.DataContext as GameManager;
-            gameManager.Table.TreasuresHand.Add(gameManager.Deck.Treasures.Last());
-            gameManager.Deck.Treasures.RemoveAt(gameManager.Deck.Treasures.Count - 1);
-            MessageBox.Show(gameManager.Table.TreasuresHand[0].image.Source + "");
+            gameManager.User.Doors.Add(gameManager.Deck.Doors.Last());
+            gameManager.Deck.Doors.RemoveAt(gameManager.Deck.Doors.Count - 1);
+
+            if(gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 1)
+            {
+                card1.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 2)
+            {
+                card2.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 3)
+            {
+                card3.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 4)
+            {
+                card4.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 5)
+            {
+                card5.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 6)
+            {
+                card6.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 7)
+            {
+                card7.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 8)
+            {
+                card8.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 9)
+            {
+                card9.Source = gameManager.User.Doors.Last().image.Source;
+            }
+            else if (gameManager.User.Treasures.Count + gameManager.User.Doors.Count == 10)
+            {
+                card10.Source = gameManager.User.Doors.Last().image.Source;
+            }
         }
     }
 }
