@@ -13,7 +13,7 @@
     
     <UserControl.Resources>
         <ContextMenu x:Key="CardContextMenu">
-            <MenuItem Header="Use" Click="Use"/>
+            <MenuItem Header="Use" Click="Use" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
             <MenuItem Header="Discard"/>
             <MenuItem Header="Sell"/>
         </ContextMenu>

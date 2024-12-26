@@ -156,8 +156,11 @@ namespace Munchkin
         }
         public void Use(object sender, RoutedEventArgs e)
         {
-            ContextMenu? card = sender as ContextMenu;
-            MessageBox.Show(card.Parent + "");
+            MenuItem? item = sender as MenuItem;
+            ContextMenu? menu = item.CommandParameter as ContextMenu;
+            Image? image = menu.PlacementTarget as Image;
+            if(image != null) MessageBox.Show(image.Source + "");
+
         }
         private void Selected(object sender, MouseButtonEventArgs e)
         {
