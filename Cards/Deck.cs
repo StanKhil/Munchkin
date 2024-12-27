@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Munchkin.Player;
+using System.Windows.Media.Animation;
+using System.Windows;
 
 namespace Munchkin.Cards
 {
@@ -12,6 +14,7 @@ namespace Munchkin.Cards
     {
         private ObservableCollection<Treasure> treasures;
         private ObservableCollection<Door> doors;
+        GameManager gameManager;
 
         public ObservableCollection<Treasure> Treasures
         {
@@ -39,8 +42,9 @@ namespace Munchkin.Cards
             }
         }
 
-        public Deck()
+        public Deck(GameManager gameManager)
         {
+            this.gameManager = gameManager;
             Treasures = new ObservableCollection<Treasure>
             {
                 new Treasure("1000GoldPieces.png", "1000 Gold pieces", delegate(User? user) 
@@ -53,50 +57,302 @@ namespace Munchkin.Cards
                     if(user != null)
                         user.Power += 1;
                 }, 400, Size.Small, 2),
-                new Weapon("BowWithRibbons.png", "Bow With Ribbons", null, 800, Size.Small, 2, 4),
-                new Weapon("DaggerOfTreachery.png", "Dagger Of Treachery", null, 400, Size.Small, 1, 3),
-                new Weapon("ElevenFootPole.png", "Eleven-Foot Pole", null, 200, Size.Small, 2, 1),
-                new Armor("FlamingArmor.png", "Flaming Armor", null, 400, Size.Small, 2),
-                new Spell("FriendshipPotion.png", "Friendship Potion", null, 200),
-                new Armor("LeatherArmor.png", "Leather Armor", null, 200, Size.Small, 1),
-                new Spell("LoadedDie.png", "Loaded Die", null, 300),
-                new Weapon("MaceOfSharpness.png", "Mace Of Sharpness", null, 600, Size.Small, 1, 4),
-                new Spell("MagicLamp.png", "Magic Lamp", null, 500),
-                new Weapon("RapierOfUnfairness.png", "Rapier Of Unfairness", null, 600, Size.Small, 1, 3),
-                new Weapon("RatOnStick.png", "Rat On Stick", null, 0, Size.Small, 1, 1),
-                new Gear("ReallyImpressiveTitle.png", "Really Impressive Title", null, 0),
-                new Weapon("ShieldOfUbiquity.png", "Shield Of Ubiquity", null, 600, Size.Big, 1, 4),
-                new Armor("ShortWideArmor.png", "Short Wide Armor", null, 400, Size.Small, 3),
-                new Gear("SingingAndDancingSword.png", "Singing And Dancing Sword", null, 400),
-                new Armor("SneakyBastardSword.png", "Sneaky Bastard Sword", null, 200, Size.Small, 1),
-                new Gear("SpikyKnees.png", "Spiky Knees", null, 200),
-                new Weapon("StaffOfNapalm.png", "Staff Of Napalm", null, 800, Size.Small, 1, 5),
-                new Weapon("SwissArmyPolearm.png", "Swiss Army Polearm", null, 600, Size.Big, 2, 4)
+                new Weapon("BowWithRibbons.png", "Bow With Ribbons", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.Race == Race.Elf) user.Power += 4;
+                }, 800, Size.Small, 2, 4),
+                new Weapon("DaggerOfTreachery.png", "Dagger Of Treachery", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.GameClass == Class.Thief) user.Power += 3;
+                }, 400, Size.Small, 1, 3),
+                new Weapon("ElevenFootPole.png", "Eleven-Foot Pole", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 1;
+                }, 200, Size.Small, 2, 1),
+                new Armor("FlamingArmor.png", "Flaming Armor", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 2;
+                }, 400, Size.Small, 2),
+                new Spell("FriendshipPotion.png", "Friendship Potion", delegate(User? user)
+                {
+                    // ------
+                }, 200),
+                new Armor("LeatherArmor.png", "Leather Armor", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 1;
+                }, 200, Size.Small, 1),
+                new Spell("LoadedDie.png", "Loaded Die", delegate(User? user)
+                {
+                    // ------
+                }, 300),
+                new Weapon("MaceOfSharpness.png", "Mace Of Sharpness", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.GameClass == Class.Cleric) user.Power += 4;
+                }, 600, Size.Small, 1, 4),
+                new Spell("MagicLamp.png", "Magic Lamp", delegate(User? user)
+                {
+                    // ------
+                }, 500),
+                new Weapon("RapierOfUnfairness.png", "Rapier Of Unfairness", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.Race == Race.Elf) user.Power += 3;
+                }, 600, Size.Small, 1, 3),
+                new Weapon("RatOnStick.png", "Rat On Stick", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 1;
+                }, 0, Size.Small, 1, 1),
+                new Gear("ReallyImpressiveTitle.png", "Really Impressive Title", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 3;
+                }, 0),
+                new Weapon("ShieldOfUbiquity.png", "Shield Of Ubiquity", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.GameClass == Class.Warrior) user.Power += 4;
+                }, 600, Size.Big, 1, 4),
+                new Armor("ShortWideArmor.png", "Short Wide Armor", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.Race == Race.Dwarf) user.Power += 3;
+                }, 400, Size.Small, 3),
+                new Gear("SingingAndDancingSword.png", "Singing And Dancing Sword", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.GameClass != Class.Thief) user.Power += 2;
+                }, 400),
+                new Armor("SmilyArmor.png", "Smily Armor", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 1;
+                }, 200, Size.Small, 1),
+                new Gear("SpikyKnees.png", "Spiky Knees", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Power += 1;
+                }, 200),
+                new Weapon("StaffOfNapalm.png", "Staff Of Napalm", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.GameClass == Class.Wizard) user.Power += 5;
+                }, 800, Size.Small, 1, 5),
+                new Weapon("SwissArmyPolearm.png", "Swiss Army Polearm", delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.Race == Race.Human) user.Power += 4;
+                }, 600, Size.Big, 2, 4)
             };
 
             Doors = new ObservableCollection<Door>
             {
-                new Monster("3872Orcs.png", "3872 Orcs", null, 10, 1, 3, 10),
-                new Monster("Amazon.png", "Amazon", null, 8, 1, 2, 8),
-                new Monster("Crabs.png", "Crabs", null, 1, 1, 1, 1),
-                new Monster("DroolingSmile.png", "Drooling Smile", null, 1, 1, 1, 1),
-                new Monster("Bigfoot.png", "Bigfoot", null, 12, 1, 3, 12),
-                new Monster("Lawers.png", "Lawers", null, 6, 1, 2, 6),
-                new Monster("Leperchaun.png", "Leperchaun", null, 4, 1, 2, 4),
-                new Monster("PitBull.png", "Pitbull", null, 2, 1, 1, 2),
-                new Monster("PlutoniumDragon.png", "Plutonium Dragon", null, 20, 2, 5, 20),
-                new Monster("ShriekingGeek.png", "Shrieking Geek", null, 6, 1, 2, 6),
-                new Monster("WannabeVampire.png", "Wannabe Vampire", null, 12, 1, 3, 12),
-                new Monster("WightBrothers.png", "Wight Brothers", null, 16, 2, 4, 16),
-                new PlayerClass("Cleric.png", "Cleric", null),
-                new PlayerClass("Thief.png", "Thief", null),
-                new PlayerClass("Warrior.png", "Warrior", null),
-                new PlayerClass("Wizard.png", "Wizard", null),
-                new PlayerRace("Dwarf.png", "Dwarf", null),
-                new PlayerRace("Elf.png", "Elf", null),
-                new PlayerRace("Hafling.png", "Hafling", null),
-                new Door("Supermunchkin.png", "Supermunchkin", null)
+                new Monster("3872Orcs.png", "3872 Orcs", null, null, 10, 1, 3, 10),
+                new Monster("Amazon.png", "Amazon", null, null, 8, 1, 2, 8),
+                new Monster("Crabs.png", "Crabs", null, null, 1, 1, 1, 1),
+                new Monster("DroolingSmile.png", "Drooling Smile", null, null, 1, 1, 1, 1),
+                new Monster("Bigfoot.png", "Bigfoot", null, null, 12, 1, 3, 12),
+                new Monster("Lawers.png", "Lawers", null, null, 6, 1, 2, 6),
+                new Monster("Leperchaun.png", "Leperchaun", null, null, 4, 1, 2, 4),
+                new Monster("PitBull.png", "Pitbull", null, null, 2, 1, 1, 2),
+                new Monster("PlutoniumDragon.png", "Plutonium Dragon", null, null, 20, 2, 5, 20),
+                new Monster("ShriekingGeek.png", "Shrieking Geek", null, null, 6, 1, 2, 6),
+                new Monster("WannabeVampire.png", "Wannabe Vampire", null, null, 12, 1, 3, 12),
+                new Monster("WightBrothers.png", "Wight Brothers", null, null, 16, 2, 4, 16),
+                new PlayerClass("Cleric.png", "Cleric", delegate(User? user)
+                {
+                    if(user != null)
+                        user.GameClass = Class.Cleric;
+                }),
+                new PlayerClass("Thief.png", "Thief", delegate(User? user)
+                {
+                    if(user != null)
+                        user.GameClass = Class.Thief;
+                }),
+                new PlayerClass("Warrior.png", "Warrior", delegate(User? user)
+                {
+                    if(user != null)
+                        user.GameClass = Class.Warrior;
+                }),
+                new PlayerClass("Wizard.png", "Wizard", delegate(User? user)
+                {
+                    if(user != null)
+                        user.GameClass = Class.Wizard;
+                }),
+                new PlayerRace("Dwarf.png", "Dwarf", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Race = Race.Dwarf;
+                }),
+                new PlayerRace("Elf.png", "Elf", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Race = Race.Elf;
+                }),
+                new PlayerRace("Hafling.png", "Hafling", delegate(User? user)
+                {
+                    if(user != null)
+                        user.Race = Race.Hafling;
+                }),
+                new Door("Supermunchkin.png", "Supermunchkin", delegate(User? user)
+                {
+                    if(user != null)
+                        user.IsSuperMunchkin = true;
+                })
             };
+            Monster? monster = Doors[0] as Monster;
+            monster.Action = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Race == Race.Dwarf) monster.Power += 6;
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                int roll = user.Roll();
+                if (roll <= 2) user.Death();
+                else
+                {
+                    user.Level -= roll;
+                    if(user.Level <= 0) user.Level = 1;
+                };
+            };
+            monster = Doors[1] as Monster;
+            monster.Action = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.State == State.Woman) gameManager.Table.ProvideTreasure();
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if(user != null)
+                {
+                    if(user.GameClass != Class.None) user.GameClass = Class.None;
+                    else
+                    {
+                        user.Level -= 3;
+                        if (user.Level <= 0) user.Level = 1;
+                    }
+                }
+            };
+            monster = Doors[2] as Monster;
+            monster.Action = delegate (User? user)
+            {
+                // -------
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Body = null;
+                    user.Legs = null;
+                }
+            };
+            monster = Doors[3] as Monster;
+            monster.Action = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Race == Race.Elf) monster.Power += 4;
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Legs != null) user.Legs = null;
+                    else
+                    {
+                        user.Level -= 1;
+                        if (user.Level <= 0) user.Level = 1;
+                    }
+            };
+            monster = Doors[4] as Monster;
+            monster.Action = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Race == Race.Dwarf || user.Race == Race.Hafling) monster.Power += 3;
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null)
+                    user.Head = null; // !!!
+            };
+            monster = Doors[5] as Monster;
+            monster.Action = delegate (User? user) { };
+            monster.BadStuff = delegate (User? user)
+            {
+                if(user != null)
+                    for(int i = 0; i < user.Hand.Count; i++)
+                    {
+                        user.Hand.Clear();
+                    }
+            };
+            monster = Doors[6] as Monster;
+            monster.Action = delegate (User? user) 
+            {
+                if (user != null)
+                    if (user.Race == Race.Elf) monster.Power += 5;
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    int rand = new Random().Next(0, user.Hand.Count);
+                    user.Hand.RemoveAt(rand);
+                    rand = new Random().Next(0, user.Hand.Count);
+                    user.Hand.RemoveAt(rand);
+                }
+            };
+            monster = Doors[7] as Monster;
+            monster.Action = delegate (User? user) { };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Level -= 2;
+                    if (user.Level <= 0) user.Level = 1;
+                }
+            };
+            monster = Doors[8] as Monster;
+            monster.Action = delegate (User? user) 
+            {
+                if (user != null)
+                    if (user.Level <= 5) MessageBox.Show("It won't pursue you");
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null) user.Death();
+            };
+            monster = Doors[9] as Monster;
+            monster.Action = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.GameClass == Class.Warrior) monster.Power += 6;
+                    
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.GameClass = Class.None;
+                    user.Race = Race.Human;
+                }  
+            };
+            monster = Doors[10] as Monster;
+            monster.Action = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Level <= 3) MessageBox.Show("They won't pursue you");
+            };
+            monster.BadStuff = delegate (User? user)
+            {
+                if (user != null) user.Level = 1;
+            };
+
+
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

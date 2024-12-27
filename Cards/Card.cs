@@ -18,6 +18,11 @@ namespace Munchkin.Cards
         public Image? image = new Image();
         public string? Cell { get; set; }
 
+        public Active? Action 
+        {
+            get { return action; }
+            set { action = value; }
+        }
         public string? Name
         {
             get => name;

@@ -13,6 +13,21 @@ namespace Munchkin.Player
         Man,
         Woman
     }
+    public enum Race
+    {
+        Human,
+        Elf,
+        Hafling,
+        Dwarf
+    }
+    public enum Class
+    {
+        None,
+        Warrior,
+        Wizard,
+        Thief,
+        Cleric
+    }
 
     public class User : INotifyPropertyChanged
     {
@@ -28,8 +43,13 @@ namespace Munchkin.Player
         private Armor? legs;
 
         private State state = State.Man;
+        private Race race = Race.Human;
+        private Class gameClass = Class.None;
 
+        public bool IsSuperMunchkin { get; set; }
+        public bool IsHalfBlood { get; set; }
 
+        
         public List<Card> Hand
         {
             get => hand;
@@ -146,8 +166,37 @@ namespace Munchkin.Player
                 }
             }
         }
+        public Class GameClass
+        {
+            get => gameClass;
+            set
+            {
+                if (gameClass != value)
+                {
+                    gameClass = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public Race Race
+        {
+            get => race;
+            set
+            {
+                if (race != value)
+                {
+                    race = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public void Fight() { }
+        public int Roll()
+        {
+            return new Random().Next(1, 7);
+        }
+        public void Death() { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

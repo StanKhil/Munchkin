@@ -12,7 +12,7 @@ namespace Munchkin
     {
         private Deck deck;
         private User user;
-        private Table table;
+        private GameTable table;
         public Dictionary<string?, Card?> positions;
 
         public User User
@@ -25,7 +25,7 @@ namespace Munchkin
             }
         }
 
-        public Table Table
+        public GameTable Table
         {
             get => table;
             set
@@ -47,7 +47,7 @@ namespace Munchkin
 
         public GameManager()
         {
-            Deck = new Deck();
+            Deck = new Deck(this);
             User = new User();
             positions = new Dictionary<string?, Card?>();
 

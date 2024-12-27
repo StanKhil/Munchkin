@@ -39,8 +39,7 @@ namespace Munchkin
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.ToGuide();
         }
-
-        private void TakeTreasure(object sender, RoutedEventArgs e)
+        public void ProvideTreasure()
         {
             var GameManager = this.DataContext as GameManager;
             int ind = -1;
@@ -60,10 +59,10 @@ namespace Munchkin
             {
                 GameManager.User.Hand.Add(GameManager.Deck.Treasures.Last());
             }
-            ChoosePosition(ind+1);
+            ChoosePosition(ind + 1);
             GameManager.Deck.Treasures.RemoveAt(GameManager.Deck.Treasures.Count - 1);
         }
-        private void TakeDoor(object sender, RoutedEventArgs e)
+        public void ProvideDoor()
         {
             var GameManager = this.DataContext as GameManager;
             int ind = -1;
@@ -85,6 +84,14 @@ namespace Munchkin
             }
             ChoosePosition(ind + 1);
             GameManager.Deck.Doors.RemoveAt(GameManager.Deck.Doors.Count - 1);
+        }
+        public void TakeTreasure(object sender, RoutedEventArgs e)
+        {
+            ProvideTreasure();
+        }
+        public void TakeDoor(object sender, RoutedEventArgs e)
+        {
+            ProvideDoor();
         }
         public void Use(object sender, RoutedEventArgs e)
         {

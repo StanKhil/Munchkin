@@ -12,16 +12,29 @@ namespace Munchkin.Cards.Doors
         private int levels;
         private int treasusers;
         private int power;
+        private Active? badStuff;
 
         //public void Fight() { }
+        public int Power
+        {
+            get { return power; }
+            set { this.power = value; }
+        }
+        public Active? BadStuff
+        {
+            get { return badStuff; }
+            set { badStuff = value; }
+        }
 
-        public Monster(string source, string name, Active action, int level, int levels, int treasures, int power) 
+        public Monster(string source, string name, Active action, Active badStuff, int level, int levels, int treasures, int power) 
             : base(source, name, action)
         {
             this.level = level;
             this.levels = levels;
             this.treasusers = treasures;
             this.power = power;
+            BadStuff = badStuff;
         }
+
     }
 }
