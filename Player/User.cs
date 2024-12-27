@@ -19,14 +19,42 @@ namespace Munchkin.Player
         private int level = 1;
         private int money;
         private int power = 0;
-        private List<Treasure> treasures = new List<Treasure>();
-        private List<Door> doors = new List<Door>();
+        /*private List<Treasure> treasures = new List<Treasure>();
+        private List<Door> doors = new List<Door>();*/
+        private List<Treasure> activeTreasures = new List<Treasure>();
+        List<Card> hand = new List<Card>();
         private Armor? body;
         private Armor? head;
         private Armor? legs;
 
         private State state = State.Man;
 
+
+        public List<Card> Hand
+        {
+            get => hand;
+            set
+            {
+                if (hand != value)
+                {
+                    hand = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public List<Treasure> ActiveTreasures
+        {
+            get => activeTreasures;
+            set
+            {
+                if (activeTreasures != value)
+                {
+                    activeTreasures = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public int Level
         {
             get => level;
@@ -66,31 +94,6 @@ namespace Munchkin.Player
             }
         }
 
-        public List<Treasure> Treasures
-        {
-            get => treasures;
-            set
-            {
-                if (treasures != value)
-                {
-                    treasures = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public List<Door> Doors
-        {
-            get => doors;
-            set
-            {
-                if (doors != value)
-                {
-                    doors = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         public Armor? Body
         {

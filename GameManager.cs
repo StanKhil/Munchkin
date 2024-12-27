@@ -49,33 +49,34 @@ namespace Munchkin
         {
             Deck = new Deck();
             User = new User();
-            //Table = new Table();
+            positions = new Dictionary<string?, Card?>();
 
-            //positions.Add("card1", null);
-            //positions.Add("card2", null);
-            //positions.Add("card3", null);
-            //positions.Add("card4", null);
-            //positions.Add("card5", null);
-            //positions.Add("card6", null);
-            //positions.Add("card7", null);
-            //positions.Add("card8", null);
-            //positions.Add("card9", null);
-            //positions.Add("card10", null);
-            //
-            //positions.Add("race1", null);
-            //positions.Add("race2", null);
-            //positions.Add("class1", null);
-            //positions.Add("class2", null);
-            //positions.Add("isHalfBlood", null);
-            //positions.Add("isSupermunchkin", null);
-            //
-            //positions.Add("hand1", null);
-            //positions.Add("hand2", null);
-            //positions.Add("footgear", null);
-            //positions.Add("headgear", null);
-            //positions.Add("armor", null);
-            //positions.Add("accessory", null);
-            //positions.Add("curse", null);
+            
+            positions.Add("card1", null);
+            positions.Add("card2", null);
+            positions.Add("card3", null);
+            positions.Add("card4", null);
+            positions.Add("card5", null);
+            positions.Add("card6", null);
+            positions.Add("card7", null);
+            positions.Add("card8", null);
+            positions.Add("card9", null);
+            positions.Add("card10", null);
+            
+            positions.Add("race1", null);
+            positions.Add("race2", null);
+            positions.Add("class1", null);
+            positions.Add("class2", null);
+            positions.Add("isHalfBlood", null);
+            positions.Add("isSupermunchkin", null);
+
+            positions.Add("hand1", null);
+            positions.Add("hand2", null);
+            positions.Add("footgear", null);
+            positions.Add("headgear", null);
+            positions.Add("armor", null);
+            positions.Add("accessory", null);
+            positions.Add("curse", null);
 
 
             Random random = new Random();
