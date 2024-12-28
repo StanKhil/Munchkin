@@ -9,8 +9,8 @@ namespace Munchkin.Cards.Doors
     internal class Curse : Door
     {
         //Specific specific
-        public Curse(string source, string name, Active action, Condition condition) 
-            : base(source, name, action, condition)
+        public Curse(string source, string name, Active action, Condition condition, Discard discard) 
+            : base(source, name, action, condition, discard)
         {
            
         }

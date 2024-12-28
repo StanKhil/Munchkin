@@ -11,11 +11,13 @@ namespace Munchkin.Cards
 {
     public delegate void Active(User? user);
     public delegate bool Condition(User? user);
+    public delegate void Discard(User? user);
     public class Card : INotifyPropertyChanged
     {
         protected bool? active = false;
         protected Active? action;
         protected Condition? condition;
+        protected Discard? discard;
         private string? name;
         public Image? image = new Image();
         public string? Cell { get; set; }
@@ -29,6 +31,11 @@ namespace Munchkin.Cards
         {
             get => condition;
             set => condition = value;
+        }
+        public Discard? Discard
+        {
+            get => discard;
+            set => discard = value;
         }
         public string? Name
         {

@@ -112,10 +112,10 @@
                 <Image Name="monster" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="2" Background="#87480c">
-                <Image Name="active1" MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}"  Width="150" Height="200"></Image>
+                <Image Source="{Binding GameManager.User.Weapon1}"  Name="active1" MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}"  Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="2" Grid.Row="2" Background="#87480c">
-                <Image Name="active2" MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}"  Grid.Column="2" Grid.Row="2" Width="150" Height="200"></Image>
+                <Image Source="{Binding GameManager.User.Weapon2}" Name="active2" MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}"  Grid.Column="2" Grid.Row="2" Width="150" Height="200"></Image>
             </Border>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="3" Grid.Row="2" Background="#87480c">
                 <Image Name="active3" MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}" Width="150" Height="200"></Image>

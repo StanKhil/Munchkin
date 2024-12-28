@@ -22,12 +22,14 @@ namespace Munchkin.Cards
         
         //Effect effect
         //Specific specific
-        public Treasure(string source, string name, Active? action, Condition condition, int price)
+        public Treasure(string source, string name, Active? action, Condition condition, Discard discard, int price)
         {
-            this.action = action;
             image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\" + source) as ImageSource;
             Price = price;
             Name = name;
+            this.action = action;
+            this.condition = condition;
+            this.discard = discard;
         }
     }
 }

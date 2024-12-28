@@ -50,6 +50,7 @@ namespace Munchkin.Player
 
         public bool IsSuperMunchkin { get; set; }
         public bool IsHalfBlood { get; set; }
+        public bool HasBig { get; set; }
 
         public Weapon? Weapon1
         {
