@@ -41,6 +41,8 @@ namespace Munchkin.Player
         private Armor? body;
         private Armor? head;
         private Armor? legs;
+        private Weapon? weapon1;
+        private Weapon? weapon2;
 
         private State state = State.Man;
         private Race race = Race.Human;
@@ -49,7 +51,30 @@ namespace Munchkin.Player
         public bool IsSuperMunchkin { get; set; }
         public bool IsHalfBlood { get; set; }
 
-        
+        public Weapon? Weapon1
+        {
+            get => weapon1;
+            set
+            {
+                if(weapon1 != value)
+                {
+                    weapon1 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public Weapon? Weapon2
+        {
+            get => weapon2;
+            set
+            {
+                if (weapon2 != value)
+                {
+                    weapon2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public List<Card> Hand
         {
             get => hand;

@@ -10,10 +10,12 @@ using Munchkin.Player;
 namespace Munchkin.Cards
 {
     public delegate void Active(User? user);
+    public delegate bool Condition(User? user);
     public class Card : INotifyPropertyChanged
     {
         protected bool? active = false;
         protected Active? action;
+        protected Condition? condition;
         private string? name;
         public Image? image = new Image();
         public string? Cell { get; set; }
@@ -22,6 +24,11 @@ namespace Munchkin.Cards
         {
             get { return action; }
             set { action = value; }
+        }
+        public Condition? Condition
+        {
+            get => condition;
+            set => condition = value;
         }
         public string? Name
         {

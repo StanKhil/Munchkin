@@ -10,7 +10,7 @@ namespace Munchkin.Cards.Doors
     {
         //Specific specific
 
-        public PlayerClass(string source, string name, Active action) : base(source, name, action)
+        public PlayerClass(string source, string name, Active action, Condition condition) : base(source, name, action, condition)
         {
 
         }

@@ -26,8 +26,8 @@ namespace Munchkin.Cards.Doors
             set { badStuff = value; }
         }
 
-        public Monster(string source, string name, Active action, Active badStuff, int level, int levels, int treasures, int power) 
-            : base(source, name, action)
+        public Monster(string source, string name, Active action, Active badStuff, Condition condition, int level, int levels, int treasures, int power) 
+            : base(source, name, action, condition)
         {
             this.level = level;
             this.levels = levels;

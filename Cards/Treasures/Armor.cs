@@ -11,8 +11,8 @@ namespace Munchkin.Cards.Treasures
     {
         Size size;
         int bonus;
-        public Armor(string source, string name, Active action, int price, Size size, int bonus)
-        : base(source, name, action, price)
+        public Armor(string source, string name, Active action, Condition condition, int price, Size size, int bonus)
+        : base(source, name, action, condition, price)
         {
             this.size = size;
             this.bonus = bonus;

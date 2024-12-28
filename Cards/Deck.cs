@@ -51,16 +51,27 @@ namespace Munchkin.Cards
                 {
                     if(user != null)
                         if(user.Level < 9) user.Level++;
-                }, 1000),
+                }, null, 1000),
                 new Armor("BootsOfButtKicking.png", "Boots Of Butt Kicking", delegate(User? user)
                 {
                     if(user != null)
                         user.Power += 1;
-                }, 400, Size.Small, 2),
+                }, delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.Legs == null) return true;
+                    return false;
+                },
+                400, Size.Small, 2),
                 new Weapon("BowWithRibbons.png", "Bow With Ribbons", delegate(User? user)
                 {
                     if(user != null)
-                        if(user.Race == Race.Elf) user.Power += 4;
+                        user.Power += 4;
+                }, delegate(User? user)
+                {
+                    if(user != null)
+                        if(user.Race == Race.Elf && user.Weapon1 == null && user.Weapon2 == null) return true;
+                    return false;
                 }, 800, Size.Small, 2, 4),
                 new Weapon("DaggerOfTreachery.png", "Dagger Of Treachery", delegate(User? user)
                 {
