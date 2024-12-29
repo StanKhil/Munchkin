@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Munchkin.Cards.Treasures
 {
     
-    internal class Weapon : Treasure
+    public class Weapon : Treasure
     {
         Size size;
         int hands;

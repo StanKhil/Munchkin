@@ -33,7 +33,7 @@ namespace Munchkin.Player
     {
         private int level = 1;
         private int money;
-        private int power = 0;
+        private int power = 1;
         /*private List<Treasure> treasures = new List<Treasure>();
         private List<Door> doors = new List<Door>();*/
         private List<Treasure> activeTreasures = new List<Treasure>();
@@ -44,6 +44,7 @@ namespace Munchkin.Player
         private Weapon? weapon1;
         private Weapon? weapon2;
 
+
         private State state = State.Man;
         private Race race = Race.Human;
         private Class gameClass = Class.None;
@@ -51,6 +52,8 @@ namespace Munchkin.Player
         public bool IsSuperMunchkin { get; set; }
         public bool IsHalfBlood { get; set; }
         public bool HasBig { get; set; }
+
+
 
         public Weapon? Weapon1
         {

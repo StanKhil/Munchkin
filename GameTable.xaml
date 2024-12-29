@@ -103,6 +103,14 @@
                         Text="{Binding User.Level}"
                         FontSize="24" Foreground="White" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Grid.Column="0" Grid.Row="4" 
+                        Text="Power: "
+                        FontSize="24" Foreground="White" />
+                    <TextBlock Name="Power" Grid.Column="0" Grid.Row="4" 
+                        Text="{Binding User.Power}"
+                        FontSize="24" Foreground="White" />
+                </StackPanel>
             </StackPanel>
 
 

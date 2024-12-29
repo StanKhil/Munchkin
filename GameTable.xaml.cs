@@ -1,4 +1,5 @@
 ﻿using Munchkin.Cards;
+using Munchkin.Cards.Doors;
 using Munchkin.Player;
 using System;
 using System.Collections.Generic;
@@ -108,57 +109,95 @@ namespace Munchkin
                 }
             }
             var GameManager = this.DataContext as GameManager;
-            
-            img.Source = null;
-            int index = Convert.ToInt32(path.Last()) - '0' -1;
-            //MessageBox.Show(index + "");
-            GameManager.User.Hand[index] = null;
+
+
             if (GameManager.positions[path] is Treasure)
             {
-                if (GameManager.User.ActiveTreasures.Count == 0)
+                if (!GameManager.positions[path].Condition(GameManager.User))
+                {
+                    MessageBox.Show("You can't use this card");
+                    return;
+                }
+
+                GameManager.positions[path].Action(GameManager.User);
+
+                int ind = -1;
+                for (int i = 0; i < GameManager.User.ActiveTreasures.Count; i++)
+                {
+                    if (GameManager.User.ActiveTreasures[i] == null && ind == -1)
+                    {
+                        ind = i;
+                    }
+                }
+                if (ind == -1) ind = GameManager.User.ActiveTreasures.Count;
+
+
+                if (ind < GameManager.User.ActiveTreasures.Count)
+                {
+                    GameManager.User.ActiveTreasures[ind] = GameManager.positions[path] as Treasure;
+                }
+                else
                 {
                     GameManager.User.ActiveTreasures.Add(GameManager.positions[path] as Treasure);
+                }
+
+
+                if (ind == 0)
+                {
                     active1.Source = GameManager.positions[path].image.Source;
                     GameManager.positions[active1.Name] = GameManager.positions[path];
                 }
-                else if(GameManager.User.ActiveTreasures.Count == 1)
+                else if (ind == 1)
                 {
-                    GameManager.User.ActiveTreasures.Add(GameManager.positions[path] as Treasure);
                     active2.Source = GameManager.positions[path].image.Source;
                     GameManager.positions[active2.Name] = GameManager.positions[path];
                 }
-                else if (GameManager.User.ActiveTreasures.Count == 2)
+                else if (ind == 2)
                 {
-                    GameManager.User.ActiveTreasures.Add(GameManager.positions[path] as Treasure);
                     active3.Source = GameManager.positions[path].image.Source;
                     GameManager.positions[active3.Name] = GameManager.positions[path];
                 }
-                else if (GameManager.User.ActiveTreasures.Count == 3)
+                else if (ind == 3)
                 {
-                    GameManager.User.ActiveTreasures.Add(GameManager.positions[path] as Treasure);
                     active4.Source = GameManager.positions[path].image.Source;
                     GameManager.positions[active4.Name] = GameManager.positions[path];
                 }
-                else if (GameManager.User.ActiveTreasures.Count == 4)
+                else if (ind == 4)
                 {
-                    GameManager.User.ActiveTreasures.Add(GameManager.positions[path] as Treasure);
                     active5.Source = GameManager.positions[path].image.Source;
                     GameManager.positions[active5.Name] = GameManager.positions[path];
                 }
-                else if (GameManager.User.ActiveTreasures.Count == 5)
+                else if (ind == 5)
                 {
-                    GameManager.User.ActiveTreasures.Add(GameManager.positions[path] as Treasure);
                     active6.Source = GameManager.positions[path].image.Source;
                     GameManager.positions[active6.Name] = GameManager.positions[path];
                 }
-                else if (GameManager.User.ActiveTreasures.Count == 6)
+                else if (ind == 6)
                 {
-                    GameManager.User.ActiveTreasures.Add(GameManager.positions[path] as Treasure);
                     active7.Source = GameManager.positions[path].image.Source;
                     GameManager.positions[active7.Name] = GameManager.positions[path];
                 }
             }
+
+            else if (GameManager.positions[path] is Monster)
+            {
+                /*if (!GameManager.positions[path].Condition(GameManager.User))
+                {
+                    MessageBox.Show("You can't use this card");
+                    return;
+                }
+                GameManager.positions[path].Action(GameManager.User);*/
+
+                GameManager.positions[monster.Name] = GameManager.positions[path];
+                monster.Source = GameManager.positions[path].image.Source;
+            }
+
+
+                img.Source = null;
+            int index = Convert.ToInt32(path.Last()) - '0' - 1;
             GameManager.positions[path] = null;
+            if (path[0] == 'c') GameManager.User.Hand[index] = null;
+            else if (path[0] == 'a') GameManager.User.ActiveTreasures[index] = null;
         }
         private void Selected(object sender, MouseButtonEventArgs e)
         {
