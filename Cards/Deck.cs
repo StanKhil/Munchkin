@@ -78,7 +78,7 @@ namespace Munchkin.Cards
                 }, delegate(User? user)
                 {
                     if(user != null)
-                        if((user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) && user.Weapon1 == null && user.Weapon2 == null) return true;
+                        if((user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) && user.Weapon1 == null && user.Weapon2 == null) return true; 
                     return false;
                 }, delegate(User? user)
                 {
@@ -284,7 +284,7 @@ namespace Munchkin.Cards
                 new Monster("ShriekingGeek.png", "Shrieking Geek", null, null, null, null, 6, 1, 2, 6),
                 new Monster("WannabeVampire.png", "Wannabe Vampire", null, null, null, null, 12, 1, 3, 12),
                 new Monster("WightBrothers.png", "Wight Brothers", null, null, null, null, 16, 2, 4, 16),
-                new PlayerClass("Cleric.png", "Cleric", delegate(User? user)
+                new PlayerClass("Cleric.png", "Cleric",Class.Cleric, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -303,7 +303,7 @@ namespace Munchkin.Cards
                         else if(user.SecondClass == Class.Cleric) user.SecondClass = Class.None;
                     }
                 }),
-                new PlayerClass("Thief.png", "Thief", delegate(User? user)
+                new PlayerClass("Thief.png", "Thief", Class.Thief, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -322,7 +322,7 @@ namespace Munchkin.Cards
                         else if(user.SecondClass == Class.Thief) user.SecondClass = Class.None;
                     }
                 }),
-                new PlayerClass("Warrior.png", "Warrior", delegate(User? user)
+                new PlayerClass("Warrior.png", "Warrior", Class.Warrior, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -341,7 +341,7 @@ namespace Munchkin.Cards
                         else if(user.SecondClass == Class.Warrior) user.SecondClass = Class.None;
                     }
                 }),
-                new PlayerClass("Wizard.png", "Wizard", delegate(User? user)
+                new PlayerClass("Wizard.png", "Wizard", Class.Wizard, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -360,7 +360,7 @@ namespace Munchkin.Cards
                         else if(user.SecondClass == Class.Wizard) user.SecondClass = Class.None;
                     }
                 }),
-                new PlayerRace("Dwarf.png", "Dwarf", delegate(User? user)
+                new PlayerRace("Dwarf.png", "Dwarf", Race.Dwarf, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -379,7 +379,7 @@ namespace Munchkin.Cards
                         else if(user.SecondRace == Race.Dwarf) user.SecondRace = Race.None;
                     }
                 }),
-                new PlayerRace("Elf.png", "Elf", delegate(User? user)
+                new PlayerRace("Elf.png", "Elf", Race.Elf, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -398,7 +398,7 @@ namespace Munchkin.Cards
                         else if(user.SecondRace == Race.Elf) user.SecondRace = Race.None;
                     }
                 }),
-                new PlayerRace("Hafling.png", "Hafling", delegate(User? user)
+                new PlayerRace("Hafling.png", "Hafling", Race.Hafling, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -417,7 +417,7 @@ namespace Munchkin.Cards
                         else if(user.SecondRace == Race.Hafling) user.SecondRace = Race.None;
                     }
                 }),
-                new PlayerClass("Supermunchkin.png", "Supermunchkin", delegate(User? user)
+                new PlayerClass("Supermunchkin.png", "Supermunchkin", Class.None, delegate(User? user)
                 {
                     if(user != null)
                         user.IsSuperMunchkin = true;
@@ -433,7 +433,7 @@ namespace Munchkin.Cards
                         user.IsSuperMunchkin = false;
                     }    
                 }),
-                new PlayerRace("HalfBreed.png", "Half Breed", delegate(User? user)
+                new PlayerRace("HalfBreed.png", "Half Breed", Race.None, delegate(User? user)
                 {
                     if(user != null)
                         user.IsHalfBlood = true;

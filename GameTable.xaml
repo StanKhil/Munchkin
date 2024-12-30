@@ -13,9 +13,9 @@
     
     <UserControl.Resources>
         <ContextMenu x:Key="CardContextMenu">
-            <MenuItem Header="Use" Click="Use" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-            <MenuItem Header="Discard"/>
-            <MenuItem Header="Sell"/>
+            <MenuItem Header="Use" Click="Use" />
+            <MenuItem Header="Discard" Click="Discard"/>
+            <MenuItem Header="Sell" Click="Sell"/>
         </ContextMenu>
     </UserControl.Resources>
     
@@ -109,6 +109,14 @@
                         FontSize="24" Foreground="White" />
                     <TextBlock Name="Power" Grid.Column="0" Grid.Row="4" 
                         Text="{Binding User.Power}"
+                        FontSize="24" Foreground="White" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Grid.Column="0" Grid.Row="4" 
+                        Text="Money: "
+                        FontSize="24" Foreground="White" />
+                    <TextBlock Name="Money" Grid.Column="0" Grid.Row="4" 
+                        Text="{Binding User.Money}"
                         FontSize="24" Foreground="White" />
                 </StackPanel>
             </StackPanel>

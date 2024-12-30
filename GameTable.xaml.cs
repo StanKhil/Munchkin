@@ -3,6 +3,7 @@ using Munchkin.Cards.Doors;
 using Munchkin.Player;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -219,28 +220,19 @@ namespace Munchkin
                     halfBlood.Source = gameManager.positions[path].image.Source;
                     gameManager.positions[halfBlood.Name] = gameManager.positions[path];
                 }
-                else if (gameManager.positions[path].Name == "SuperMunchkin")
-                {
-                    gameManager.User.IsSuperMunchkin = true;
-                    supermunchkin.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[supermunchkin.Name] = gameManager.positions[path];
-                }
                 else
                 {
                     if (gameManager.positions[race1.Name] == null)
                     {
                         gameManager.positions[race1.Name] = gameManager.positions[path];
                         race1.Source = gameManager.positions[path].image.Source;
+                        gameManager.User.FirstRace = (gameManager.positions[path] as PlayerRace).race;
                     }
                     else if (gameManager.positions[race2.Name] == null)
                     {
                         gameManager.positions[race2.Name] = gameManager.positions[path];
                         race2.Source = gameManager.positions[path].image.Source;
-                    }
-                    else
-                    {
-                        MessageBox.Show("You can't use this card");
-                        return;
+                        gameManager.User.SecondRace = (gameManager.positions[path] as PlayerRace).race;
                     }
                 }
 
@@ -260,26 +252,19 @@ namespace Munchkin
                     {
                         gameManager.positions[class1.Name] = gameManager.positions[path];
                         class1.Source = gameManager.positions[path].image.Source;
+                        gameManager.User.FirstClass = (gameManager.positions[path] as PlayerClass).pClass;
                     }
                     else if (gameManager.positions[class2.Name] == null)
                     {
                         gameManager.positions[class2.Name] = gameManager.positions[path];
                         class2.Source = gameManager.positions[path].image.Source;
-                    }
-                    else
-                    {
-                        MessageBox.Show("You can't use this card");
-                        return;
+                        gameManager.User.SecondClass = (gameManager.positions[path] as PlayerClass).pClass;
                     }
                 }
             }
 
 
-            img.Source = null;
-            int index = Convert.ToInt32(path.Last()) - '0' - 1;
-            gameManager.positions[path] = null;
-            if (path[0] == 'c') gameManager.User.Hand[index] = null;
-            else if (path[0] == 'a') gameManager.User.ActiveTreasures[index] = null;
+            Discard(sender, e);
         }
         private void Selected(object sender, MouseButtonEventArgs e)
         {
@@ -318,7 +303,7 @@ namespace Munchkin
             }
         }*/
 
-        private int ChoosePosition(int ind)
+        private void ChoosePosition(int ind)
         {
             if (ind == 1)
             {
@@ -370,8 +355,83 @@ namespace Munchkin
                 card10.Source = gameManager.User.Hand[ind - 1].image.Source;
                 gameManager.positions[card10.Name] = gameManager.User.Hand[ind - 1];
             }
-            
-            return ind;
+        }
+
+        public void Discard(object sender, RoutedEventArgs e)
+        {
+            Image img = null;
+            string path = "";
+            if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu)
+            {
+                var target = contextMenu.PlacementTarget;
+                if (target is Image image)
+                {
+                    path = image.Name;
+                    img = image;
+                }
+            }
+            img.Source = null;
+            int index = Convert.ToInt32(path.Last()) - '0' - 1;
+            gameManager.positions[path] = null;
+
+            if (path.Contains("card")) gameManager.User.Hand[index] = null;
+            else if (path.Contains("active")) gameManager.User.ActiveTreasures[index] = null;
+            else if(path == "class1")
+            { 
+                if(gameManager.User.SecondClass != Class.None)
+                {
+                    gameManager.User.FirstClass = gameManager.User.SecondClass;
+                    gameManager.User.SecondClass = Class.None;
+                    class1.Source = class2.Source;
+                    class2.Source = null;
+                    gameManager.positions["class1"] = gameManager.positions["class2"];
+                    gameManager.positions["class2"] = null;
+                }
+                else
+                    gameManager.User.FirstClass = Class.None; 
+            }
+            else if (path == "class2") gameManager.User.SecondClass = Class.None;
+            else if (path == "race1")
+            {
+                if (gameManager.User.SecondRace != Race.None)
+                {
+                    gameManager.User.FirstRace = gameManager.User.SecondRace;
+                    gameManager.User.SecondRace = Race.None;
+                    race1.Source = race2.Source;
+                    race2.Source = null;
+                    gameManager.positions["race1"] = gameManager.positions["race2"];
+                    gameManager.positions["race2"] = null;
+                }
+                else
+                    gameManager.User.FirstRace = Race.Human;
+            }
+            else if(path == "race2") gameManager.User.SecondRace = Race.None;
+            else if (path == "halfBlood") gameManager.User.IsHalfBlood = false;
+            else if (path == "supermunchkin") gameManager.User.IsSuperMunchkin = false;
+        }
+
+        public void Sell(object sender, RoutedEventArgs e)
+        {
+            string path = "";
+            if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu)
+            {
+                var target = contextMenu.PlacementTarget;
+                if (target is Image image)
+                {
+                    path = image.Name;
+                }
+            }
+            if(gameManager.positions[path] is Treasure && user.Level != 9)
+            {
+                user.Money += (gameManager.positions[path] as Treasure).Price;
+                user.Level += (user.Money) / 1000;
+                user.Money %= 1000;
+                Discard(sender, e);
+            }
+            else
+            {
+                MessageBox.Show("You can't sell this card");
+            }
         }
     }
 }
