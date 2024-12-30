@@ -417,7 +417,7 @@ namespace Munchkin.Cards
                         else if(user.SecondRace == Race.Hafling) user.SecondRace = Race.None;
                     }
                 }),
-                new Door("Supermunchkin.png", "Supermunchkin", delegate(User? user)
+                new PlayerClass("Supermunchkin.png", "Supermunchkin", delegate(User? user)
                 {
                     if(user != null)
                         user.IsSuperMunchkin = true;
@@ -433,7 +433,7 @@ namespace Munchkin.Cards
                         user.IsSuperMunchkin = false;
                     }    
                 }),
-                new Door("HalfBreed.png", "Half Breed", delegate(User? user)
+                new PlayerRace("HalfBreed.png", "Half Breed", delegate(User? user)
                 {
                     if(user != null)
                         user.IsHalfBlood = true;
@@ -582,10 +582,9 @@ namespace Munchkin.Cards
             {
                 if (user != null)
                 {
-                    user.FirstClass = Class.None;
-                    user.SecondClass = Class.None;
-                    user.FirstRace = Race.Human;
-                    user.SecondRace = Race.None;
+                    user.ClearClasses();
+                    user.ClearRaces();
+                    
                 }  
             };
             monster = Doors[10] as Monster;

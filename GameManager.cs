@@ -45,10 +45,10 @@ namespace Munchkin
             }
         }
 
-        public GameManager(User user)
+        public GameManager()
         {
             Deck = new Deck(this);
-            User = user;
+            User = new User();
             positions = new Dictionary<string?, Card?>();
 
             

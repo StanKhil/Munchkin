@@ -287,7 +287,24 @@ namespace Munchkin.Player
         {
             FirstRace = Race.Human;
             SecondRace= Race.None;
-            //race1
+            GameTable.race1.Source = null;
+            GameTable.race2.Source = null;
+            GameTable.gameManager.positions["race1"] = null;
+            GameTable.gameManager.positions["race2"] = null;
+            FirstRace = Race.Human;
+            SecondRace = Race.None;
+        }
+
+        public void ClearClasses()
+        {
+            FirstClass = Class.None;
+            SecondClass = Class.None;
+            GameTable.class1.Source = null;
+            GameTable.class2.Source = null;
+            GameTable.gameManager.positions["class1"] = null;
+            GameTable.gameManager.positions["class2"] = null;
+            FirstClass = Class.None;
+            SecondClass = Class.None;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
