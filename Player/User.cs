@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml;
 
 namespace Munchkin.Player
 {
@@ -18,7 +19,8 @@ namespace Munchkin.Player
         Human,
         Elf,
         Hafling,
-        Dwarf
+        Dwarf,
+        None
     }
     public enum Class
     {
@@ -31,6 +33,7 @@ namespace Munchkin.Player
 
     public class User : INotifyPropertyChanged
     {
+        public GameTable GameTable { get; set; }
         private int level = 1;
         private int money;
         private int power = 1;
@@ -46,13 +49,14 @@ namespace Munchkin.Player
 
 
         private State state = State.Man;
-        private Race race = Race.Human;
-        private Class gameClass = Class.None;
+        private Race firstRace = Race.Human;
+        private Class firstClass = Class.None;
+        private Race secondRace = Race.None;
+        private Class secondClass = Class.None;
 
-        public bool IsSuperMunchkin { get; set; }
-        public bool IsHalfBlood { get; set; }
+        private bool isSuperMunchkin;
+        private bool isHalfBlood;
         public bool HasBig { get; set; }
-
 
 
         public Weapon? Weapon1
@@ -195,26 +199,77 @@ namespace Munchkin.Player
                 }
             }
         }
-        public Class GameClass
+        public Class FirstClass
         {
-            get => gameClass;
+            get => firstClass;
             set
             {
-                if (gameClass != value)
+                if (firstClass != value)
                 {
-                    gameClass = value;
+                    firstClass = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public Race Race
+
+        public Class SecondClass
         {
-            get => race;
+            get => secondClass;
             set
             {
-                if (race != value)
+                if (secondClass != value)
                 {
-                    race = value;
+                    secondClass = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public Race FirstRace
+        {
+            get => firstRace;
+            set
+            {
+                if (firstRace != value)
+                {
+                    firstRace = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public Race SecondRace
+        {
+            get => secondRace;
+            set
+            {
+                if (secondRace != value)
+                {
+                    secondRace = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSuperMunchkin
+        {
+            get => isSuperMunchkin;
+            set
+            {
+                if (isSuperMunchkin != value)
+                {
+                    isSuperMunchkin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsHalfBlood
+        {
+            get => isHalfBlood;
+            set
+            {
+                if (isHalfBlood != value)
+                {
+                    isHalfBlood = value;
                     OnPropertyChanged();
                 }
             }
@@ -226,6 +281,14 @@ namespace Munchkin.Player
             return new Random().Next(1, 7);
         }
         public void Death() { }
+
+
+        public void ClearRaces()
+        {
+            FirstRace = Race.Human;
+            SecondRace= Race.None;
+            //race1
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

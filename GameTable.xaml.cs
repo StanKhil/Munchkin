@@ -24,10 +24,16 @@ namespace Munchkin
     /// </summary>
     public partial class GameTable : UserControl
     {
-        
+        private User user;
+        private GameManager gameManager;
         public GameTable()
         {
             InitializeComponent();
+
+            user = new User();
+            user.GameTable = this;
+            gameManager = this.DataContext as GameManager;
+            gameManager.User = user;
         }
         private void ToMainMenu(object sender, RoutedEventArgs e)
         {
@@ -193,7 +199,9 @@ namespace Munchkin
             }
 
 
-                img.Source = null;
+
+
+            img.Source = null;
             int index = Convert.ToInt32(path.Last()) - '0' - 1;
             GameManager.positions[path] = null;
             if (path[0] == 'c') GameManager.User.Hand[index] = null;

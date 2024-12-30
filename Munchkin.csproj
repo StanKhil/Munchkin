@@ -45,7 +45,6 @@
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 145231.png" />
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 145248.png" />
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 145309.png" />
-    <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 145325.png" />
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 145332.png" />
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 145343.png" />
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 145355.png" />
@@ -167,7 +166,7 @@
     <Resource Include="Resources\Cards\Doors\Screenshot 2024-12-15 145231.png" />
     <Resource Include="Resources\Cards\Doors\Screenshot 2024-12-15 145248.png" />
     <Resource Include="Resources\Cards\Doors\Screenshot 2024-12-15 145309.png" />
-    <Resource Include="Resources\Cards\Doors\Screenshot 2024-12-15 145325.png" />
+    <Resource Include="Resources\Cards\Doors\HalfBreed.png" />
     <Resource Include="Resources\Cards\Doors\Screenshot 2024-12-15 145332.png" />
     <Resource Include="Resources\Cards\Doors\Screenshot 2024-12-15 145343.png" />
     <Resource Include="Resources\Cards\Doors\Hafling.png" />

@@ -45,10 +45,10 @@ namespace Munchkin
             }
         }
 
-        public GameManager()
+        public GameManager(User user)
         {
             Deck = new Deck(this);
-            User = new User();
+            User = user;
             positions = new Dictionary<string?, Card?>();
 
             
@@ -92,6 +92,7 @@ namespace Munchkin
             // 1) Open doors
             // 2) Discard cards
             //----------------------------
+            
         }
         
 
