@@ -1,11 +1,14 @@
 ﻿using Munchkin.Cards;
 using Munchkin.Cards.Doors;
+using Munchkin.Cards.Treasures;
 using Munchkin.Player;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -133,70 +136,13 @@ namespace Munchkin
 
             if (gameManager.positions[path] is Treasure)
             {
-                if (!gameManager.positions[path].Condition(gameManager.User))
+                if (!gameManager.positions[path].Condition(user))
                 {
                     MessageBox.Show("You can't use this card");
                     return;
                 }
-
-                gameManager.positions[path].Action(gameManager.User);
-
-                int ind = -1;
-                for (int i = 0; i < gameManager.User.ActiveTreasures.Count; i++)
-                {
-                    if (gameManager.User.ActiveTreasures[i] == null && ind == -1)
-                    {
-                        ind = i;
-                    }
-                }
-                if (ind == -1) ind = gameManager.User.ActiveTreasures.Count;
-
-
-                if (ind < gameManager.User.ActiveTreasures.Count)
-                {
-                    gameManager.User.ActiveTreasures[ind] = gameManager.positions[path] as Treasure;
-                }
-                else
-                {
-                    gameManager.User.ActiveTreasures.Add(gameManager.positions[path] as Treasure);
-                }
-
-
-                if (ind == 0)
-                {
-                    active1.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[active1.Name] = gameManager.positions[path];
-                }
-                else if (ind == 1)
-                {
-                    active2.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[active2.Name] = gameManager.positions[path];
-                }
-                else if (ind == 2)
-                {
-                    active3.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[active3.Name] = gameManager.positions[path];
-                }
-                else if (ind == 3)
-                {
-                    active4.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[active4.Name] = gameManager.positions[path];
-                }
-                else if (ind == 4)
-                {
-                    active5.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[active5.Name] = gameManager.positions[path];
-                }
-                else if (ind == 5)
-                {
-                    active6.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[active6.Name] = gameManager.positions[path];
-                }
-                else if (ind == 6)
-                {
-                    active7.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[active7.Name] = gameManager.positions[path];
-                }
+                gameManager.positions[path].Action(user);
+                ActivateTreasure(path);
             }
 
             else if (gameManager.positions[path] is Monster)
@@ -263,8 +209,8 @@ namespace Munchkin
                 }
             }
 
-
-            Discard(sender, e);
+            img.Source = null;
+            ClearCard(path);
         }
         private void Selected(object sender, MouseButtonEventArgs e)
         {
@@ -371,43 +317,28 @@ namespace Munchkin
                 }
             }
             img.Source = null;
-            int index = Convert.ToInt32(path.Last()) - '0' - 1;
-            gameManager.positions[path] = null;
 
-            if (path.Contains("card")) gameManager.User.Hand[index] = null;
-            else if (path.Contains("active")) gameManager.User.ActiveTreasures[index] = null;
-            else if(path == "class1")
-            { 
-                if(gameManager.User.SecondClass != Class.None)
-                {
-                    gameManager.User.FirstClass = gameManager.User.SecondClass;
-                    gameManager.User.SecondClass = Class.None;
-                    class1.Source = class2.Source;
-                    class2.Source = null;
-                    gameManager.positions["class1"] = gameManager.positions["class2"];
-                    gameManager.positions["class2"] = null;
-                }
-                else
-                    gameManager.User.FirstClass = Class.None; 
-            }
-            else if (path == "class2") gameManager.User.SecondClass = Class.None;
-            else if (path == "race1")
+            if (gameManager.positions[path] is Footgear) user.Legs = null;
+            else if (gameManager.positions[path] is Headgear) user.Head = null;
+
+            else if (gameManager.positions[path] is Armor) user.Body = null;
+
+            else if (gameManager.positions[path] is Weapon)
             {
-                if (gameManager.User.SecondRace != Race.None)
+                if ((gameManager.positions[path] as Weapon).hands == 1)
                 {
-                    gameManager.User.FirstRace = gameManager.User.SecondRace;
-                    gameManager.User.SecondRace = Race.None;
-                    race1.Source = race2.Source;
-                    race2.Source = null;
-                    gameManager.positions["race1"] = gameManager.positions["race2"];
-                    gameManager.positions["race2"] = null;
+                    if (user.Weapon1 != null) user.Weapon1 = null;
+                    else user.Weapon2 = null; 
                 }
                 else
-                    gameManager.User.FirstRace = Race.Human;
+                {
+                    user.Weapon1 = null;
+                    user.Weapon2 = null;
+                }
             }
-            else if(path == "race2") gameManager.User.SecondRace = Race.None;
-            else if (path == "halfBlood") gameManager.User.IsHalfBlood = false;
-            else if (path == "supermunchkin") gameManager.User.IsSuperMunchkin = false;
+
+            ClearCard(path);
+            
         }
 
         public void Sell(object sender, RoutedEventArgs e)
@@ -432,6 +363,133 @@ namespace Munchkin
             {
                 MessageBox.Show("You can't sell this card");
             }
+        }
+
+        public void ActivateTreasure(string path)
+        {
+            int ind = -1;
+            for (int i = 0; i < gameManager.User.ActiveTreasures.Count; i++)
+            {
+                if (gameManager.User.ActiveTreasures[i] == null && ind == -1)
+                {
+                    ind = i;
+                }
+            }
+            if (ind == -1) ind = gameManager.User.ActiveTreasures.Count;
+            if (ind < gameManager.User.ActiveTreasures.Count)
+            {
+                gameManager.User.ActiveTreasures[ind] = gameManager.positions[path] as Treasure;
+            }
+            else
+            {
+                gameManager.User.ActiveTreasures.Add(gameManager.positions[path] as Treasure);
+            }
+
+            if (ind == 0)
+            {
+                active1.Source = gameManager.positions[path].image.Source;
+                gameManager.positions[active1.Name] = gameManager.positions[path];
+            }
+            else if (ind == 1)
+            {
+                active2.Source = gameManager.positions[path].image.Source;
+                gameManager.positions[active2.Name] = gameManager.positions[path];
+            }
+            else if (ind == 2)
+            {
+                active3.Source = gameManager.positions[path].image.Source;
+                gameManager.positions[active3.Name] = gameManager.positions[path];
+            }
+            else if (ind == 3)
+            {
+                active4.Source = gameManager.positions[path].image.Source;
+                gameManager.positions[active4.Name] = gameManager.positions[path];
+            }
+            else if (ind == 4)
+            {
+                active5.Source = gameManager.positions[path].image.Source;
+                gameManager.positions[active5.Name] = gameManager.positions[path];
+            }
+            else if (ind == 5)
+            {
+                active6.Source = gameManager.positions[path].image.Source;
+                gameManager.positions[active6.Name] = gameManager.positions[path];
+            }
+            else if (ind == 6)
+            {
+                active7.Source = gameManager.positions[path].image.Source;
+                gameManager.positions[active7.Name] = gameManager.positions[path];
+            }
+
+
+            if (gameManager.positions[path] is Footgear)
+                user.Legs = gameManager.positions[path] as Footgear;
+            else if (gameManager.positions[path] is Headgear)
+                user.Head = gameManager.positions[path] as Headgear;
+            else if (gameManager.positions[path] is Armor)
+                user.Body = gameManager.positions[path] as Armor;
+            
+            else if (gameManager.positions[path] is Weapon)
+            {
+                
+                if ((gameManager.positions[path] as Weapon).hands == 1)
+                {
+                    if (user.Weapon1 != null)
+                        user.Weapon2 = gameManager.positions[path] as Weapon;
+                    else
+                        user.Weapon1 = gameManager.positions[path] as Weapon;
+                }
+                else if ((gameManager.positions[path] as Weapon).hands == 2)
+                {
+                    user.Weapon1 = gameManager.positions[path] as Weapon;
+                    user.Weapon2 = gameManager.positions[path] as Weapon;
+
+                }
+                
+            }
+        }
+
+        public void ClearCard(string path)
+        {
+
+            int index = Convert.ToInt32(path.Last()) - '0' - 1;
+            gameManager.positions[path] = null;
+            if (index == -1) index = 9;
+
+            if (path.Contains("card"))gameManager.User.Hand[index] = null; 
+            else if (path.Contains("active")) gameManager.User.ActiveTreasures[index] = null;
+            else if (path == "class1")
+            {
+                if (gameManager.User.SecondClass != Class.None)
+                {
+                    gameManager.User.FirstClass = gameManager.User.SecondClass;
+                    gameManager.User.SecondClass = Class.None;
+                    class1.Source = class2.Source;
+                    class2.Source = null;
+                    gameManager.positions["class1"] = gameManager.positions["class2"];
+                    gameManager.positions["class2"] = null;
+                }
+                else
+                    gameManager.User.FirstClass = Class.None;
+            }
+            else if (path == "class2") gameManager.User.SecondClass = Class.None;
+            else if (path == "race1")
+            {
+                if (gameManager.User.SecondRace != Race.None)
+                {
+                    gameManager.User.FirstRace = gameManager.User.SecondRace;
+                    gameManager.User.SecondRace = Race.None;
+                    race1.Source = race2.Source;
+                    race2.Source = null;
+                    gameManager.positions["race1"] = gameManager.positions["race2"];
+                    gameManager.positions["race2"] = null;
+                }
+                else
+                    gameManager.User.FirstRace = Race.Human;
+            }
+            else if (path == "race2") gameManager.User.SecondRace = Race.None;
+            else if (path == "halfBlood") gameManager.User.IsHalfBlood = false;
+            else if (path == "supermunchkin") gameManager.User.IsSuperMunchkin = false;
         }
     }
 }

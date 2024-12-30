@@ -10,7 +10,7 @@ namespace Munchkin.Cards.Treasures
     public class Weapon : Treasure
     {
         Size size;
-        int hands;
+        public int hands;
         int bonus;
 
         public Weapon(string source, string name, Active action, Condition condition, Discard discard, int price, Size size, int hands, int bonus)
