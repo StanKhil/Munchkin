@@ -11,7 +11,7 @@ namespace Munchkin.Cards.Doors
     {
         //Specific specific
         public Race race;
-        public PlayerRace(string source, string name, Race race, Active action, Condition condition, Discard discard) 
+        public PlayerRace(string source, string name, Race race, Active? action, Condition? condition, Discard? discard) 
             : base(source, name, action, condition, discard)
         {
             this.race = race;

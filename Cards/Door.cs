@@ -12,7 +12,7 @@ namespace Munchkin.Cards
 {
     public class Door : Card
     {
-        public Door(string source, string name, Active action, Condition condition, Discard discard)
+        public Door(string source, string name, Active? action, Condition? condition, Discard? discard)
         {
             Name = name;
             image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Doors\\" + source) as ImageSource;

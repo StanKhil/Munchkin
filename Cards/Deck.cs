@@ -7,6 +7,10 @@ using System.Runtime.CompilerServices;
 using Munchkin.Player;
 using System.Windows.Media.Animation;
 using System.Windows;
+using System.Windows.Media;
+using System.IO;
+
+// Желательно не смотреть
 
 namespace Munchkin.Cards
 {
@@ -45,230 +49,480 @@ namespace Munchkin.Cards
         public Deck(GameManager gameManager)
         {
             this.gameManager = gameManager;
+
+            
             Treasures = new ObservableCollection<Treasure>
             {
-                new Treasure("1000GoldPieces.png", "1000 Gold pieces", delegate(User? user) 
-                {
-                    if(user != null)
-                        user.Level++;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.Level < 9) return true;
-                    return false;
-                }, null, 1000),
-                new Armor("BootsOfButtKicking.png", "Boots Of Butt Kicking", delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power += 1;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.Legs == null) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 1;
-                }, 400, Size.Small, 2),
-                new Weapon("BowWithRibbons.png", "Bow With Ribbons", delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power += 4;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if((user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) && user.Weapon1 == null && user.Weapon2 == null) return true; 
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 4;
-                }, 800, Size.Small, 2, 4),
-                new Weapon("DaggerOfTreachery.png", "Dagger Of Treachery", delegate(User? user)
-                {
-                    if(user != null)
-                        if((user.FirstClass == Class.Thief || user.SecondClass == Class.Thief)) user.Power += 3;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if((user.FirstClass == Class.Thief || user.SecondClass == Class.Thief) && (user.Weapon1 != null || user.Weapon2 != null)) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 3;
-                }, 400, Size.Small, 1, 3),
-                new Weapon("ElevenFootPole.png", "Eleven-Foot Pole", delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        user.Power += 1;
-                    }
-                        
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.Weapon1 == null && user.Weapon2 == null) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 1;
-                }, 200, Size.Small, 2, 1),
-                new Armor("FlamingArmor.png", "Flaming Armor", delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power += 2;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.Body == null) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        user.Power -= 2;
-                        user.Body = null;
-                    }
-                },400, Size.Small, 2),
-                new Spell("FriendshipPotion.png", "Friendship Potion", delegate(User? user)
-                {
-                    // ------
-                }, null, null, 200),
-                new Armor("LeatherArmor.png", "Leather Armor", delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power += 1;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.Body == null) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        user.Power -= 1;
-                        user.Body = null;
-                    }
-                }, 200, Size.Small, 1),
-                new Spell("LoadedDie.png", "Loaded Die", delegate(User? user)
-                {
-                    // ------
-                },null,null, 300),
-                new Weapon("MaceOfSharpness.png", "Mace Of Sharpness", delegate(User? user)
-                {
-                    if(user != null)
-                        if((user.FirstClass == Class.Cleric || user.SecondClass == Class.Cleric)) user.Power += 4;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if((user.FirstClass == Class.Cleric || user.SecondClass == Class.Cleric) && (user.Weapon1 == null || user.Weapon2 == null)) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 4;
-                }, 600, Size.Small, 1, 4),
-                new Spell("MagicLamp.png", "Magic Lamp", delegate(User? user)
-                {
-                    // ------
-                }, null, null, 500),
-                new Weapon("RapierOfUnfairness.png", "Rapier Of Unfairness", delegate(User? user)
-                {
-                    if(user != null)
-                        if((user.FirstRace == Race.Elf || user.SecondRace == Race.Elf)) user.Power += 3;
-                }, delegate(User? user)
-                { 
-                    if(user != null)
-                        if((user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) && (user.Weapon1 == null || user.Weapon2 == null)) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 3;
-                }, 600, Size.Small, 1, 3),
-                new Weapon("RatOnStick.png", "Rat On Stick", delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power += 1;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.Weapon1 == null || user.Weapon2 == null) return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 1;
-                }, 0, Size.Small, 1, 1),
-                new Gear("ReallyImpressiveTitle.png", "Really Impressive Title", delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power += 3;
-                },delegate(User? user)
-                {
-                    return true;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                        user.Power -= 3;
-                }, 0),
-                new Weapon("ShieldOfUbiquity.png", "Shield Of Ubiquity", delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        user.Power += 4;
-                        user.HasBig = true;
-                    }
-                        
-                },delegate(User? user)
-                {
-                    if(user != null)
-                        if((user.FirstClass == Class.Warrior || user.SecondClass == Class.Warrior) && (user.Weapon1 == null || user.Weapon2 == null) && user.HasBig == false)
-                            return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        user.Power += 4;
-                        user.HasBig = false;
-                    }
-                }, 600, Size.Big, 1, 4),
-                //new Armor("ShortWideArmor.png", "Short Wide Armor", delegate(User? user)
-                //{
-                //    if(user != null)
-                //        if(user.Race == Race.Dwarf) user.Power += 3;
-                //}, 400, Size.Small, 3),
-                //new Gear("SingingAndDancingSword.png", "Singing And Dancing Sword", delegate(User? user)
-                //{
-                //    if(user != null)
-                //        if(user.GameClass != Class.Thief) user.Power += 2;
-                //}, 400),
-                //new Armor("SmilyArmor.png", "Smily Armor", delegate(User? user)
-                //{
-                //    if(user != null)
-                //        user.Power += 1;
-                //}, 200, Size.Small, 1),
-                //new Gear("SpikyKnees.png", "Spiky Knees", delegate(User? user)
-                //{
-                //    if(user != null)
-                //        user.Power += 1;
-                //}, 200),
-                //new Weapon("StaffOfNapalm.png", "Staff Of Napalm", delegate(User? user)
-                //{
-                //    if(user != null)
-                //        if(user.GameClass == Class.Wizard) user.Power += 5;
-                //}, 800, Size.Small, 1, 5),
-                //new Weapon("SwissArmyPolearm.png", "Swiss Army Polearm", delegate(User? user)
-                //{
-                //    if(user != null)
-                //        if(user.Race == Race.Human) user.Power += 4;
-                //}, 600, Size.Big, 2, 4)
+                new Treasure("1000GoldPieces.png", "1000 Gold pieces", null, null, null, 1000),
+                new Footgear("BootsOfButtKicking.png", "Boots Of Butt Kicking", null, null, null, 400, Size.Small, 2),
+                new Weapon("BowWithRibbons.png", "Bow With Ribbons", null, null, null, 800, Size.Small, 2, 4),
+                new Weapon("DaggerOfTreachery.png", "Dagger Of Treachery", null, null, null, 400, Size.Small, 1, 3),
+                new Weapon("ElevenFootPole.png", "Eleven-Foot Pole", null, null, null, 200, Size.Small, 2, 1),
+                new Armor("FlamingArmor.png", "Flaming Armor", null, null, null, 400, Size.Small, 2),
+                new Spell("FriendshipPotion.png", "Friendship Potion", null, null, null, 200), // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                new Armor("LeatherArmor.png", "Leather Armor", null, null, null, 200, Size.Small, 1),
+                new Spell("LoadedDie.png", "Loaded Die", null ,null,null, 300), // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                new Weapon("MaceOfSharpness.png", "Mace Of Sharpness", null,  null, null, 600, Size.Small, 1, 4),
+                new Spell("MagicLamp.png", "Magic Lamp", null, null, null, 500),  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                new Weapon("RapierOfUnfairness.png", "Rapier Of Unfairness", null, null, null, 600, Size.Small, 1, 3),
+                new Weapon("RatOnStick.png", "Rat On a Stick", null, null, null, 0, Size.Small, 1, 1),
+                new Gear("ReallyImpressiveTitle.png", "Really Impressive Title", null, null, null, 0),
+                new Weapon("ShieldOfUbiquity.png", "Shield Of Ubiquity", null, null, null, 600, Size.Big, 1, 4),
+                new Armor("ShortWideArmor.png", "Short Wide Armor", null, null, null, 400, Size.Small, 3),
+                new Gear("SingingAndDancingSword.png", "Singing And Dancing Sword", null, null, null, 400),
+                new Armor("SmilyArmor.png", "Smily Armor", null, null, null, 200, Size.Small, 1),
+                new Gear("SpikyKnees.png", "Spiky Knees", null, null, null, 200),
+                new Weapon("StaffOfNapalm.png", "Staff Of Napalm", null, null, null, 800, Size.Small, 1, 5),
+                new Weapon("SwissArmyPolearm.png", "Swiss Army Polearm", null, null, null, 600, Size.Big, 2, 4)
             };
+
+            //----------------------------------------------------------------------------------
+
+            var treasure0 = Treasures[0];
+            treasure0.Action = delegate (User? user)
+            {
+                if (user != null)
+                    user.Level++;
+            };
+            treasure0.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Level < 9) return true;
+                return false;
+            };
+
+            Footgear treasure1 = Treasures[1] as Footgear; //Boots of butt-kicking
+            treasure1.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 2;
+                    user.Legs = treasure1;
+                }
+            };  
+            treasure1.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Legs == null) return true;
+                return false;
+            };
+            treasure1.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 1;
+                    user.Legs = null;
+                }
+            };
+
+            Weapon treasure2 = Treasures[2] as Weapon; //Bow with ribbons
+            treasure2.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 4;
+                    user.Weapon1 = treasure2;
+                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Assets\\UsedSlot") as ImageSource;
+                }
+            };
+            treasure2.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if ((user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) && user.Weapon1 == null && user.Weapon2 == null) return true;
+                return false;
+            };
+            treasure2.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 4;
+                    user.Weapon1 = null;
+                    user.Weapon2 = null;
+                }
+            };
+
+            Weapon treasure3 = Treasures[3] as Weapon; //Dagger Of Treachery
+            treasure3.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 3;
+                    if(user.Weapon1 != null && user.Weapon2 == null) user.Weapon2 = treasure3;
+                    else user.Weapon1 = treasure3;
+                }
+            }; 
+            treasure3.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if ((user.FirstClass == Class.Thief || user.SecondClass == Class.Thief) && (user.Weapon1 != null || user.Weapon2 != null)) return true;
+                return false;
+            }; ;
+            treasure3.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 3;
+                    if (user.Weapon1 == treasure3) user.Weapon1 = null;
+                    else user.Weapon2 = null;
+                }
+            };
+
+            Weapon treasure4 = Treasures[4] as Weapon; //Eleven-Foot Pole
+            treasure4.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 1;
+                    user.Weapon1 = treasure2;
+                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Assets\\UsedSlot") as ImageSource;
+                }
+            };
+            treasure4.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Weapon1 == null && user.Weapon2 == null) return true;
+                return false;
+            };
+            treasure4.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 1;
+                    user.Weapon1 = null;
+                    user.Weapon2 = null;
+                }
+            };
+
+            Armor treasure5 = Treasures[5] as Armor; //Flaming Armor
+            treasure5.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 2;
+                    user.Body = treasure5;
+                }
+            };
+            treasure5.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Body == null) return true;
+                return false;
+            };
+            treasure5.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 2;
+                    user.Body = null;
+                }
+            };
+
+            Armor treasure7 = Treasures[7] as Armor; //Leather Armor
+            treasure7.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 1;
+                    user.Body = treasure7;
+                }
+            };
+            treasure7.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Body == null) return true;
+                return false;
+            };
+            treasure7.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 1;
+                    user.Body = null;
+                }
+            };
+
+            Weapon treasure9 = Treasures[9] as Weapon; // Mace of sharpness
+            treasure9.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 4;
+                    if (user.Weapon1 != null && user.Weapon2 == null) user.Weapon2 = treasure9;
+                    else user.Weapon1 = treasure9;
+                }
+            };
+            treasure9.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if ((user.FirstClass == Class.Cleric || user.SecondClass == Class.Cleric) && (user.Weapon1 == null || user.Weapon2 == null)) return true;
+                return false;
+            };
+            treasure9.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 4;
+                    if (user.Weapon1 == treasure9) user.Weapon1 = null;
+                    else user.Weapon2 = null;
+                } 
+            };
+
+            Weapon treasure11 = Treasures[11] as Weapon; //Rapier of sharpness
+            treasure11.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 3;
+                    if (user.Weapon1 != null && user.Weapon2 == null) user.Weapon2 = treasure11;
+                    else user.Weapon1 = treasure11;
+                }
+            };
+            treasure11.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if ((user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) && (user.Weapon1 == null || user.Weapon2 == null)) return true;
+                return false;
+            };
+            treasure11.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 3;
+                    if (user.Weapon1 == treasure11) user.Weapon1 = null;
+                    else user.Weapon2 = null;
+                }
+            };
+
+            Weapon treasure12 = Treasures[12] as Weapon; //Rat On a Stick
+            treasure12.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 1;
+                    if (user.Weapon1 != null && user.Weapon2 == null) user.Weapon2 = treasure12;
+                    else user.Weapon1 = treasure12;
+                }
+            };
+            treasure12.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Weapon1 == null || user.Weapon2 == null) return true;
+                return false;
+            };
+            treasure12.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 1;
+                    if (user.Weapon1 == treasure12) user.Weapon1 = null;
+                    else user.Weapon2 = null;
+                }
+            };
+
+            Gear treasure13 = Treasures[13] as Gear; //Really Impressive Title
+            treasure13.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 3;
+                    user.Accessory = treasure13;
+                }
+            };
+            treasure13.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Accessory == null) return true;
+                return false;
+            };
+            treasure13.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 3;
+                    user.Accessory = null;
+                }
+            };
+
+            Weapon treasure14 = Treasures[14] as Weapon; //Shield Of Ubiquity
+            treasure14.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 4;
+                    user.HasBig = true;
+                    if(user.Weapon1 != null && user.Weapon2 == null) user.Weapon2 = treasure14;
+                    else user.Weapon1 = treasure14;
+                }
+            };
+            treasure14.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if ((user.FirstClass == Class.Warrior || user.SecondClass == Class.Warrior) && (user.Weapon1 == null || user.Weapon2 == null) && user.HasBig == false)
+                        return true;
+                return false;
+            };
+            treasure14.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 4;
+                    user.HasBig = false;
+                    if (user.Weapon1 == treasure14) user.Weapon1 = null;
+                    else user.Weapon2 = null;
+                }
+            };
+
+            Armor treasure15 = Treasures[15] as Armor; //Short Wide Armor
+            treasure15.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 3;
+                    user.Body = treasure15;
+                }
+                   
+            };
+            treasure15.Condition = delegate(User? user)
+            {
+                if (user != null)
+                    if (user.FirstRace == Race.Dwarf || user.SecondRace == Race.Dwarf && user.Body == null) return true;
+                return false;
+            };
+            treasure15.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 3;
+                    user.Body = null;
+                }
+            };
+
+            Gear treasure16 = Treasures[16] as Gear; //Singing And Dancing Sword
+            treasure16.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 2;
+                    user.Accessory = treasure16;
+                }
+            };
+            treasure16.Condition = delegate(User? user)
+            {
+                if (user != null)
+                    if (user.FirstClass != Class.Thief && user.SecondClass != Class.Thief) return true;
+                return false;
+            };
+            treasure16.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 2;
+                    user.Accessory = null;
+                }
+            };
+
+            Armor treasure17 = Treasures[17] as Armor; //Smily Armor
+            treasure17.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 1;
+                    user.Body = treasure17;
+                }
+            };
+            treasure17.Condition = delegate(User? user)
+            {
+                if (user != null)
+                    if(user.Body == null) return true;
+                return false;
+            };
+            treasure17.Discard = delegate(User? user) 
+            {
+                if (user != null)
+                {
+                    user.Power -= 1;
+                    user.Body = null;
+                }
+            };
+
+            Gear treasure18 = Treasures[18] as Gear; //Spiky Knees
+            treasure18.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 1;
+                    user.Accessory = treasure18;
+                }
+            };
+            treasure18.Condition = delegate(User? user)
+            {
+                if (user != null) 
+                    if(user.Accessory == null) return true;
+                return false;
+            };
+            treasure18.Discard = delegate(User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 1;
+                    user.Accessory = null;
+                }
+            };
+
+            Weapon treasure19 = Treasures[19] as Weapon; //Staff Of Napalm
+            treasure19.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 5;
+                    if(user.Weapon1 != null) user.Weapon2 = treasure19;
+                    else user.Weapon1 = treasure19;
+                }
+            };
+            treasure19.Condition = delegate(User? user)
+            {
+                if (user != null)
+                    if ((user.Weapon1 == null || user.Weapon2 == null) && (user.FirstClass == Class.Wizard || user.SecondClass == Class.Wizard)) return true;
+                return false;
+            };
+            treasure19.Discard = delegate(User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 5;
+                    if (user.Weapon1 == treasure19) user.Weapon1 = null;
+                    else user.Weapon2 = null;
+                }
+            };
+
+            Weapon treasure20 = Treasures[20] as Weapon; //Swiss Army Polearm
+            treasure20.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power += 4;
+                    user.Weapon1 = treasure20;
+                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Assets\\UsedSlot") as ImageSource;
+                }
+                
+            };
+            treasure20.Condition = delegate(User? user)
+            {
+                if (user != null)
+                    if ((user.FirstRace == Race.Human || user.SecondRace == Race.Human) && user.HasBig == false && (user.Weapon1 == null && user.Weapon2 == null)) return true;
+                return false;
+            };
+            treasure20.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.Power -= 4;
+                    user.Weapon1 = null;
+                    user.Weapon2 = null;
+                }
+            };
+
+            //----------------------------------------------------------------------------------
 
             Doors = new ObservableCollection<Door>
             {
@@ -584,7 +838,6 @@ namespace Munchkin.Cards
                 {
                     user.ClearClasses();
                     user.ClearRaces();
-                    
                 }  
             };
             monster = Doors[10] as Monster;

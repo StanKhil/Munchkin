@@ -22,6 +22,11 @@ namespace Munchkin.Cards
         public Image? image = new Image();
         public string? Cell { get; set; }
 
+        public Image? Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
         public Active? Action 
         {
             get { return action; }

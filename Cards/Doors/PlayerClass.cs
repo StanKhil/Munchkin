@@ -11,7 +11,7 @@ namespace Munchkin.Cards.Doors
     {
         //Specific specific
         public Class pClass;
-        public PlayerClass(string source, string name, Class pClass, Active action, Condition condition, Discard discard) : base(source, name, action, condition, discard)
+        public PlayerClass(string source, string name, Class pClass, Active? action, Condition? condition, Discard? discard) : base(source, name, action, condition, discard)
         {
             this.pClass = pClass;
         }

@@ -8,7 +8,7 @@ namespace Munchkin.Cards.Treasures
 {
     public class Footgear : Armor
     {
-        public Footgear(string source, string name, Active action, Condition condition, Discard discard, int price, Size size, int bonus)
+        public Footgear(string source, string name, Active? action, Condition? condition, Discard? discard, int price, Size size, int bonus)
         : base(source, name, action, condition, discard, price, size, bonus)
         {
         }

@@ -33,7 +33,7 @@ namespace Munchkin.Player
 
     public class User : INotifyPropertyChanged
     {
-        public GameTable GameTable { get; set; }
+        public GameTable? GameTable { get; set; }
         private int level = 1;
         private int money;
         private int power = 1;
@@ -46,6 +46,7 @@ namespace Munchkin.Player
         private Armor? legs;
         private Weapon? weapon1;
         private Weapon? weapon2;
+        private Gear? accessory;
 
 
         private State state = State.Man;
@@ -59,6 +60,11 @@ namespace Munchkin.Player
         public bool HasBig { get; set; }
 
 
+        public Gear? Accessory
+        {
+            get => accessory;
+            set => accessory = value;
+        }
         public Weapon? Weapon1
         {
             get => weapon1;
