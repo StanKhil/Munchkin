@@ -42,8 +42,8 @@ namespace Munchkin.Player
         private List<Treasure> activeTreasures = new List<Treasure>();
         List<Card> hand = new List<Card>();
         private Armor? body;
-        private Armor? head;
-        private Armor? legs;
+        private Headgear? head;
+        private Footgear? legs;
         private Weapon? weapon1;
         private Weapon? weapon2;
         private Gear? accessory;
@@ -63,7 +63,14 @@ namespace Munchkin.Player
         public Gear? Accessory
         {
             get => accessory;
-            set => accessory = value;
+            set
+            {
+                if(accessory != value)
+                {
+                    accessory = value;
+                    OnPropertyChanged(nameof(Accessory));
+                }
+            }
         }
         public Weapon? Weapon1
         {
@@ -73,7 +80,7 @@ namespace Munchkin.Player
                 if(weapon1 != value)
                 {
                     weapon1 = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Weapon1));
                 }
             }
         }
@@ -85,7 +92,7 @@ namespace Munchkin.Player
                 if (weapon2 != value)
                 {
                     weapon2 = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Weapon2));
                 }
             }
         }
@@ -162,12 +169,12 @@ namespace Munchkin.Player
                 if (body != value)
                 {
                     body = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Body));
                 }
             }
         }
 
-        public Armor? Head
+        public Headgear? Head
         {
             get => head;
             set
@@ -175,12 +182,12 @@ namespace Munchkin.Player
                 if (head != value)
                 {
                     head = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Head));
                 }
             }
         }
 
-        public Armor? Legs
+        public Footgear? Legs
         {
             get => legs;
             set
@@ -188,7 +195,7 @@ namespace Munchkin.Player
                 if (legs != value)
                 {
                     legs = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Legs));
                 }
             }
         }

@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows;
 using System.Windows.Media;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 // Желательно не смотреть
 
@@ -122,7 +123,9 @@ namespace Munchkin.Cards
                 {
                     user.Power += 4;
                     user.Weapon1 = treasure2;
-                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Assets\\UsedSlot") as ImageSource;
+                    user.Weapon2 = new Weapon();
+                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\\\UsedSlot.png") as ImageSource;
+                    //user.Weapon2.Image.Source = new BitmapImage(new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\\\UsedSlot.png"));
                 }
             };
             treasure2.Condition = delegate (User? user)
@@ -174,7 +177,9 @@ namespace Munchkin.Cards
                 {
                     user.Power += 1;
                     user.Weapon1 = treasure2;
-                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Assets\\UsedSlot") as ImageSource;
+                    user.Weapon2 = new Weapon();
+                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\UsedSlot.png") as ImageSource;
+                    //user.Weapon2.Image.Source = new BitmapImage(new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\\\UsedSlot.png", UriKind.Relative));
                 }
             };
             treasure4.Condition = delegate (User? user)
@@ -502,7 +507,8 @@ namespace Munchkin.Cards
                 {
                     user.Power += 4;
                     user.Weapon1 = treasure20;
-                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Assets\\UsedSlot") as ImageSource;
+                    user.Weapon2 = new Weapon();
+                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\UsedSlot.png") as ImageSource;
                 }
                 
             };

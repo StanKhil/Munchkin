@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Resources\Assets\Door.png" />
     <None Remove="Resources\Assets\Treasure.png" />
+    <None Remove="Resources\Assets\UnusedSlot.png" />
     <None Remove="Resources\Assets\UsedSlot.png" />
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 143253.png" />
     <None Remove="Resources\Cards\Doors\Screenshot 2024-12-15 143320.png" />
@@ -119,13 +120,14 @@
     <None Remove="Resources\Cards\Treasures\Screenshot 2024-12-15 151914.png" />
     <None Remove="Resources\Cards\Treasures\Screenshot 2024-12-15 151928.png" />
     <None Remove="Resources\Cards\Treasures\Screenshot 2024-12-15 151939.png" />
+    <None Remove="Resources\Cards\Treasures\UnusedSlot.png" />
+    <None Remove="Resources\Cards\Treasures\UsedSlot.png" />
     <None Remove="Resources\Fonts\munchkin.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Assets\Door.png" />
     <Resource Include="Resources\Assets\Treasure.png" />
-    <Resource Include="Resources\Assets\UsedSlot.png" />
     <Resource Include="Resources\Cards\Doors\3872Orcs.png" />
     <Resource Include="Resources\Cards\Doors\Amazon.png" />
     <Resource Include="Resources\Cards\Doors\Screenshot 2024-12-15 143253.png" />
@@ -273,6 +275,8 @@
     <Resource Include="Resources\Cards\Treasures\Screenshot 2024-12-15 151914.png" />
     <Resource Include="Resources\Cards\Treasures\Screenshot 2024-12-15 151928.png" />
     <Resource Include="Resources\Cards\Treasures\Screenshot 2024-12-15 151939.png" />
+    <Resource Include="Resources\Cards\Treasures\UnusedSlot.png" />
+    <Resource Include="Resources\Cards\Treasures\UsedSlot.png" />
     <Resource Include="Resources\Fonts\munchkin.ttf" />
   </ItemGroup>
 
