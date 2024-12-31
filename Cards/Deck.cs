@@ -567,7 +567,10 @@ namespace Munchkin.Cards
                 {
                     if(user != null)
                     {
-                        if(user.FirstClass == Class.None) user.FirstClass = Class.Thief;
+                        if(user.FirstClass == Class.None)
+                        { 
+                            user.FirstClass = Class.Thief;
+                        }
                         else if(user.SecondClass == Class.None && user.IsSuperMunchkin) user.SecondClass = Class.Thief;
                     }
                 },delegate(User? user)

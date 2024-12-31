@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using System.Xml;
 
 namespace Munchkin.Player
@@ -38,17 +39,16 @@ namespace Munchkin.Player
         private int money;
         private int power = 1;
         private bool canFlee = false;
-        /*private List<Treasure> treasures = new List<Treasure>();
-        private List<Door> doors = new List<Door>();*/
+
         private List<Treasure> activeTreasures = new List<Treasure>();
         List<Card> hand = new List<Card>();
+
         private Armor? body;
         private Headgear? head;
         private Footgear? legs;
         private Weapon? weapon1;
         private Weapon? weapon2;
         private Gear? accessory;
-
 
         private State state = State.Man;
         private Race firstRace = Race.Human;
@@ -64,6 +64,8 @@ namespace Munchkin.Player
             get => canFlee;
             set => canFlee = value;
         }
+
+
 
         public Gear? Accessory
         {

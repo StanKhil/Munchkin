@@ -22,11 +22,7 @@ namespace Munchkin.Cards
         public Image? image = new Image();
         public string? Cell { get; set; }
 
-        public Image? Image
-        {
-            get { return image; }
-            set { image = value; }
-        }
+        
         public Active? Action 
         {
             get { return action; }
@@ -60,8 +56,19 @@ namespace Munchkin.Cards
             set { active = value; }
         }
 
+        public Image? Image
+        {
+            get { return image; }
+            set
+            {
+                if (image != value)
+                {
+                    image = value;
+                    OnPropertyChanged(nameof(Image));
+                }
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
-
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -4,10 +4,12 @@ using Munchkin.Cards.Treasures;
 using Munchkin.Player;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,10 +28,26 @@ namespace Munchkin
     /// <summary>
     /// Interaction logic for GameTable.xaml
     /// </summary>
-    public partial class GameTable : UserControl
+    public partial class GameTable : UserControl, INotifyPropertyChanged
     {
         public User user;
         public GameManager? gameManager;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
         public GameTable()
         {
             InitializeComponent();
@@ -122,7 +140,7 @@ namespace Munchkin
         {
 
             Image img = null;
-            string path="";
+            string path = "";
             if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu)
             {
                 var target = contextMenu.PlacementTarget;
@@ -136,9 +154,13 @@ namespace Munchkin
             //-----------------------------------------------
 
             //Card selectedCard = gameManager.positions[path];
-            //if(selectedCard.Condition(user)) selectedCard.Action(user);
-
-
+            //if (selectedCard.Condition(user))
+            //{
+            //    selectedCard.Action(user);
+            //    ActivateTreasure(path);
+            //}
+            //else return;
+            ////gameManager.positions[path] = null;
 
 
             //-----------------------------------------------
