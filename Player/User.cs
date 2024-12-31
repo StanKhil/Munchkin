@@ -37,6 +37,7 @@ namespace Munchkin.Player
         private int level = 1;
         private int money;
         private int power = 1;
+        private bool canFlee = false;
         /*private List<Treasure> treasures = new List<Treasure>();
         private List<Door> doors = new List<Door>();*/
         private List<Treasure> activeTreasures = new List<Treasure>();
@@ -58,7 +59,11 @@ namespace Munchkin.Player
         private bool isSuperMunchkin;
         private bool isHalfBlood;
         public bool HasBig { get; set; }
-
+        public bool CanFlee 
+        {
+            get => canFlee;
+            set => canFlee = value;
+        }
 
         public Gear? Accessory
         {
@@ -69,6 +74,7 @@ namespace Munchkin.Player
                 {
                     accessory = value;
                     OnPropertyChanged(nameof(Accessory));
+                    OnPropertyChanged(nameof(Accessory.Image.Source));
                 }
             }
         }
@@ -81,6 +87,7 @@ namespace Munchkin.Player
                 {
                     weapon1 = value;
                     OnPropertyChanged(nameof(Weapon1));
+                    OnPropertyChanged(nameof(Weapon1.Image.Source));
                 }
             }
         }
@@ -93,6 +100,7 @@ namespace Munchkin.Player
                 {
                     weapon2 = value;
                     OnPropertyChanged(nameof(Weapon2));
+                    OnPropertyChanged(nameof(Weapon2.Image.Source));
                 }
             }
         }
@@ -170,6 +178,7 @@ namespace Munchkin.Player
                 {
                     body = value;
                     OnPropertyChanged(nameof(Body));
+                    OnPropertyChanged(nameof(Body.Image.Source));
                 }
             }
         }
@@ -183,6 +192,7 @@ namespace Munchkin.Player
                 {
                     head = value;
                     OnPropertyChanged(nameof(Head));
+                    OnPropertyChanged(nameof(Head.Image.Source));
                 }
             }
         }
@@ -196,6 +206,7 @@ namespace Munchkin.Player
                 {
                     legs = value;
                     OnPropertyChanged(nameof(Legs));
+                    OnPropertyChanged(nameof(Legs.Image.Source));
                 }
             }
         }

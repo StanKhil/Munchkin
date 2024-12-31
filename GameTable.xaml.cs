@@ -29,7 +29,7 @@ namespace Munchkin
     public partial class GameTable : UserControl
     {
         public User user;
-        public GameManager gameManager;
+        public GameManager? gameManager;
         public GameTable()
         {
             InitializeComponent();
@@ -133,6 +133,15 @@ namespace Munchkin
                 }
             }
 
+            //-----------------------------------------------
+
+            //Card selectedCard = gameManager.positions[path];
+            //if(selectedCard.Condition(user)) selectedCard.Action(user);
+
+
+
+
+            //-----------------------------------------------
 
             if (gameManager.positions[path] is Treasure)
             {

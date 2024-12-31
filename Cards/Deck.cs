@@ -648,9 +648,10 @@ namespace Munchkin.Cards
                     }
                 },delegate(User? user)
                 {
-                    if(user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood))return true;
+                    if(user != null)
+                        if(user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood)) return true;
                     return false;
-                },delegate(User? user)
+                }, delegate(User? user)
                 {
                     if(user != null)
                     {
@@ -689,9 +690,7 @@ namespace Munchkin.Cards
                 }, delegate(User? user)
                 {
                     if(user != null)
-                    {
                         user.IsSuperMunchkin = false;
-                    }    
                 }),
                 new PlayerRace("HalfBreed.png", "Half Breed", Race.None, delegate(User? user)
                 {
@@ -705,52 +704,62 @@ namespace Munchkin.Cards
                 }, delegate(User? user)
                 {
                     if(user != null)
-                    {
                         user.IsHalfBlood = false;
-                    }
                 })
-
             };
-            Monster? monster = Doors[0] as Monster;
-            monster.Action = delegate (User? user)
+
+
+            Monster door0 = Doors[0] as Monster; //3872 Orcs
+            door0.Action = delegate (User? user)
             {
                 if (user != null)
-                    if (user.FirstRace == Race.Dwarf || user.SecondRace == Race.Dwarf) monster.Power += 6;
+                    if (user.FirstRace == Race.Dwarf || user.SecondRace == Race.Dwarf) door0.Power += 6;
             };
-            monster.BadStuff = delegate (User? user)
+            door0.BadStuff = delegate (User? user)
             {
                 int roll = user.Roll();
                 if (roll <= 2) user.Death();
                 else
                 {
                     user.Level -= roll;
-                    if(user.Level <= 0) user.Level = 1;
+                    if (user.Level <= 0) user.Level = 1;
                 };
             };
-            monster = Doors[1] as Monster;
-            monster.Action = delegate (User? user)
+            door0.Condition = null;
+            door0.Discard = null;
+
+            Monster door1 = Doors[1] as Monster; //Amazon
+            door1.Action = delegate (User? user)
             {
                 if (user != null)
-                    if (user.State == State.Woman) gameManager.Table.ProvideTreasure();
+                    if (user.State == State.Woman)
+                    { 
+                        gameManager.Table.ProvideTreasure();
+                        door1.Discard(user);
+                    }
             };
-            monster.BadStuff = delegate (User? user)
+            door1.BadStuff = delegate (User? user)
             {
-                if(user != null)
+                if (user != null)
                 {
-                    if(user.FirstClass != Class.None) user.FirstClass = Class.None;
-                    else
+                    if(user.FirstClass == Class.None && user.SecondClass == Class.None)
                     {
                         user.Level -= 3;
                         if (user.Level <= 0) user.Level = 1;
                     }
+                    else
+                    {
+                        if(user.FirstClass != Class.None) user.FirstClass = Class.None;
+                        if(user.SecondClass != Class.None) user.SecondClass = Class.None;
+                    }
                 }
-            };
-            monster = Doors[2] as Monster;
-            monster.Action = delegate (User? user)
-            {
-                // -------
-            };
-            monster.BadStuff = delegate (User? user)
+            }; ;
+            door1.Condition = null;
+            door1.Discard = null;
+
+            Monster door2 = Doors[2] as Monster; //Crabs
+            door2.Action = null;
+            door2.BadStuff = delegate (User? user)
             {
                 if (user != null)
                 {
@@ -758,50 +767,69 @@ namespace Munchkin.Cards
                     user.Legs = null;
                 }
             };
-            monster = Doors[3] as Monster;
-            monster.Action = delegate (User? user)
+            door2.Condition = null;
+            door2.Discard = null;
+
+            Monster door3 = Doors[3] as Monster; //Droodling slime
+            door3.Action = delegate (User? user)
             {
                 if (user != null)
-                    if (user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) monster.Power += 4;
+                    if (user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) door3.Power += 4;
             };
-            monster.BadStuff = delegate (User? user)
+            door3.BadStuff = delegate (User? user)
             {
                 if (user != null)
+                {
                     if (user.Legs != null) user.Legs = null;
                     else
                     {
                         user.Level -= 1;
                         if (user.Level <= 0) user.Level = 1;
                     }
+                }
             };
-            monster = Doors[4] as Monster;
-            monster.Action = delegate (User? user)
+            door3.Condition = null;
+            door3.Discard = null;
+
+
+            Monster door4 = Doors[4] as Monster; //Bigfoor
+            door4.Action = delegate (User? user)
             {
                 if (user != null)
-                    if (user.FirstRace == Race.Dwarf || user.SecondRace == Race.Dwarf || user.FirstRace == Race.Hafling || user.SecondRace == Race.Hafling) monster.Power += 3;
+                    if (user.FirstRace == Race.Dwarf || user.SecondRace == Race.Dwarf || user.FirstRace == Race.Hafling || user.SecondRace == Race.Hafling) door4.Power += 3;
             };
-            monster.BadStuff = delegate (User? user)
+            door4.BadStuff = delegate (User? user)
             {
                 if (user != null)
-                    user.Head = null; // !!!
+                    user.Head = null;
             };
-            monster = Doors[5] as Monster;
-            monster.Action = delegate (User? user) { };
-            monster.BadStuff = delegate (User? user)
+            door4.Condition = null;
+            door4.Discard = null;
+
+            Monster door5 = Doors[5] as Monster; //Lawers
+            door5.Action = delegate (User? user) 
             {
-                if(user != null)
-                    for(int i = 0; i < user.Hand.Count; i++)
+                if (user != null)
+                    if (user.FirstClass == Class.Thief || user.SecondClass == Class.Thief) user.CanFlee = true;
+            };
+            door5.BadStuff = delegate (User? user)
+            {
+                if (user != null)
+                    for (int i = 0; i < user.Hand.Count; i++)
                     {
                         user.Hand.Clear();
                     }
             };
-            monster = Doors[6] as Monster;
-            monster.Action = delegate (User? user) 
+            door5.Condition = null;
+            door5.Discard = null;
+
+            Monster door6 = Doors[6] as Monster; //Leperchaun
+            door6.Action = delegate (User? user)
             {
                 if (user != null)
-                    if (user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) monster.Power += 5;
+                    if (user.FirstRace == Race.Elf || user.SecondRace == Race.Elf) door6.Power += 5;
             };
-            monster.BadStuff = delegate (User? user)
+            door6.BadStuff = delegate (User? user)
             {
                 if (user != null)
                 {
@@ -811,9 +839,12 @@ namespace Munchkin.Cards
                     user.Hand.RemoveAt(rand);
                 }
             };
-            monster = Doors[7] as Monster;
-            monster.Action = delegate (User? user) { };
-            monster.BadStuff = delegate (User? user)
+            door6.Condition = null;
+            door6.Discard = null;
+
+            Monster door7 = Doors[7] as Monster; //Pit bull
+            door7.Action = delegate (User? user) { }; ;
+            door7.BadStuff = delegate (User? user)
             {
                 if (user != null)
                 {
@@ -821,41 +852,68 @@ namespace Munchkin.Cards
                     if (user.Level <= 0) user.Level = 1;
                 }
             };
-            monster = Doors[8] as Monster;
-            monster.Action = delegate (User? user) 
+            door7.Condition = null;
+            door7.Discard = null;
+            
+            Monster door8 = Doors[8] as Monster; //Plutonium Dragon
+            door8.Action = delegate (User? user)
             {
                 if (user != null)
-                    if (user.Level <= 5) MessageBox.Show("It won't pursue you");
+                    if (user.Level <= 5) user.CanFlee = true;
             };
-            monster.BadStuff = delegate (User? user)
+            door8.BadStuff = delegate (User? user)
             {
                 if (user != null) user.Death();
             };
-            monster = Doors[9] as Monster;
-            monster.Action = delegate (User? user)
+            door8.Condition = null;
+            door8.Discard = null;
+
+            Monster door9 = Doors[9] as Monster; //Shrieking Geek
+            door9.Action = delegate (User? user)
             {
                 if (user != null)
-                    if (user.FirstClass == Class.Warrior || user.SecondClass == Class.Warrior) monster.Power += 6;
-                    
+                    if (user.FirstClass == Class.Warrior || user.SecondClass == Class.Warrior) door9.Power += 6;
             };
-            monster.BadStuff = delegate (User? user)
+            door9.BadStuff = delegate (User? user)
             {
                 if (user != null)
                 {
                     user.ClearClasses();
                     user.ClearRaces();
-                }  
+                }
             };
-            monster = Doors[10] as Monster;
-            monster.Action = delegate (User? user)
+            door9.Condition = null;
+            door9.Discard = null;
+
+            Monster door10 = Doors[10] as Monster; //Wannabe Vampire
+            door10.Action = delegate(User? user)
             {
                 if (user != null)
-                    if (user.Level <= 3) MessageBox.Show("They won't pursue you");
+                    if (user.FirstClass == Class.Cleric || user.SecondClass == Class.Cleric) user.CanFlee = true;
             };
-            monster.BadStuff = delegate (User? user)
+            door10.BadStuff = delegate(User? user)
+            {
+                if(user != null)
+                {
+                    user.Level -= 3;
+                    if (user.Level <= 0) user.Level = 1;
+                }
+            };
+            door10.Condition = null;
+            door10.Discard = null;
+
+            Monster door11 = Doors[11] as Monster; //Wight Brothers
+            door11.Action = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.Level <= 3) user.CanFlee = true;
+            };
+            door11.BadStuff = delegate (User? user)
             {
                 if (user != null) user.Level = 1;
-            };
+            }; ;
+            door11.Condition = null;
+            door11.Discard = null;
 
 
         }
