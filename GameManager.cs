@@ -3,9 +3,11 @@ using Munchkin.Cards.Doors;
 using Munchkin.Player;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Munchkin
 {
@@ -14,11 +16,14 @@ namespace Munchkin
     {
         Start,
         OpenDoors,
+        Choice,
+        LootTheRoom, //ProvideDoor
         TakeTreasures,
         UseCards,
         DiscardCards,
         Battle
     }
+    
     public class GameManager : INotifyPropertyChanged
     {
         private Deck deck;
@@ -26,11 +31,14 @@ namespace Munchkin
         private GameTable table;
         public Dictionary<string?, Card?> positions;
         private string tips;
-        private Monster currentMonster;
-        private Stadia stadia;
+        private Monster? currentMonster;
+        private Stadia stadia = Stadia.Start;
         public int treasuresToTake = 4;
         public int doorsToOpen = 4;
 
+        public string? LastCalledMethod { get; set; }
+        public Card? UsedCard { get; set; }
+        
         public Stadia Stadia
         {
             get => stadia;
@@ -40,12 +48,20 @@ namespace Munchkin
                 OnPropertyChanged();
             }
         }
-        public Monster CurrentMonster
+        public Monster? CurrentMonster
         {
             get => currentMonster;
             set
             {
-                currentMonster = value;
+                if(currentMonster != value)
+                {
+                    currentMonster = value;
+                    if(currentMonster != null)
+                    {
+                        Table.monster.Source = currentMonster.Image.Source;
+                        positions["monster"] = currentMonster;
+                    }
+                }
                 OnPropertyChanged();
             }
         }
@@ -124,6 +140,7 @@ namespace Munchkin
             positions.Add("active6", null);
             positions.Add("active7", null);
 
+            positions.Add("monster", null);
 
             Random random = new Random();
             deck.Doors = new ObservableCollection<Door>(deck.Doors.OrderBy(x => random.Next()));
@@ -131,50 +148,105 @@ namespace Munchkin
             Start();
         }
 
-        public void Start()
+        public void OpenDoor()
+        {
+            Door door = deck.Doors.Last();
+            if(door is Monster)
+            {
+                table.monster.Source = door.Image.Source;
+                currentMonster = (Monster)door;
+                //MessageBox.Show(currentMonster.Power + "");
+                Stadia = Stadia.Battle;
+            }
+            else if(door is Curse)
+            {
+                table.active7.Source = door.Image.Source;
+                positions["active7"] = door;
+                Stadia = Stadia.Choice;
+            }
+            else
+            {
+                string path = "";
+                foreach (var position in positions)
+                {
+                    if (position.Value == null)
+                    {
+                        path = position.Key;
+                        break;
+                    }
+                }
+                positions[path] = door;
+                user.Hand.Add(door);
+                table.SeekAddPosition(path);
+                Stadia = Stadia.Choice;
+            }
+            deck.Doors.Remove(door);
+        }
+        public async Task Start()
         {
             //----------------------------
             // 0) Use cards
             // 1) Open doors
             // 2) Discard cards
             //----------------------------
-
-            //while (true)
-            //{
-            //    if (Stadia == Stadia.Start)
-            //    {
-            //        //
-            //        Stadia = Stadia.OpenDoors;
-            //    }
-            //    else if (Stadia == Stadia.OpenDoors || Stadia == Stadia.UseCards)
-            //    {
-            //        //
-            //        Stadia = Stadia.DiscardCards;
-            //        //Stadia = Stadia.Battle;
-            //    }
-            //    else if (Stadia == Stadia.DiscardCards)
-            //    {
-            //        //
-            //        Stadia = Stadia.OpenDoors;
-            //    }
-            //    else if (Stadia == Stadia.Battle)
-            //    {
-            //        //
-            //        Stadia = Stadia.TakeTreasures;
-            //    }
-            //    else if (Stadia == Stadia.TakeTreasures)
-            //    {
-            //        //
-            //        Stadia = Stadia.UseCards;
-            //    }
-            //}
+            if (Stadia == Stadia.Start)
+            {
+                Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
+                while(doorsToOpen != 0 || treasuresToTake != 0)
+                {
+                    Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
+                    await Task.Delay(500);
+                }
+                Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
+                Stadia = Stadia.OpenDoors;
+            }
+            if (Stadia == Stadia.OpenDoors)
+            {
+                Tips = "Opening the DOOR!";
+                OpenDoor();
+            }
+            if (Stadia == Stadia.Choice)
+            {
+                Tips = "Loot the Room OR \nLook for Troubles";
+                LastCalledMethod = "";
+                while(LastCalledMethod == "") await Task.Delay(500);
+                if (LastCalledMethod == "Use") Stadia = Stadia.Battle;
+                else if (LastCalledMethod == "ProvideDoor") Stadia = Stadia.DiscardCards;
+            }
+            if(Stadia == Stadia.Battle)
+            {
+                Tips = "Figting a monster\nCompare monster's \nand your power";
+                table.fightPanel.Visibility = Visibility.Visible;
+                LastCalledMethod = "";
+                while (LastCalledMethod == "") await Task.Delay(500);
+                if (LastCalledMethod == "Fight") user.Fight(currentMonster);
+                else if (LastCalledMethod == "Flee") user.Flee(currentMonster);
+                Stadia = Stadia.DiscardCards;
+            }
+            if(Stadia == Stadia.DiscardCards)
+            {
+                Tips = $"Discard cards until\n you have {user.Limit} \nof them";
+                while(user.Hand.Count > user.Limit)
+                {
+                    await Task.Delay(500);
+                }
+                Stadia = Stadia.OpenDoors;
+            }
+            await Start();
         }
         
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            try
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch(Exception e)
+            {
+
+            }
         }
 
     }

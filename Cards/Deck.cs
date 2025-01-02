@@ -176,7 +176,7 @@ namespace Munchkin.Cards
                 if (user != null)
                 {
                     user.Power += 1;
-                    user.Weapon1 = treasure2;
+                    user.Weapon1 = treasure4;
                     user.Weapon2 = new Weapon();
                     user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\UsedSlot.png") as ImageSource;
                     //user.Weapon2.Image.Source = new BitmapImage(new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\\\UsedSlot.png", UriKind.Relative));
@@ -194,6 +194,7 @@ namespace Munchkin.Cards
                 {
                     user.Power -= 1;
                     user.Weapon1 = null;
+                    user.Weapon2 = new Weapon(null);
                     user.Weapon2 = null;
                 }
             };
@@ -553,20 +554,7 @@ namespace Munchkin.Cards
                 new PlayerRace("Elf.png", "Elf", Race.Elf, null, null, null),
                 new PlayerRace("Hafling.png", "Hafling", Race.Hafling, null, null, null),
                 new PlayerClass("Supermunchkin.png", "Supermunchkin", Class.None, null, null, null),
-                new PlayerRace("HalfBreed.png", "Half Breed", Race.None, delegate(User? user)
-                {
-                    if(user != null)
-                        user.IsHalfBlood = true;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.IsHalfBlood == false) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.IsHalfBlood = false;
-                })
+                new PlayerRace("HalfBreed.png", "Half Breed", Race.None, null, null, null)
             };
 
 
@@ -937,6 +925,7 @@ namespace Munchkin.Cards
             {
                 if (user != null)
                 {
+                    user.Limit = 6;
                     if (user.FirstRace == Race.Human)
                     {
                         user.FirstRace = Race.Dwarf;
@@ -1098,7 +1087,6 @@ namespace Munchkin.Cards
                     user.HalfBlood = null;
                 }
             };
-
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

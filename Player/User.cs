@@ -1,13 +1,9 @@
 ﻿using Munchkin.Cards;
 using Munchkin.Cards.Doors;
 using Munchkin.Cards.Treasures;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Controls;
-using System.Xml;
+using System.Windows;
 
 namespace Munchkin.Player
 {
@@ -40,6 +36,7 @@ namespace Munchkin.Player
         private int level = 1;
         private int money;
         private int power = 1;
+        private int limit = 5;
         private bool canFlee = false;
 
         private List<Treasure> activeTreasures = new List<Treasure>();
@@ -70,11 +67,17 @@ namespace Munchkin.Player
         private bool isHalfBlood;
         public bool HasBig { get; set; }
         public bool CanFlee { get; set; }
+        public int Limit 
+        { 
+            get => limit; 
+            set => limit = value; 
+        }
 
         public User(GameManager gm)
         {
             GameManager = gm;
         }
+        
         public Curse? Curse
         {
             get => curse;
@@ -458,12 +461,23 @@ namespace Munchkin.Player
             }
         }
 
-        public void Fight() { }
+        public void Fight(Monster? monster)
+        {
+            MessageBox.Show("Fighting");
+
+        }
+        public void Flee(Monster? monster)
+        {
+            MessageBox.Show("Fleeing");
+        }
         public int Roll()
         {
             return new Random().Next(1, 7);
         }
-        public void Death() { }
+        public void Death()
+        { 
+
+        }
 
 
         public void ClearRaces()
