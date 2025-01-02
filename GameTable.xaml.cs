@@ -184,7 +184,7 @@ namespace Munchkin
                     return;
                 }
                 gameManager.positions[path].Action(gameManager.User);*/
-
+                gameManager.CurrentMonster = gameManager.positions[path] as Monster;
                 gameManager.positions[monster.Name] = gameManager.positions[path];
                 monster.Source = gameManager.positions[path].image.Source;
             }
@@ -307,7 +307,7 @@ namespace Munchkin
                 card5.Source = gameManager.User.Hand[ind - 1].image.Source;
                 gameManager.positions[card5.Name] = gameManager.User.Hand[ind - 1];
             }
-            else if (gameManager.User.Hand.Count == 6)
+            else if (ind == 6)
             {
                 card6.Source = gameManager.User.Hand[ind - 1].image.Source;
                 gameManager.positions[card6.Name] = gameManager.User.Hand[ind - 1];

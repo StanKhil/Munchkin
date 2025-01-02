@@ -1,4 +1,5 @@
 ﻿using Munchkin.Cards;
+using Munchkin.Cards.Doors;
 using Munchkin.Player;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,12 +9,56 @@ using System.Windows.Controls;
 
 namespace Munchkin
 {
+
+    public enum Stadia
+    {
+        Start,
+        OpenDoors,
+        TakeTreasures,
+        UseCards,
+        DiscardCards,
+        Battle
+    }
     public class GameManager : INotifyPropertyChanged
     {
         private Deck deck;
         private User user;
         private GameTable table;
         public Dictionary<string?, Card?> positions;
+        private string tips;
+        private Monster currentMonster;
+        private Stadia stadia;
+        public int treasuresToTake = 4;
+        public int doorsToOpen = 4;
+
+        public Stadia Stadia
+        {
+            get => stadia;
+            set
+            {
+                stadia = value;
+                OnPropertyChanged();
+            }
+        }
+        public Monster CurrentMonster
+        {
+            get => currentMonster;
+            set
+            {
+                currentMonster = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Tips
+        {
+            get => tips;
+            set
+            {
+                tips = value;
+                OnPropertyChanged();
+            }
+        }
 
         public User User
         {
@@ -92,7 +137,35 @@ namespace Munchkin
             // 1) Open doors
             // 2) Discard cards
             //----------------------------
-            
+            while (true)
+            {
+                if (Stadia == Stadia.Start)
+                {
+                    //
+                    Stadia = Stadia.OpenDoors;
+                }
+                else if (Stadia == Stadia.OpenDoors || Stadia == Stadia.UseCards)
+                {
+                    //
+                    Stadia = Stadia.DiscardCards;
+                    //Stadia = Stadia.Battle;
+                }
+                else if (Stadia == Stadia.DiscardCards)
+                {
+                    //
+                    Stadia = Stadia.OpenDoors;
+                }
+                else if (Stadia == Stadia.Battle)
+                {
+                    //
+                    Stadia = Stadia.TakeTreasures;
+                }
+                else if (Stadia == Stadia.TakeTreasures)
+                {
+                    //
+                    Stadia = Stadia.UseCards;
+                }
+            }
         }
         
 
