@@ -1,4 +1,5 @@
 ﻿using Munchkin.Cards;
+using Munchkin.Cards.Doors;
 using Munchkin.Cards.Treasures;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace Munchkin.Player
     public class User : INotifyPropertyChanged
     {
         public GameTable? GameTable { get; set; }
+        public GameManager? GameManager { get; set; }
         private int level = 1;
         private int money;
         private int power = 1;
@@ -49,6 +51,14 @@ namespace Munchkin.Player
         private Weapon? weapon1;
         private Weapon? weapon2;
         private Gear? accessory;
+        private Curse? curse;
+
+        private PlayerClass? class1;
+        private PlayerClass? class2;
+        private PlayerRace? race1;
+        private PlayerRace? race2;
+        private PlayerClass? supermunchkin;
+        private PlayerRace? halfBlood;
 
         private State state = State.Man;
         private Race firstRace = Race.Human;
@@ -59,13 +69,28 @@ namespace Munchkin.Player
         private bool isSuperMunchkin;
         private bool isHalfBlood;
         public bool HasBig { get; set; }
-        public bool CanFlee 
+        public bool CanFlee { get; set; }
+
+        public User(GameManager gm)
         {
-            get => canFlee;
-            set => canFlee = value;
+            GameManager = gm;
         }
-
-
+        public Curse? Curse
+        {
+            get => curse;
+            set
+            {
+                if (curse != value)
+                {
+                    curse = value;
+                    if(curse != null)
+                    {
+                        GameTable.active7.Source = curse.Image.Source;
+                        GameManager.positions["active7"] = curse;
+                    }
+                }
+            }
+        }
 
         public Gear? Accessory
         {
@@ -75,6 +100,11 @@ namespace Munchkin.Player
                 if(accessory != value)
                 {
                     accessory = value;
+                    if (accessory != null)
+                    { 
+                        GameTable.active6.Source = accessory.Image.Source;
+                        GameManager.positions["active6"] = accessory;
+                    }
                     OnPropertyChanged(nameof(Accessory));
                     OnPropertyChanged(nameof(Accessory.Image.Source));
                 }
@@ -88,6 +118,11 @@ namespace Munchkin.Player
                 if(weapon1 != value)
                 {
                     weapon1 = value;
+                    if (weapon1 != null)
+                    {
+                        GameTable.active1.Source = weapon1.Image.Source;
+                        GameManager.positions["active1"] = weapon1;
+                    }
                     OnPropertyChanged(nameof(Weapon1));
                     OnPropertyChanged(nameof(Weapon1.Image.Source));
                 }
@@ -101,6 +136,11 @@ namespace Munchkin.Player
                 if (weapon2 != value)
                 {
                     weapon2 = value;
+                    if (weapon2 != null)
+                    {
+                        GameTable.active2.Source = weapon2.Image.Source;
+                        GameManager.positions["active2"] = weapon2;
+                    }
                     OnPropertyChanged(nameof(Weapon2));
                     OnPropertyChanged(nameof(Weapon2.Image.Source));
                 }
@@ -179,6 +219,11 @@ namespace Munchkin.Player
                 if (body != value)
                 {
                     body = value;
+                    if (body != null)
+                    {
+                        GameTable.active4.Source = body.Image.Source;
+                        GameManager.positions["active4"] = body;
+                    }
                     OnPropertyChanged(nameof(Body));
                     OnPropertyChanged(nameof(Body.Image.Source));
                 }
@@ -193,6 +238,11 @@ namespace Munchkin.Player
                 if (head != value)
                 {
                     head = value;
+                    if (head != null)
+                    {
+                        GameTable.active3.Source = head.Image.Source;
+                        GameManager.positions["active3"] = head;
+                    }
                     OnPropertyChanged(nameof(Head));
                     OnPropertyChanged(nameof(Head.Image.Source));
                 }
@@ -207,12 +257,119 @@ namespace Munchkin.Player
                 if (legs != value)
                 {
                     legs = value;
+                    if (legs != null)
+                    {
+                        GameTable.active5.Source = legs.Image.Source;
+                        GameManager.positions["active5"] = legs;
+                    }
                     OnPropertyChanged(nameof(Legs));
                     OnPropertyChanged(nameof(Legs.Image.Source));
                 }
             }
         }
+        public PlayerClass? Class1
+        {
+            get => class1;
+            set
+            {
+                if(class1 != value)
+                {
+                    class1 = value;
+                    if (class1 != null)
+                    {
+                        GameTable.class1.Source = class1.Image.Source;
+                        GameManager.positions["class1"] = class1;
+                    }
+                    OnPropertyChanged(nameof(Class1));
+                }
+            }
+        }
+        public PlayerClass? Class2
+        {
+            get => class2;
+            set
+            {
+                if (class2 != value)
+                {
+                    class2 = value;
+                    if (class2 != null)
+                    {
+                        GameTable.class2.Source = class2.Image.Source;
+                        GameManager.positions["class2"] = class2;
+                    }
+                    OnPropertyChanged(nameof(Class2));
+                }
+            }
+        }
+        public PlayerClass? Supermunchkin
+        {
+            get => supermunchkin;
+            set
+            {
+                if (supermunchkin != value)
+                {
+                    supermunchkin = value;
+                    if (supermunchkin != null)
+                    { 
+                        GameTable.supermunchkin.Source = supermunchkin.Image.Source;
+                        GameManager.positions["isSupermunchkin"] = supermunchkin;
+                    }
+                    OnPropertyChanged(nameof(Supermunchkin));
+                }
+            }
+        }
+        public PlayerRace? Race1
+        {
+            get => race1;
+            set
+            {
+                if (race1 != value)
+                {
+                    race1 = value;
+                    if (race1 != null)
+                    {
+                        GameTable.race1.Source = race1.Image.Source;
+                        GameManager.positions["race1"] = race1;
+                    }
 
+                    OnPropertyChanged(nameof(Race1));
+                }
+            }
+        }
+        public PlayerRace? Race2
+        {
+            get => race2;
+            set
+            {
+                if (race2 != value)
+                {
+                    race2 = value;
+                    if (race2 != null)
+                    { 
+                        GameTable.race2.Source = race2.Image.Source;
+                        GameManager.positions["race2"] = race2;
+                    }
+                    OnPropertyChanged(nameof(Race2));
+                }
+            }
+        }
+        public PlayerRace? HalfBlood
+        {
+            get => halfBlood;
+            set
+            {
+                if (halfBlood != value)
+                {
+                    halfBlood = value;
+                    if (halfBlood != null) 
+                    { 
+                        GameTable.halfBlood.Source = halfBlood.Image.Source;
+                        GameManager.positions["isHalfBlood"] = halfBlood;
+                    }
+                    OnPropertyChanged(nameof(HalfBlood));
+                }
+            }
+        }
         public State State
         {
             get => state;

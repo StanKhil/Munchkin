@@ -56,10 +56,11 @@ namespace Munchkin
             {
                 this.DataContext = new GameManager();
             }
-            user = new User();
-            user.GameTable = this;
-
+            
             gameManager = this.DataContext as GameManager;
+
+            user = new User(gameManager);
+            user.GameTable = this;
 
             if (gameManager != null)
             {
@@ -82,51 +83,143 @@ namespace Munchkin
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.ToGuide();
         }
-        public void ProvideTreasure()
+        private void Selected(object sender, MouseButtonEventArgs e)
         {
-            
-            int ind = -1;
-            for (int i = 0; i <gameManager.User.Hand.Count; i++)
+            if (sender is Image image)
             {
-                if (gameManager.User.Hand[i] == null && ind == -1)
+                var contextMenu = image.ContextMenu;
+                if (contextMenu != null)
                 {
-                    ind = i;
+                    contextMenu.PlacementTarget = image;
+                    contextMenu.IsOpen = true;
                 }
             }
-            if (ind == -1) ind = gameManager.User.Hand.Count;
-            if (ind < gameManager.User.Hand.Count)
+        }
+        public void SeekAddPosition(string? path)
+        {
+            switch (path)
             {
-                gameManager.User.Hand[ind] = gameManager.Deck.Treasures.Last();
+                case "card1":
+                    card1.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card2":
+                    card2.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card3":
+                    card3.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card4":
+                    card4.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card5":
+                    card5.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card6":
+                    card6.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card7":
+                    card7.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card8":
+                    card8.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card9":
+                    card9.Source = gameManager.positions[path].Image.Source;
+                    break;
+                case "card10":
+                    card10.Source = gameManager.positions[path].Image.Source;
+                    break;
             }
-            else
+        }
+        public void ProvideTreasure()
+        {
+            if(user.Hand.Count == 10)
             {
-                gameManager.User.Hand.Add(gameManager.Deck.Treasures.Last());
+                MessageBox.Show("You cannot take more cards");
+                return;
             }
-            ChoosePosition(ind + 1);
-            gameManager.Deck.Treasures.RemoveAt(gameManager.Deck.Treasures.Count - 1);
+            int cardNumber = new Random().Next(0, gameManager.Deck.Treasures.Count);
+            Card card = gameManager.Deck.Treasures[cardNumber];
+            gameManager.Deck.Treasures.RemoveAt(cardNumber);
+
+            string path = "";
+            foreach(var position in gameManager.positions)
+            {
+                if (position.Value == null)
+                {
+                    path = position.Key;
+                    break;
+                }
+            }
+            gameManager.positions[path] = card;
+            user.Hand.Add(card);
+            SeekAddPosition(path);
+
+            //int ind = -1;
+            //for (int i = 0; i <gameManager.User.Hand.Count; i++)
+            //{
+            //    if (gameManager.User.Hand[i] == null && ind == -1)
+            //    {
+            //        ind = i;
+            //    }
+            //}
+            //if (ind == -1) ind = gameManager.User.Hand.Count;
+            //if (ind < gameManager.User.Hand.Count)
+            //{
+            //    gameManager.User.Hand[ind] = gameManager.Deck.Treasures.Last();
+            //}
+            //else
+            //{
+            //    gameManager.User.Hand.Add(gameManager.Deck.Treasures.Last());
+            //}
+            //ChoosePosition(ind + 1);
+            //gameManager.Deck.Treasures.RemoveAt(gameManager.Deck.Treasures.Count - 1);
         }
         public void ProvideDoor()
         {
-            
-            int ind = -1;
-            for (int i = 0; i < gameManager.User.Hand.Count; i++)
+            if(user.Hand.Count == 10)
             {
-                if (gameManager.User.Hand[i] == null && ind == -1)
-                {
-                    ind = i;
+                MessageBox.Show("You cannot take more cards");
+                return;
+            }
+            int cardNumber = new Random().Next(0, gameManager.Deck.Doors.Count);
+            Card selectedCard = gameManager.Deck.Doors[cardNumber];
+            gameManager.Deck.Doors.RemoveAt(cardNumber);
+
+            string path = "";
+            foreach (var position in gameManager.positions)
+            {
+                if(position.Value == null)
+                { 
+                    path = position.Key;
+                    break; 
                 }
             }
-            if (ind == -1) ind = gameManager.User.Hand.Count;
-            if (ind < gameManager.User.Hand.Count)
-            {
-                gameManager.User.Hand[ind] = gameManager.Deck.Doors.Last();
-            }
-            else
-            {
-                gameManager.User.Hand.Add(gameManager.Deck.Doors.Last());
-            }
-            ChoosePosition(ind + 1);
-            gameManager.Deck.Doors.RemoveAt(gameManager.Deck.Doors.Count - 1);
+            gameManager.positions[path] = selectedCard;
+            user.Hand.Add(selectedCard);
+            SeekAddPosition(path);
+
+
+
+            //int ind = -1;
+            //for (int i = 0; i < gameManager.User.Hand.Count; i++)
+            //{
+            //    if (gameManager.User.Hand[i] == null && ind == -1)
+            //    {
+            //        ind = i;
+            //    }
+            //}
+            //if (ind == -1) ind = gameManager.User.Hand.Count;
+            //if (ind < gameManager.User.Hand.Count)
+            //{
+            //    gameManager.User.Hand[ind] = gameManager.Deck.Doors.Last();
+            //}
+            //else
+            //{
+            //    gameManager.User.Hand.Add(gameManager.Deck.Doors.Last());
+            //}
+            //ChoosePosition(ind + 1);
+            //gameManager.Deck.Doors.RemoveAt(gameManager.Deck.Doors.Count - 1);
         }
         public void TakeTreasure(object sender, RoutedEventArgs e)
         {
@@ -153,108 +246,134 @@ namespace Munchkin
 
             //-----------------------------------------------
 
-            //Card selectedCard = gameManager.positions[path];
-            //if (selectedCard.Condition(user))
-            //{
-            //    selectedCard.Action(user);
-            //    ActivateTreasure(path);
-            //}
-            //else return;
-            ////gameManager.positions[path] = null;
+            Card selectedCard = gameManager.positions[path];
+            if (selectedCard.Condition != null && !selectedCard.Condition(user))
+            {
+                MessageBox.Show("You can't use this card");
+                return;
+            }
+            else
+            {
+                selectedCard.Action(user);
+            }
+            switch(path)
+            {
+                case "card1":
+                    card1.Source = null;
+                    break;
+                case "card2":
+                    card2.Source = null;
+                    break;
+                case "card3":
+                    card3.Source = null;
+                    break;
+                case "card4":
+                    card4.Source = null;
+                    break;
+                case "card5":
+                    card5.Source = null;
+                    break;
+                case "card6":
+                    card6.Source = null;
+                    break;
+                case "card7":
+                    card7.Source = null;
+                    break;
+                case "card8":
+                    card8.Source = null;
+                    break;
+                case "card9":
+                    card9.Source = null;
+                    break;
+                case "card10":
+                    card10.Source = null;
+                    break;
+            }
+            gameManager.positions[path] = null;
+            user.Hand.Remove(selectedCard);
 
 
             //-----------------------------------------------
 
-            if (gameManager.positions[path] is Treasure)
-            {
-                if (!gameManager.positions[path].Condition(user))
-                {
-                    MessageBox.Show("You can't use this card");
-                    return;
-                }
-                gameManager.positions[path].Action(user);
-                ActivateTreasure(path);
-            }
+            //if (gameManager.positions[path] is Treasure)
+            //{
+            //    if (!gameManager.positions[path].Condition(user))
+            //    {
+            //        MessageBox.Show("You can't use this card");
+            //        return;
+            //    }
+            //    gameManager.positions[path].Action(user);
+            //    ActivateTreasure(path);
+            //}
 
-            else if (gameManager.positions[path] is Monster)
-            {
-                /*if (!gameManager.positions[path].Condition(gameManager.User))
-                {
-                    MessageBox.Show("You can't use this card");
-                    return;
-                }
-                gameManager.positions[path].Action(gameManager.User);*/
-                gameManager.CurrentMonster = gameManager.positions[path] as Monster;
-                gameManager.positions[monster.Name] = gameManager.positions[path];
-                monster.Source = gameManager.positions[path].image.Source;
-            }
+            //else if (gameManager.positions[path] is Monster)
+            //{
+            //    /*if (!gameManager.positions[path].Condition(gameManager.User))
+            //    {
+            //        MessageBox.Show("You can't use this card");
+            //        return;
+            //    }
+            //    gameManager.positions[path].Action(gameManager.User);*/
+            //    gameManager.CurrentMonster = gameManager.positions[path] as Monster;
+            //    gameManager.positions[monster.Name] = gameManager.positions[path];
+            //    monster.Source = gameManager.positions[path].image.Source;
+            //}
 
-            else if (gameManager.positions[path] is PlayerRace)
-            {
-                if (gameManager.positions[path].Name == "HalfBreed")
-                {
-                    gameManager.User.IsHalfBlood = true;
-                    halfBlood.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[halfBlood.Name] = gameManager.positions[path];
-                }
-                else
-                {
-                    if (gameManager.positions[race1.Name] == null)
-                    {
-                        gameManager.positions[race1.Name] = gameManager.positions[path];
-                        race1.Source = gameManager.positions[path].image.Source;
-                        gameManager.User.FirstRace = (gameManager.positions[path] as PlayerRace).race;
-                    }
-                    else if (gameManager.positions[race2.Name] == null)
-                    {
-                        gameManager.positions[race2.Name] = gameManager.positions[path];
-                        race2.Source = gameManager.positions[path].image.Source;
-                        gameManager.User.SecondRace = (gameManager.positions[path] as PlayerRace).race;
-                    }
-                }
+            //else if (gameManager.positions[path] is PlayerRace)
+            //{
+            //    if (gameManager.positions[path].Name == "HalfBreed")
+            //    {
+            //        gameManager.User.IsHalfBlood = true;
+            //        halfBlood.Source = gameManager.positions[path].image.Source;
+            //        gameManager.positions[halfBlood.Name] = gameManager.positions[path];
+            //    }
+            //    else
+            //    {
+            //        if (gameManager.positions[race1.Name] == null)
+            //        {
+            //            gameManager.positions[race1.Name] = gameManager.positions[path];
+            //            race1.Source = gameManager.positions[path].image.Source;
+            //            gameManager.User.FirstRace = (gameManager.positions[path] as PlayerRace).race;
+            //        }
+            //        else if (gameManager.positions[race2.Name] == null)
+            //        {
+            //            gameManager.positions[race2.Name] = gameManager.positions[path];
+            //            race2.Source = gameManager.positions[path].image.Source;
+            //            gameManager.User.SecondRace = (gameManager.positions[path] as PlayerRace).race;
+            //        }
+            //    }
 
-            }
+            //}
 
-            else if (gameManager.positions[path] is PlayerClass)
-            {
-                if (gameManager.positions[path].Name == "Supermunchkin")
-                {
-                    gameManager.User.IsSuperMunchkin = true;
-                    supermunchkin.Source = gameManager.positions[path].image.Source;
-                    gameManager.positions[supermunchkin.Name] = gameManager.positions[path];
-                }
-                else
-                {
-                    if (gameManager.positions[class1.Name] == null)
-                    {
-                        gameManager.positions[class1.Name] = gameManager.positions[path];
-                        class1.Source = gameManager.positions[path].image.Source;
-                        gameManager.User.FirstClass = (gameManager.positions[path] as PlayerClass).pClass;
-                    }
-                    else if (gameManager.positions[class2.Name] == null)
-                    {
-                        gameManager.positions[class2.Name] = gameManager.positions[path];
-                        class2.Source = gameManager.positions[path].image.Source;
-                        gameManager.User.SecondClass = (gameManager.positions[path] as PlayerClass).pClass;
-                    }
-                }
-            }
+            //else if (gameManager.positions[path] is PlayerClass)
+            //{
+            //    if (gameManager.positions[path].Name == "Supermunchkin")
+            //    {
+            //        gameManager.User.IsSuperMunchkin = true;
+            //        supermunchkin.Source = gameManager.positions[path].image.Source;
+            //        gameManager.positions[supermunchkin.Name] = gameManager.positions[path];
+            //    }
+            //    else
+            //    {
+            //        if (gameManager.positions[class1.Name] == null)
+            //        {
+            //            gameManager.positions[class1.Name] = gameManager.positions[path];
+            //            class1.Source = gameManager.positions[path].image.Source;
+            //            gameManager.User.FirstClass = (gameManager.positions[path] as PlayerClass).pClass;
+            //        }
+            //        else if (gameManager.positions[class2.Name] == null)
+            //        {
+            //            gameManager.positions[class2.Name] = gameManager.positions[path];
+            //            class2.Source = gameManager.positions[path].image.Source;
+            //            gameManager.User.SecondClass = (gameManager.positions[path] as PlayerClass).pClass;
+            //        }
+            //    }
+            //}
 
-            img.Source = null;
-            ClearCard(path);
+            //img.Source = null;
+            //ClearCard(path);
         }
-        private void Selected(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is Image image)
-            {
-                var contextMenu = image.ContextMenu;
-                if (contextMenu != null)
-                {
-                    contextMenu.PlacementTarget = image;
-                    contextMenu.IsOpen = true;
-                }
-            }
-        }
+        
 
         /*private void CardContextMenu_Opened(object sender, RoutedEventArgs e)
         {
@@ -336,7 +455,7 @@ namespace Munchkin
 
         public void Discard(object sender, RoutedEventArgs e)
         {
-            Image img = null;
+            Image? img = null;
             string path = "";
             if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu)
             {
@@ -348,27 +467,34 @@ namespace Munchkin
                 }
             }
             img.Source = null;
-
-            if (gameManager.positions[path] is Footgear) user.Legs = null;
-            else if (gameManager.positions[path] is Headgear) user.Head = null;
-
-            else if (gameManager.positions[path] is Armor) user.Body = null;
-
-            else if (gameManager.positions[path] is Weapon)
+            Card card = gameManager.positions[path];
+            if(!path.Contains("card") && card != null)
             {
-                if ((gameManager.positions[path] as Weapon).hands == 1)
-                {
-                    if (user.Weapon1 != null) user.Weapon1 = null;
-                    else user.Weapon2 = null; 
-                }
-                else
-                {
-                    user.Weapon1 = null;
-                    user.Weapon2 = null;
-                }
+                if (card.Discard != null) card.Discard(user);
             }
+            gameManager.positions[path] = null;
+            user.Hand.Remove(card);
 
-            ClearCard(path);
+
+            //if (gameManager.positions[path] is Footgear) user.Legs = null;
+            //else if (gameManager.positions[path] is Headgear) user.Head = null;
+
+            //else if (gameManager.positions[path] is Armor) user.Body = null;
+
+            //else if (gameManager.positions[path] is Weapon)
+            //{
+            //    if ((gameManager.positions[path] as Weapon).hands == 1)
+            //    {
+            //        if (user.Weapon1 != null) user.Weapon1 = null;
+            //        else user.Weapon2 = null; 
+            //    }
+            //    else
+            //    {
+            //        user.Weapon1 = null;
+            //        user.Weapon2 = null;
+            //    }
+            //}
+            //ClearCard(path);
             
         }
 

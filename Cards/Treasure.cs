@@ -24,7 +24,8 @@ namespace Munchkin.Cards
         //Specific specific
         public Treasure(string source, string name, Active? action, Condition? condition, Discard? discard, int price)
         {
-            image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\" + source) as ImageSource;
+            if (source == null) image.Source = null;
+            else image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\" + source) as ImageSource;
             Price = price;
             Name = name;
             this.action = action;

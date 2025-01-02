@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Munchkin.Cards.Doors
 {
-    internal class Curse : Door
+    public class Curse : Door
     {
         //Specific specific
         public Curse(string source, string name, Active? action, Condition? condition, Discard? discard) 

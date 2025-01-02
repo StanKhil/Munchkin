@@ -17,6 +17,9 @@ namespace Munchkin.Cards.Treasures
         public Weapon() : base ("UnusedSlot.png", "", null, null, null, 0)
         {
         }
+        public Weapon(string? path) : base(path, "", null, null, null, 0)
+        {
+        }
         public Weapon(string source, string name, Active? action, Condition? condition, Discard? discard, int price, Size size, int hands, int bonus)
         : base(source, name, action, condition, discard, price)
         {

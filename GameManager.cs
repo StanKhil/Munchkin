@@ -93,7 +93,8 @@ namespace Munchkin
         public GameManager()
         {
             Deck = new Deck(this);
-            User = new User();
+            User = new User(this);
+            User.GameManager = this;
             positions = new Dictionary<string?, Card?>();
 
             
@@ -115,13 +116,13 @@ namespace Munchkin
             positions.Add("isHalfBlood", null);
             positions.Add("isSupermunchkin", null);
 
-            positions.Add("hand1", null);
-            positions.Add("hand2", null);
-            positions.Add("footgear", null);
-            positions.Add("headgear", null);
-            positions.Add("armor", null);
-            positions.Add("accessory", null);
-            positions.Add("curse", null);
+            positions.Add("active1", null);
+            positions.Add("active2", null);
+            positions.Add("active3", null);
+            positions.Add("active4", null);
+            positions.Add("active5", null);
+            positions.Add("active6", null);
+            positions.Add("active7", null);
 
 
             Random random = new Random();
@@ -137,35 +138,36 @@ namespace Munchkin
             // 1) Open doors
             // 2) Discard cards
             //----------------------------
-            while (true)
-            {
-                if (Stadia == Stadia.Start)
-                {
-                    //
-                    Stadia = Stadia.OpenDoors;
-                }
-                else if (Stadia == Stadia.OpenDoors || Stadia == Stadia.UseCards)
-                {
-                    //
-                    Stadia = Stadia.DiscardCards;
-                    //Stadia = Stadia.Battle;
-                }
-                else if (Stadia == Stadia.DiscardCards)
-                {
-                    //
-                    Stadia = Stadia.OpenDoors;
-                }
-                else if (Stadia == Stadia.Battle)
-                {
-                    //
-                    Stadia = Stadia.TakeTreasures;
-                }
-                else if (Stadia == Stadia.TakeTreasures)
-                {
-                    //
-                    Stadia = Stadia.UseCards;
-                }
-            }
+
+            //while (true)
+            //{
+            //    if (Stadia == Stadia.Start)
+            //    {
+            //        //
+            //        Stadia = Stadia.OpenDoors;
+            //    }
+            //    else if (Stadia == Stadia.OpenDoors || Stadia == Stadia.UseCards)
+            //    {
+            //        //
+            //        Stadia = Stadia.DiscardCards;
+            //        //Stadia = Stadia.Battle;
+            //    }
+            //    else if (Stadia == Stadia.DiscardCards)
+            //    {
+            //        //
+            //        Stadia = Stadia.OpenDoors;
+            //    }
+            //    else if (Stadia == Stadia.Battle)
+            //    {
+            //        //
+            //        Stadia = Stadia.TakeTreasures;
+            //    }
+            //    else if (Stadia == Stadia.TakeTreasures)
+            //    {
+            //        //
+            //        Stadia = Stadia.UseCards;
+            //    }
+            //}
         }
         
 

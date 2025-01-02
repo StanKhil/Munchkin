@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Munchkin.Cards.Doors
 {
-    internal class PlayerClass : Door
+    public class PlayerClass : Door
     {
         //Specific specific
         public Class pClass;

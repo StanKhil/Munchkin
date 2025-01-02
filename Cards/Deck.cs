@@ -111,7 +111,7 @@ namespace Munchkin.Cards
             {
                 if (user != null)
                 {
-                    user.Power -= 1;
+                    user.Power -= 2;
                     user.Legs = null;
                 }
             };
@@ -507,8 +507,8 @@ namespace Munchkin.Cards
                 {
                     user.Power += 4;
                     user.Weapon1 = treasure20;
-                    user.Weapon2 = new Weapon();
-                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\UsedSlot.png") as ImageSource;
+                    user.Weapon2 = new Weapon("UsedSlot.png");
+                    //user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\UsedSlot.png") as ImageSource;
                 }
                 
             };
@@ -524,6 +524,7 @@ namespace Munchkin.Cards
                 {
                     user.Power -= 4;
                     user.Weapon1 = null;
+                    user.Weapon2 = new Weapon(null);
                     user.Weapon2 = null;
                 }
             };
@@ -544,157 +545,14 @@ namespace Munchkin.Cards
                 new Monster("ShriekingGeek.png", "Shrieking Geek", null, null, null, null, 6, 1, 2, 6),
                 new Monster("WannabeVampire.png", "Wannabe Vampire", null, null, null, null, 12, 1, 3, 12),
                 new Monster("WightBrothers.png", "Wight Brothers", null, null, null, null, 16, 2, 4, 16),
-                new PlayerClass("Cleric.png", "Cleric",Class.Cleric, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.None) user.FirstClass = Class.Cleric;
-                        else if(user.SecondClass == Class.None && user.IsSuperMunchkin) user.SecondClass = Class.Cleric;
-                    }
-                },delegate(User? user)
-                {
-                    if(user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin))return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.Cleric) user.FirstClass = Class.None;
-                        else if(user.SecondClass == Class.Cleric) user.SecondClass = Class.None;
-                    }
-                }),
-                new PlayerClass("Thief.png", "Thief", Class.Thief, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.None)
-                        { 
-                            user.FirstClass = Class.Thief;
-                        }
-                        else if(user.SecondClass == Class.None && user.IsSuperMunchkin) user.SecondClass = Class.Thief;
-                    }
-                },delegate(User? user)
-                {
-                    if(user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin))return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.Thief) user.FirstClass = Class.None;
-                        else if(user.SecondClass == Class.Thief) user.SecondClass = Class.None;
-                    }
-                }),
-                new PlayerClass("Warrior.png", "Warrior", Class.Warrior, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.None) user.FirstClass = Class.Warrior;
-                        else if(user.SecondClass == Class.None && user.IsSuperMunchkin) user.SecondClass = Class.Warrior;
-                    }
-                },delegate(User? user)
-                {
-                    if(user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin))return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.Warrior) user.FirstClass = Class.None;
-                        else if(user.SecondClass == Class.Warrior) user.SecondClass = Class.None;
-                    }
-                }),
-                new PlayerClass("Wizard.png", "Wizard", Class.Wizard, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.None) user.FirstClass = Class.Wizard;
-                        else if(user.SecondClass == Class.None && user.IsSuperMunchkin) user.SecondClass = Class.Wizard;
-                    }
-                },delegate(User? user)
-                {
-                    if(user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin))return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstClass == Class.Wizard) user.FirstClass = Class.None;
-                        else if(user.SecondClass == Class.Wizard) user.SecondClass = Class.None;
-                    }
-                }),
-                new PlayerRace("Dwarf.png", "Dwarf", Race.Dwarf, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstRace == Race.Human) user.FirstRace = Race.Dwarf;
-                        else if(user.SecondRace == Race.None && user.IsHalfBlood) user.SecondRace = Race.Dwarf;
-                    }
-                },delegate(User? user)
-                {
-                    if(user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood))return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstRace == Race.Dwarf) user.FirstRace = Race.Human;
-                        else if(user.SecondRace == Race.Dwarf) user.SecondRace = Race.None;
-                    }
-                }),
-                new PlayerRace("Elf.png", "Elf", Race.Elf, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstRace == Race.Human) user.FirstRace = Race.Elf;
-                        else if(user.SecondRace == Race.None && user.IsHalfBlood) user.SecondRace = Race.Elf;
-                    }
-                },delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood)) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstRace == Race.Elf) user.FirstRace = Race.Human;
-                        else if(user.SecondRace == Race.Elf) user.SecondRace = Race.None;
-                    }
-                }),
-                new PlayerRace("Hafling.png", "Hafling", Race.Hafling, delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstRace == Race.Human) user.FirstRace = Race.Hafling;
-                        else if(user.SecondRace == Race.None && user.IsHalfBlood) user.SecondRace = Race.Hafling;
-                    }
-                },delegate(User? user)
-                {
-                    if(user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood))return true;
-                    return false;
-                },delegate(User? user)
-                {
-                    if(user != null)
-                    {
-                        if(user.FirstRace == Race.Hafling) user.FirstRace = Race.Human;
-                        else if(user.SecondRace == Race.Hafling) user.SecondRace = Race.None;
-                    }
-                }),
-                new PlayerClass("Supermunchkin.png", "Supermunchkin", Class.None, delegate(User? user)
-                {
-                    if(user != null)
-                        user.IsSuperMunchkin = true;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        if(user.IsSuperMunchkin == false) return true;
-                    return false;
-                }, delegate(User? user)
-                {
-                    if(user != null)
-                        user.IsSuperMunchkin = false;
-                }),
+                new PlayerClass("Cleric.png", "Cleric",Class.Cleric, null, null, null),
+                new PlayerClass("Thief.png", "Thief", Class.Thief, null, null, null),
+                new PlayerClass("Warrior.png", "Warrior", Class.Warrior, null, null, null),
+                new PlayerClass("Wizard.png", "Wizard", Class.Wizard, null, null, null),
+                new PlayerRace("Dwarf.png", "Dwarf", Race.Dwarf, null, null, null),
+                new PlayerRace("Elf.png", "Elf", Race.Elf, null, null, null),
+                new PlayerRace("Hafling.png", "Hafling", Race.Hafling, null, null, null),
+                new PlayerClass("Supermunchkin.png", "Supermunchkin", Class.None, null, null, null),
                 new PlayerRace("HalfBreed.png", "Half Breed", Race.None, delegate(User? user)
                 {
                     if(user != null)
@@ -918,6 +776,328 @@ namespace Munchkin.Cards
             door11.Condition = null;
             door11.Discard = null;
 
+            PlayerClass door12 = Doors[12] as PlayerClass; // Cleric
+            door12.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.None)
+                    {
+                        user.FirstClass = Class.Cleric;
+                        user.Class1 = door12;
+                    }
+                    else if (user.SecondClass == Class.None && user.IsSuperMunchkin)
+                    {
+                        user.SecondClass = Class.Cleric;
+                        user.Class2 = door12;
+                    }
+                }
+            };
+            door12.Condition = delegate (User? user) 
+            {
+                if (user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin)) return true;
+                return false;
+            };
+            door12.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.Cleric)
+                    {
+                        user.FirstClass = Class.None;
+                        user.Class1 = null;
+                    }
+                    else if (user.SecondClass == Class.Cleric)
+                    { 
+                        user.SecondClass = Class.None;
+                        user.Class2 = null;
+                    }
+                }
+            };
+
+            PlayerClass door13 = Doors[13] as PlayerClass; // Thief
+            door13.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.None)
+                    {
+                        user.FirstClass = Class.Thief;
+                        user.Class1 = door13;
+                    }
+                    else if (user.SecondClass == Class.None && user.IsSuperMunchkin)
+                    { 
+                        user.SecondClass = Class.Thief;
+                        user.Class2 = door13;
+                    }
+                }
+            };
+            door13.Condition = delegate (User? user)
+            {
+                if (user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin)) return true;
+                return false;
+            };
+            door13.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.Thief)
+                    {
+                        user.FirstClass = Class.None;
+                        user.Class1 = null;
+                    }
+                    else if (user.SecondClass == Class.Thief)
+                    {
+                        user.SecondClass = Class.None;
+                        user.Class2 = null;
+                    }
+                }
+            };
+
+            PlayerClass door14 = Doors[14] as PlayerClass; //Warrior
+            door14.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.None)
+                    {
+                        user.FirstClass = Class.Warrior;
+                        user.Class1 = door14;
+                    }
+                    else if (user.SecondClass == Class.None && user.IsSuperMunchkin)
+                    { 
+                        user.SecondClass = Class.Warrior;
+                        user.Class2 = door14;
+                    }
+                }
+            };
+            door14.Condition = delegate (User? user)
+            {
+                if (user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin)) return true;
+                return false;
+            };
+            door14.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.Warrior)
+                    {
+                        user.FirstClass = Class.None;
+                        user.Class1 = null;
+                    }
+                    else if (user.SecondClass == Class.Warrior) 
+                    { 
+                        user.SecondClass = Class.None;
+                        user.Class2 = null;
+                    }
+                }
+            };
+
+            PlayerClass door15 = Doors[15] as PlayerClass; //Wizard
+            door15.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.None)
+                    {
+                        user.FirstClass = Class.Wizard;
+                        user.Class1 = door15;
+                    }
+                    else if (user.SecondClass == Class.None && user.IsSuperMunchkin) 
+                    {
+                        user.SecondClass = Class.Wizard;
+                        user.Class2 = door15;
+                    };
+                }
+            };
+            door15.Condition = delegate (User? user)
+            {
+                if (user.FirstClass == Class.None || (user.SecondClass == Class.None && user.IsSuperMunchkin)) return true;
+                return false;
+            };
+            door15.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstClass == Class.Wizard)
+                    {
+                        user.FirstClass = Class.None;
+                        user.Class1 = null;
+                    }
+                    else if (user.SecondClass == Class.Wizard)
+                    {
+                        user.SecondClass = Class.None;
+                        user.Class2 = null;
+                    }
+                }
+            };
+
+            PlayerRace door16 = Doors[16] as PlayerRace; //Dwarf
+            door16.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstRace == Race.Human)
+                    {
+                        user.FirstRace = Race.Dwarf;
+                        user.Race1 = door16;
+                    }
+                    else if (user.SecondRace == Race.None && user.IsHalfBlood)
+                    { 
+                        user.SecondRace = Race.Dwarf; 
+                        user.Race2 = door16;
+                    }
+                }
+            };
+            door16.Condition = delegate (User? user)
+            {
+                if (user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood)) return true;
+                return false;
+            };
+            door16.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstRace == Race.Dwarf)
+                    {
+                        user.FirstRace = Race.Human;
+                        user.Race1 = null;
+                    }
+                    else if (user.SecondRace == Race.Dwarf)
+                    {
+                        user.SecondRace = Race.None;
+                        user.Race2 = null;
+                    }
+                }
+            };
+
+            PlayerRace door17 = Doors[17] as PlayerRace; //Elf
+            door17.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstRace == Race.Human)
+                    {
+                        user.FirstRace = Race.Elf;
+                        user.Race1 = door17;
+                    }
+                    else if (user.SecondRace == Race.None && user.IsHalfBlood)
+                    {
+                        user.SecondRace = Race.Elf;
+                        user.Race2 = door17;
+                    }
+                }
+            };
+            door17.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood)) return true;
+                return false;
+            };
+            door17.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstRace == Race.Elf)
+                    {
+                        user.FirstRace = Race.Human;
+                        user.Race1 = null;
+                    }
+                    else if (user.SecondRace == Race.Elf)
+                    {
+                        user.SecondRace = Race.None;
+                        user.Race2 = null;
+                    }
+                }
+            };
+
+            PlayerRace door18 = Doors[18] as PlayerRace; //Hafling
+            door18.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstRace == Race.Human)
+                    {
+                        user.FirstRace = Race.Hafling;
+                        user.Race1 = door18;
+                    }
+                    else if (user.SecondRace == Race.None && user.IsHalfBlood)
+                    {
+                        user.SecondRace = Race.Hafling;
+                        user.Race2 = door18;
+                    }
+                }
+            };
+            door18.Condition = delegate (User? user)
+            {
+                if (user.FirstRace == Race.Human || (user.SecondRace == Race.None && user.IsHalfBlood)) return true;
+                return false;
+            };
+            door18.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (user.FirstRace == Race.Hafling)
+                    {
+                        user.FirstRace = Race.Human;
+                        user.Race1 = null;
+                    }
+                    else if (user.SecondRace == Race.Hafling)
+                    {
+                        user.SecondRace = Race.None;
+                        user.Race2 = null;
+                    }
+                }
+            };
+
+            PlayerClass door19 = Doors[19] as PlayerClass; //Supermunchkin
+            door19.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.IsSuperMunchkin = true;
+                    user.Supermunchkin = door19;
+                }
+                   
+            };
+            door19.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.IsSuperMunchkin == false) return true;
+                return false;
+            };
+            door19.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.IsSuperMunchkin = false;
+                    user.Supermunchkin = null;
+                }
+            };
+
+            PlayerRace door20 = Doors[20] as PlayerRace; //Half-Breed
+            door20.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.IsHalfBlood = true;
+                    user.HalfBlood = door20;
+                }
+            };
+            door20.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.IsHalfBlood == false) return true;
+                return false;
+            };
+            door20.Discard = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.IsHalfBlood = false;
+                    user.HalfBlood = null;
+                }
+            };
 
         }
         public event PropertyChangedEventHandler PropertyChanged;
