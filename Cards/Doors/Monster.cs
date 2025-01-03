@@ -8,9 +8,9 @@ namespace Munchkin.Cards.Doors
 {
     public class Monster : Door
     {
-        private int level;
-        private int levels;
-        private int treasusers;
+        public int Level { get; set; }
+        public int Levels { get; set; }
+        public int Treasusers { get; set; }
         private int power;
         private Active? badStuff;
 
@@ -29,9 +29,9 @@ namespace Munchkin.Cards.Doors
         public Monster(string source, string name, Active? action, Active? badStuff, Condition? condition, Discard? discard, int level, int levels, int treasures, int power) 
             : base(source, name, action, condition, discard)
         {
-            this.level = level;
-            this.levels = levels;
-            this.treasusers = treasures;
+            this.Level = level;
+            this.Levels = levels;
+            this.Treasusers = treasures;
             this.power = power;
             BadStuff = badStuff;
         }

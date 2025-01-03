@@ -204,14 +204,17 @@ namespace Munchkin
             {
                 Tips = "Opening the DOOR!";
                 OpenDoor();
+                await Task.Delay(3000);
             }
             if (Stadia == Stadia.Choice)
             {
                 Tips = "Loot the Room OR \nLook for Troubles";
                 LastCalledMethod = "";
+                doorsToOpen = 1;
                 while(LastCalledMethod == "") await Task.Delay(500);
                 if (LastCalledMethod == "Use") Stadia = Stadia.Battle;
                 else if (LastCalledMethod == "ProvideDoor") Stadia = Stadia.DiscardCards;
+                doorsToOpen = 0;
             }
             if(Stadia == Stadia.Battle)
             {
@@ -221,7 +224,7 @@ namespace Munchkin
                 while (LastCalledMethod == "") await Task.Delay(500);
                 if (LastCalledMethod == "Fight") user.Fight(currentMonster);
                 else if (LastCalledMethod == "Flee") user.Flee(currentMonster);
-                Stadia = Stadia.DiscardCards;
+                Stadia = Stadia.TakeTreasures;
             }
             if(Stadia == Stadia.DiscardCards)
             {
@@ -232,7 +235,17 @@ namespace Munchkin
                 }
                 Stadia = Stadia.OpenDoors;
             }
-            await Start();
+            if (Stadia == Stadia.TakeTreasures)
+            {
+                Tips = "Take treasures";
+                while (treasuresToTake != 0)
+                {
+                    Tips = $"Take {treasuresToTake} treasures";
+                    await Task.Delay(500);
+                }
+                Stadia = Stadia.DiscardCards;
+            }
+                await Start();
         }
         
 

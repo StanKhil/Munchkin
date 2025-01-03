@@ -181,7 +181,9 @@ namespace Munchkin.Player
             {
                 if (level != value)
                 {
+                    Power -= level;
                     level = value;
+                    Power = level + Power;
                     OnPropertyChanged();
                 }
             }
@@ -205,13 +207,24 @@ namespace Munchkin.Player
             get => power;
             set
             {
-                if (power != value)
+                power = value;
+                OnPropertyChanged();
+                
+            }
+        }
+
+        /*public int TotalPower
+        {
+            get => level + power;
+            set
+            {
+                if (TotalPower != value)
                 {
-                    power = value;
+                    TotalPower = value;
                     OnPropertyChanged();
                 }
             }
-        }
+        }*/
 
 
         public Armor? Body
@@ -464,7 +477,21 @@ namespace Munchkin.Player
         public void Fight(Monster? monster)
         {
             MessageBox.Show("Fighting");
-
+            if(Power >= GameManager.CurrentMonster.Power)
+            {
+                MessageBox.Show("You won");
+                Level += GameManager.CurrentMonster.Levels;
+                GameManager.treasuresToTake = GameManager.CurrentMonster.Treasusers;
+            }
+            else
+            {
+                MessageBox.Show("You lost");
+                GameManager.CurrentMonster.BadStuff(this);
+            }
+            GameTable.fightPanel.Visibility = Visibility.Hidden;
+            GameManager.CurrentMonster = null;
+            GameTable.monster.Source = null;
+            GameManager.positions["monster"] = null;
         }
         public void Flee(Monster? monster)
         {

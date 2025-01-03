@@ -391,7 +391,7 @@ namespace Munchkin.Cards
             treasure15.Condition = delegate(User? user)
             {
                 if (user != null)
-                    if (user.FirstRace == Race.Dwarf || user.SecondRace == Race.Dwarf && user.Body == null) return true;
+                    if ((user.FirstRace == Race.Dwarf || user.SecondRace == Race.Dwarf) && user.Body == null) return true;
                 return false;
             };
             treasure15.Discard = delegate (User? user)
@@ -607,7 +607,7 @@ namespace Munchkin.Cards
             door1.Discard = null;
 
             Monster door2 = Doors[2] as Monster; //Crabs
-            door2.Action = null;
+            door2.Action = delegate (User? user) { };
             door2.BadStuff = delegate (User? user)
             {
                 if (user != null)
