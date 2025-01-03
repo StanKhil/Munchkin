@@ -19,7 +19,7 @@ namespace Munchkin
         Choice,
         LootTheRoom, //ProvideDoor
         TakeTreasures,
-        UseCards,
+        Flee,
         DiscardCards,
         Battle
     }
@@ -202,9 +202,14 @@ namespace Munchkin
             }
             if (Stadia == Stadia.OpenDoors)
             {
-                Tips = "Opening the DOOR!";
+                Tips = "Open the DOOR!";
+                doorsToOpen = 1;
+                while(LastCalledMethod != "OpenDoor")
+                {
+                    await Task.Delay(500);
+                }
+                doorsToOpen = 0;
                 OpenDoor();
-                await Task.Delay(3000);
             }
             if (Stadia == Stadia.Choice)
             {
@@ -219,11 +224,17 @@ namespace Munchkin
             if(Stadia == Stadia.Battle)
             {
                 Tips = "Figting a monster\nCompare monster's \nand your power";
+                table.FirstPanel.Visibility = Visibility.Visible;
                 table.fightPanel.Visibility = Visibility.Visible;
                 LastCalledMethod = "";
                 while (LastCalledMethod == "") await Task.Delay(500);
                 if (LastCalledMethod == "Fight") user.Fight(currentMonster);
-                else if (LastCalledMethod == "Flee") user.Flee(currentMonster);
+                else if (LastCalledMethod == "Roll") user.Roll(currentMonster);
+
+                while(currentMonster != null)
+                {
+                    await Task.Delay(500);
+                }
                 Stadia = Stadia.TakeTreasures;
             }
             if(Stadia == Stadia.DiscardCards)

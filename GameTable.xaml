@@ -131,27 +131,46 @@
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="4" Grid.Row="1" Background="#87480c">
                 <Image Name="monster" Width="150" Height="200" HorizontalAlignment="Left"></Image>
             </Border>
+
             <StackPanel Name="fightPanel" Visibility="Hidden" Grid.Column="5" Grid.Row="1">
-                <StackPanel Margin="40, 10"  Orientation="Horizontal">
-                    <TextBlock FontSize="20" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Text="Power: "/>
-                    <TextBlock FontSize="20" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Text="{Binding CurrentMonster.Power}"/>
+                <StackPanel Margin="0,0,0,19" Name = "FirstPanel" Visibility="Hidden">
+                    <StackPanel Margin="40, 10"  Orientation="Horizontal">
+                        <TextBlock FontSize="20" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Text="Power: "/>
+                        <TextBlock FontSize="20" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Text="{Binding CurrentMonster.Power}"/>
+                    </StackPanel>
+                    <Button Margin="20,20,0,0" Click="Fight" Background="#661800" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Width="70" Height="30" Content="Fight">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="100"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Margin="20,20,0,0"  Click="Roll" Background="#003c54" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Width="70" Height="30" Content="Roll">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="100"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </StackPanel>
-                <Button Margin="20" Click="Fight" Background="#661800" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Width="70" Height="30" Content="Fight">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="100"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button Margin="20"  Click="Flee" Background="#003c54" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Width="70" Height="30" Content="Flee">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="100"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                <StackPanel Name="RollResult" Visibility="Hidden" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <TextBlock FontSize="20" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Text="Roll: "/>
+                        <TextBlock FontSize="20" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Text="{Binding User.RollNumber}"/>
+                    </StackPanel>
+                    <Button Click="Flee" Background="#661800" Foreground="White" FontFamily="Resources/Fonts/#munchkin" Width="70" Height="30" Content="Flee">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="100"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+
+
             </StackPanel>
             <Border BorderThickness="5" Width="160" Height="210" Grid.Column="1" Grid.Row="2" Background="#87480c">
                 <Image Source="{Binding GameManager.User.Weapon1.Image.Source}"  Name="active1" MouseUp="Selected" ContextMenu="{StaticResource CardContextMenu}"  Width="150" Height="200"></Image>

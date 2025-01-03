@@ -222,6 +222,27 @@ namespace Munchkin.Cards
                     user.Body = null;
                 }
             };
+            Spell treasure6 = Treasures[6] as Spell; // Friendship Potion
+            treasure6.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (gameManager.CurrentMonster != null)
+                    {
+                        gameManager.Stadia = Stadia.OpenDoors;
+                        gameManager.CurrentMonster = null;
+                        gameManager.Table.monster.Source = null;
+                        gameManager.positions["monster"] = null;
+                    }
+                }
+            };
+            treasure6.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (gameManager.CurrentMonster != null) return true;
+                return false;
+            };
+            treasure6.Discard = null;
 
             Armor treasure7 = Treasures[7] as Armor; //Leather Armor
             treasure7.Action = delegate (User? user)
@@ -246,6 +267,21 @@ namespace Munchkin.Cards
                     user.Body = null;
                 }
             };
+            Spell treasure8 = Treasures[8] as Spell; // Loaded Die
+            treasure8.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    user.RollNumber = 6;
+                }
+            };
+            treasure8.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (user.RollNumber < user.RollMin) return true;
+                return false;
+            };
+            treasure8.Discard = null;
 
             Weapon treasure9 = Treasures[9] as Weapon; // Mace of sharpness
             treasure9.Action = delegate (User? user)
@@ -272,6 +308,28 @@ namespace Munchkin.Cards
                     else user.Weapon2 = null;
                 } 
             };
+            Spell treasure10 = Treasures[10] as Spell; // Magic Lamp
+            treasure10.Action = delegate (User? user)
+            {
+                if (user != null)
+                {
+                    if (gameManager.CurrentMonster != null)
+                    {
+                        gameManager.treasuresToTake = gameManager.CurrentMonster.Treasusers;
+                        gameManager.Stadia = Stadia.TakeTreasures;
+                        gameManager.CurrentMonster = null;
+                        gameManager.Table.monster.Source = null;
+                        gameManager.positions["monster"] = null;
+                    }
+                }
+            };
+            treasure10.Condition = delegate (User? user)
+            {
+                if (user != null)
+                    if (gameManager.CurrentMonster != null) return true;
+                return false;
+            };
+            treasure10.Discard = null;
 
             Weapon treasure11 = Treasures[11] as Weapon; //Rapier of sharpness
             treasure11.Action = delegate (User? user)
@@ -566,7 +624,7 @@ namespace Munchkin.Cards
             };
             door0.BadStuff = delegate (User? user)
             {
-                int roll = user.Roll();
+                int roll = new Random().Next();
                 if (roll <= 2) user.Death();
                 else
                 {
@@ -975,6 +1033,7 @@ namespace Munchkin.Cards
                         user.SecondRace = Race.Elf;
                         user.Race2 = door17;
                     }
+                    user.RollMin = 3;
                 }
             };
             door17.Condition = delegate (User? user)

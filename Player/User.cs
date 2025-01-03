@@ -39,6 +39,35 @@ namespace Munchkin.Player
         private int limit = 5;
         private bool canFlee = false;
 
+        private int rollNumber = -1;
+        private int rollMin = 4;
+
+        public int RollNumber
+        {
+            get => rollNumber;
+            set
+            {
+                if (rollNumber != value)
+                {
+                    rollNumber = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int RollMin
+        {
+            get => rollMin;
+            set
+            {
+                if (rollMin != value)
+                {
+                    rollMin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private List<Treasure> activeTreasures = new List<Treasure>();
         List<Card> hand = new List<Card>();
 
@@ -496,10 +525,31 @@ namespace Munchkin.Player
         public void Flee(Monster? monster)
         {
             MessageBox.Show("Fleeing");
+            RollNumber = new Random().Next(1, 7);
+            if (RollNumber >= RollMin)
+            {
+                MessageBox.Show("You fled");
+            }
+            else
+            {
+                MessageBox.Show("You didn't flee");
+                GameManager.CurrentMonster.BadStuff(this);
+            }
+            GameTable.fightPanel.Visibility = Visibility.Hidden;
+            GameTable.RollResult.Visibility = Visibility.Hidden;
+            GameManager.CurrentMonster = null;
+            GameTable.monster.Source = null;
+            GameManager.positions["monster"] = null;
         }
-        public int Roll()
+        public async void Roll(Monster? monster)
         {
-            return new Random().Next(1, 7);
+            MessageBox.Show("Roll");
+            RollNumber = new Random().Next(1, 7);
+            GameTable.FirstPanel.Visibility = Visibility.Hidden;
+            GameTable.RollResult.Visibility = Visibility.Visible;
+            while(GameManager.LastCalledMethod != "Flee") await Task.Delay(500);
+            Flee(monster);
+
         }
         public void Death()
         { 

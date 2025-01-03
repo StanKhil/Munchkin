@@ -142,7 +142,11 @@ namespace Munchkin
         }
         public void ProvideDoor()
         {
-
+            if (gameManager.Stadia == Stadia.OpenDoors)
+            {
+                gameManager.LastCalledMethod = "OpenDoor";
+                return;
+            }
             if (user.Hand.Count == 10)
             {
                 MessageBox.Show("You cannot take more cards");
@@ -296,6 +300,11 @@ namespace Munchkin
         {
             gameManager.LastCalledMethod = "Fight";
             //User.Fight(gameManager.CurrentMonster);
+        }
+
+        private void Roll(object sender, RoutedEventArgs e)
+        {
+            gameManager.LastCalledMethod = "Roll";
         }
 
         private void Flee(object sender, RoutedEventArgs e)
