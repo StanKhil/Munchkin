@@ -127,9 +127,7 @@ namespace Munchkin.Cards
                 {
                     user.Power += 4;
                     user.Weapon1 = treasure2;
-                    user.Weapon2 = new Weapon();
-                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\\\UsedSlot.png") as ImageSource;
-                    //user.Weapon2.Image.Source = new BitmapImage(new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\\\UsedSlot.png"));
+                    user.Weapon2 = new Weapon("UsedSlot.png");
                 }
             };
             treasure2.Condition = delegate (User? user)
@@ -144,6 +142,7 @@ namespace Munchkin.Cards
                 {
                     user.Power -= 4;
                     user.Weapon1 = null;
+                    user.Weapon2 = new Weapon(null);
                     user.Weapon2 = null;
                 }
             };
@@ -181,9 +180,7 @@ namespace Munchkin.Cards
                 {
                     user.Power += 1;
                     user.Weapon1 = treasure4;
-                    user.Weapon2 = new Weapon();
-                    user.Weapon2.Image.Source = new ImageSourceConverter().ConvertFromString(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\UsedSlot.png") as ImageSource;
-                    //user.Weapon2.Image.Source = new BitmapImage(new Uri(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Resources\\Cards\\Treasures\\\\UsedSlot.png", UriKind.Relative));
+                    user.Weapon2 = new Weapon("UsedSlot.png");
                 }
             };
             treasure4.Condition = delegate (User? user)
