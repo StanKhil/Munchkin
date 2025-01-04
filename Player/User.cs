@@ -213,6 +213,11 @@ namespace Munchkin.Player
                     Power -= level;
                     level = value;
                     Power = level + Power;
+                    if(Level == 10)
+                    {
+                        MessageBox.Show("You won");
+                        GameTable.ToMainMenu(null, null);
+                    }
                     OnPropertyChanged();
                 }
             }
