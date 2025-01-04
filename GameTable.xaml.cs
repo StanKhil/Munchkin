@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Munchkin
@@ -145,6 +146,34 @@ namespace Munchkin
 
             gameManager.treasuresToTake--;
         }
+        public void ProvideTreasureDiscard()
+        {
+            if (user.FirstClass != Class.Cleric && user.SecondClass != Class.Cleric) return;
+            if (gameManager.discardTreasures.Count == 0) return;
+            if (user.Hand.Count == 10)
+            {
+                MessageBox.Show("You cannot take more cards");
+                return;
+            }
+            int cardNumber = new Random().Next(0, gameManager.discardTreasures.Count);
+            Card card = gameManager.discardTreasures[cardNumber];
+            gameManager.discardTreasures.RemoveAt(cardNumber);
+
+            string path = "";
+            foreach (var position in gameManager.positions)
+            {
+                if (position.Value == null)
+                {
+                    path = position.Key;
+                    break;
+                }
+            }
+            gameManager.positions[path] = card;
+            user.Hand.Add(card);
+            SeekAddPosition(path);
+
+            gameManager.treasuresToTake--;
+        }
         public void ProvideDoor()
         {
             if (gameManager.Stadia == Stadia.OpenDoors)
@@ -182,6 +211,54 @@ namespace Munchkin
             SeekAddPosition(path);
 
             gameManager.doorsToOpen--;
+        }
+        public void ProvideDoorDiscard()
+        {
+            if (user.FirstClass != Class.Cleric && user.SecondClass != Class.Cleric) return;
+            if (gameManager.discardDoors.Count == 0) return;
+            if (gameManager.Stadia == Stadia.OpenDoors)
+            {
+                gameManager.LastCalledMethod = "OpenDoor";
+                return;
+            }
+            if (user.Hand.Count == 10)
+            {
+                MessageBox.Show("You cannot take more cards");
+                return;
+            }
+
+            if (gameManager.Deck.Doors.Count == 0)
+            {
+                gameManager.Deck.UpdateDoors();
+            }
+
+            int cardNumber = new Random().Next(0, gameManager.discardDoors.Count);
+            Card selectedCard = gameManager.discardDoors[cardNumber];
+            gameManager.discardDoors.RemoveAt(cardNumber);
+
+            string path = "";
+            foreach (var position in gameManager.positions)
+            {
+                if (position.Value == null)
+                {
+                    path = position.Key;
+                    break;
+                }
+            }
+            gameManager.LastCalledMethod = "ProvideDoor";
+            gameManager.positions[path] = selectedCard;
+            user.Hand.Add(selectedCard);
+            SeekAddPosition(path);
+
+            gameManager.doorsToOpen--;
+        }
+        private void TakeTreasureDiscard(object sender, MouseButtonEventArgs e)
+        {
+            if (gameManager.treasuresToTake != 0) ProvideTreasureDiscard();
+        }
+        private void TakeDoorDiscard(object sender, MouseButtonEventArgs e)
+        {
+            if (gameManager.doorsToOpen != 0) ProvideDoorDiscard();
         }
         public void TakeTreasure(object sender, RoutedEventArgs e)
         {
@@ -263,6 +340,7 @@ namespace Munchkin
 
         public void Discard(object sender, RoutedEventArgs e)
         {
+            gameManager.LastCalledMethod = "Discard";
             Image? img = null;
             string path = "";
             if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu)
@@ -289,7 +367,12 @@ namespace Munchkin
             {
                 gameManager.discardDoors.Add(card as Door);
             }
-            
+
+            if(gameManager.Stadia == Stadia.Battle && (user.FirstClass == Class.Warrior || user.SecondClass == Class.Warrior))
+            {
+                user.Discarded++;
+                user.Power += user.Discarded / 3;
+            }
             user.Hand.Remove(card);
         }
 
@@ -307,7 +390,11 @@ namespace Munchkin
             if (gameManager.positions[path] is Treasure && user.Level != 9)
             {
                 user.Money += (gameManager.positions[path] as Treasure).Price;
-                if(user.FirstRace == Race.Hafling || user.SecondRace == Race.Hafling) user.Money += (gameManager.positions[path] as Treasure).Price;
+                if((user.FirstRace == Race.Hafling || user.SecondRace == Race.Hafling) && user.SellDoublePrice)
+                {
+                    user.Money += (gameManager.positions[path] as Treasure).Price;
+                    user.SellDoublePrice = false;
+                }
                 user.Level += (user.Money) / 1000;
                 user.Money %= 1000;
                 Discard(sender, e);
@@ -333,5 +420,7 @@ namespace Munchkin
         {
             gameManager.LastCalledMethod = "Flee";
         }
+
+        
     }
 }

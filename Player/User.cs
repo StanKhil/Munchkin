@@ -38,35 +38,11 @@ namespace Munchkin.Player
         private int power = 1;
         private int limit = 5;
         private bool canFlee = false;
-
+        private bool hasBig = false;
+        private bool sellDoublePrice = false;
         private int rollNumber = -1;
         private int rollMin = 4;
-
-        public int RollNumber
-        {
-            get => rollNumber;
-            set
-            {
-                if (rollNumber != value)
-                {
-                    rollNumber = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int RollMin
-        {
-            get => rollMin;
-            set
-            {
-                if (rollMin != value)
-                {
-                    rollMin = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private int discarded = 0;
 
         private List<Treasure> activeTreasures = new List<Treasure>();
         List<Card> hand = new List<Card>();
@@ -94,14 +70,56 @@ namespace Munchkin.Player
 
         private bool isSuperMunchkin;
         private bool isHalfBlood;
-        public bool HasBig { get; set; }
+        public bool SellDoublePrice
+        {
+            get => sellDoublePrice;
+            set => sellDoublePrice = value;
+        }
+        public bool HasBig { 
+            get => hasBig;
+            set 
+            {
+                if (firstRace == Race.Dwarf || secondRace == Race.Dwarf) hasBig = false;
+                else hasBig = value;
+            }
+        }
         public bool CanFlee { get; set; }
+     
+        public int Discarded
+        { 
+            get => discarded;
+            set => discarded = value;
+        }
         public int Limit 
         { 
             get => limit; 
             set => limit = value; 
         }
+        public int RollNumber
+        {
+            get => rollNumber;
+            set
+            {
+                if (rollNumber != value)
+                {
+                    rollNumber = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
+        public int RollMin
+        {
+            get => rollMin;
+            set
+            {
+                if (rollMin != value)
+                {
+                    rollMin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public User(GameManager gm)
         {
             GameManager = gm;
@@ -247,19 +265,7 @@ namespace Munchkin.Player
             }
         }
 
-        /*public int TotalPower
-        {
-            get => level + power;
-            set
-            {
-                if (TotalPower != value)
-                {
-                    TotalPower = value;
-                    OnPropertyChanged();
-                }
-            }
-        }*/
-
+       
 
         public Armor? Body
         {
@@ -511,7 +517,7 @@ namespace Munchkin.Player
         public void Fight(Monster? monster)
         {
             MessageBox.Show("Fighting");
-            if(Power >= GameManager.CurrentMonster.Power)
+            if(Power > GameManager.CurrentMonster.Power || ((firstClass == Class.Warrior || secondClass == Class.Warrior) && Power >= GameManager.CurrentMonster.Power))
             {
                 MessageBox.Show("You won");
                 Level += GameManager.CurrentMonster.Levels;
@@ -529,7 +535,7 @@ namespace Munchkin.Player
             GameManager.positions["monster"] = null;
             
         }
-        public void Flee()
+        public async void Flee()
         {
             MessageBox.Show("Fleeing");
             if (RollNumber >= RollMin)
@@ -553,11 +559,14 @@ namespace Munchkin.Player
         {
             MessageBox.Show("Roll");
             RollNumber = new Random().Next(1, 7);
+            if (firstRace == Race.Elf || secondRace == Race.Elf) RollNumber++;
             GameTable.FirstPanel.Visibility = Visibility.Hidden;
             GameTable.RollResult.Visibility = Visibility.Visible;
-            while(GameManager.LastCalledMethod != "Flee") await Task.Delay(500);
-            Flee();
-
+            if (RollNumber < RollMin && (firstRace == Race.Hafling || secondRace == Race.Hafling)) GameManager.Tips = "You are Hafling.\nYou can discard\n a card and flee\nagain";
+            GameManager.LastCalledMethod = "";
+            while (GameManager.LastCalledMethod == "") await Task.Delay(500);
+            if (GameManager.LastCalledMethod == "Discard" && (firstRace == Race.Hafling || secondRace == Race.Hafling)) Roll();
+            else if(GameManager.LastCalledMethod == "Flee") Flee();
         }
         public void Death()
         {

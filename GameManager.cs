@@ -191,6 +191,7 @@ namespace Munchkin
             if (Stadia == Stadia.Start)
             {
                 Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
+                user.SellDoublePrice = true;
                 while(doorsToOpen != 0 || treasuresToTake != 0)
                 {
                     Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
@@ -226,14 +227,14 @@ namespace Munchkin
                 table.FirstPanel.Visibility = Visibility.Visible;
                 table.fightPanel.Visibility = Visibility.Visible;
                 LastCalledMethod = "";
-                while (LastCalledMethod == "") await Task.Delay(500);
+                while (LastCalledMethod == "" || LastCalledMethod=="Discard") await Task.Delay(500);
                 if (LastCalledMethod == "Fight") user.Fight(currentMonster);
                 else if (LastCalledMethod == "Roll") user.Roll();
 
-                while(currentMonster != null)
-                {
-                    await Task.Delay(500);
-                }
+                while(currentMonster != null) await Task.Delay(500);
+
+                user.Power -= user.Discarded / 3;
+                user.Discarded = 0;
                 Stadia = Stadia.TakeTreasures;
             }
             if(Stadia == Stadia.DiscardCards)

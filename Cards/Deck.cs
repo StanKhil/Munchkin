@@ -1008,6 +1008,7 @@ namespace Munchkin.Cards
             {
                 if (user != null)
                 {
+                    user.Limit = 5;
                     if (user.FirstRace == Race.Dwarf)
                     {
                         user.FirstRace = Race.Human;
