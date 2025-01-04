@@ -10,6 +10,8 @@ using System.Windows;
 using System.Windows.Media;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+using System;
 
 // Желательно не смотреть
 
@@ -19,6 +21,8 @@ namespace Munchkin.Cards
     {
         private ObservableCollection<Treasure> treasures;
         private ObservableCollection<Door> doors;
+        private List<Door> doorsList;
+        private List<Treasure> treasuresList;
         GameManager gameManager;
 
         public ObservableCollection<Treasure> Treasures
@@ -227,13 +231,14 @@ namespace Munchkin.Cards
             {
                 if (user != null)
                 {
-                    if (gameManager.CurrentMonster != null)
-                    {
-                        gameManager.Stadia = Stadia.OpenDoors;
-                        gameManager.CurrentMonster = null;
-                        gameManager.Table.monster.Source = null;
-                        gameManager.positions["monster"] = null;
-                    }
+                    gameManager.Stadia = Stadia.OpenDoors;
+                    gameManager.discardDoors.Add(gameManager.CurrentMonster);
+                    gameManager.CurrentMonster = null;
+                    gameManager.Table.monster.Source = null;
+                    gameManager.positions["monster"] = null;
+                    gameManager.Table.fightPanel.Visibility = Visibility.Hidden;
+                    gameManager.LastCalledMethod = "end";
+
                 }
             };
             treasure6.Condition = delegate (User? user)
@@ -278,7 +283,7 @@ namespace Munchkin.Cards
             treasure8.Condition = delegate (User? user)
             {
                 if (user != null)
-                    if (user.RollNumber < user.RollMin) return true;
+                    if (user.RollNumber < user.RollMin && gameManager.CurrentMonster != null) return true;
                 return false;
             };
             treasure8.Discard = null;
@@ -313,14 +318,15 @@ namespace Munchkin.Cards
             {
                 if (user != null)
                 {
-                    if (gameManager.CurrentMonster != null)
-                    {
-                        gameManager.treasuresToTake = gameManager.CurrentMonster.Treasusers;
-                        gameManager.Stadia = Stadia.TakeTreasures;
-                        gameManager.CurrentMonster = null;
-                        gameManager.Table.monster.Source = null;
-                        gameManager.positions["monster"] = null;
-                    }
+                    gameManager.treasuresToTake = gameManager.CurrentMonster.Treasusers;
+                    gameManager.Stadia = Stadia.TakeTreasures;
+                    gameManager.discardDoors.Add(gameManager.CurrentMonster);
+                    gameManager.CurrentMonster = null;
+                    gameManager.Table.monster.Source = null;
+                    gameManager.positions["monster"] = null;
+                    gameManager.Table.fightPanel.Visibility = Visibility.Hidden;
+                    gameManager.LastCalledMethod = "end";
+
                 }
             };
             treasure10.Condition = delegate (User? user)
@@ -770,7 +776,7 @@ namespace Munchkin.Cards
             };
             door8.BadStuff = delegate (User? user)
             {
-                if (user != null) user.Death();
+                if (user != null && user.Level <= 5) user.Death();
             };
             door8.Condition = null;
             door8.Discard = null;
@@ -1146,7 +1152,35 @@ namespace Munchkin.Cards
                     user.HalfBlood = null;
                 }
             };
+
+            doorsList = new List<Door>(Doors);
+            treasuresList = new List<Treasure>(Treasures);
+            foreach(Door door in Doors)
+            {
+                doorsList.Add(door);
+            }
+            foreach (Treasure treasure in Treasures)
+            {
+                treasuresList.Add(treasure);
+            }
         }
+
+        public void UpdateDoors()
+        {
+            MessageBox.Show("Update Doors");
+            Random random = new Random();
+            Doors = new ObservableCollection<Door>(gameManager.discardDoors.OrderBy(x => random.Next()));
+            gameManager.discardDoors.Clear();
+        }
+
+        public void UpdateTreasures()
+        {
+            MessageBox.Show("Update Treasures");
+            Random random = new Random();
+            Treasures = new ObservableCollection<Treasure>(gameManager.discardTreasures.OrderBy(x => random.Next()));
+            gameManager.discardTreasures.Clear();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

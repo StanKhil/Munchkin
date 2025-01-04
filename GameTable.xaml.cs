@@ -55,7 +55,7 @@ namespace Munchkin
             }
         }
 
-        private void ToMainMenu(object sender, RoutedEventArgs e)
+        public void ToMainMenu(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.ToMainMenu();
@@ -121,6 +121,11 @@ namespace Munchkin
                 MessageBox.Show("You cannot take more cards");
                 return;
             }
+            if(gameManager.Deck.Treasures.Count == 0)
+            {
+                gameManager.Deck.UpdateTreasures();
+            }
+
             int cardNumber = new Random().Next(0, gameManager.Deck.Treasures.Count);
             Card card = gameManager.Deck.Treasures[cardNumber];
             gameManager.Deck.Treasures.RemoveAt(cardNumber);
@@ -152,6 +157,12 @@ namespace Munchkin
                 MessageBox.Show("You cannot take more cards");
                 return;
             }
+
+            if (gameManager.Deck.Doors.Count == 0)
+            {
+                gameManager.Deck.UpdateDoors();
+            }
+
             int cardNumber = new Random().Next(0, gameManager.Deck.Doors.Count);
             Card selectedCard = gameManager.Deck.Doors[cardNumber];
             gameManager.Deck.Doors.RemoveAt(cardNumber);
@@ -249,6 +260,7 @@ namespace Munchkin
             user.Hand.Remove(selectedCard);
 
         }
+
         public void Discard(object sender, RoutedEventArgs e)
         {
             Image? img = null;
@@ -269,6 +281,15 @@ namespace Munchkin
                 if (card.Discard != null) card.Discard(user);
             }
             gameManager.positions[path] = null;
+            if(card is Treasure)
+            {
+                gameManager.discardTreasures.Add(card as Treasure);
+            }
+            else if(card is Door)
+            {
+                gameManager.discardDoors.Add(card as Door);
+            }
+            
             user.Hand.Remove(card);
         }
 
@@ -286,6 +307,7 @@ namespace Munchkin
             if (gameManager.positions[path] is Treasure && user.Level != 9)
             {
                 user.Money += (gameManager.positions[path] as Treasure).Price;
+                if(user.FirstRace == Race.Hafling || user.SecondRace == Race.Hafling) user.Money += (gameManager.positions[path] as Treasure).Price;
                 user.Level += (user.Money) / 1000;
                 user.Money %= 1000;
                 Discard(sender, e);

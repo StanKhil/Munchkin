@@ -26,6 +26,8 @@ namespace Munchkin
     
     public class GameManager : INotifyPropertyChanged
     {
+        public List<Treasure> discardTreasures = new List<Treasure>();
+        public List<Door> discardDoors = new List<Door>();
         private Deck deck;
         private User user;
         private GameTable table;
@@ -153,8 +155,10 @@ namespace Munchkin
             Door door = deck.Doors.Last();
             if(door is Monster)
             {
-                table.monster.Source = door.Image.Source;
+                
                 currentMonster = (Monster)door;
+                table.monster.Source = door.Image.Source;
+                positions["monster"] = currentMonster;
                 //MessageBox.Show(currentMonster.Power + "");
                 Stadia = Stadia.Battle;
             }
@@ -184,11 +188,6 @@ namespace Munchkin
         }
         public async Task Start()
         {
-            //----------------------------
-            // 0) Use cards
-            // 1) Open doors
-            // 2) Discard cards
-            //----------------------------
             if (Stadia == Stadia.Start)
             {
                 Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
@@ -229,7 +228,7 @@ namespace Munchkin
                 LastCalledMethod = "";
                 while (LastCalledMethod == "") await Task.Delay(500);
                 if (LastCalledMethod == "Fight") user.Fight(currentMonster);
-                else if (LastCalledMethod == "Roll") user.Roll(currentMonster);
+                else if (LastCalledMethod == "Roll") user.Roll();
 
                 while(currentMonster != null)
                 {

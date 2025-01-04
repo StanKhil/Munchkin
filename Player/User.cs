@@ -518,42 +518,46 @@ namespace Munchkin.Player
                 GameManager.CurrentMonster.BadStuff(this);
             }
             GameTable.fightPanel.Visibility = Visibility.Hidden;
+            GameManager.discardDoors.Add(GameManager.CurrentMonster);
             GameManager.CurrentMonster = null;
             GameTable.monster.Source = null;
             GameManager.positions["monster"] = null;
+            
         }
-        public void Flee(Monster? monster)
+        public void Flee()
         {
             MessageBox.Show("Fleeing");
-            RollNumber = new Random().Next(1, 7);
             if (RollNumber >= RollMin)
             {
                 MessageBox.Show("You fled");
             }
             else
             {
-                MessageBox.Show("You didn't flee");
+                MessageBox.Show("You didn't flee " + RollMin + " " + RollNumber);
                 GameManager.CurrentMonster.BadStuff(this);
             }
             GameTable.fightPanel.Visibility = Visibility.Hidden;
             GameTable.RollResult.Visibility = Visibility.Hidden;
+            GameManager.discardDoors.Add(GameManager.CurrentMonster);
             GameManager.CurrentMonster = null;
             GameTable.monster.Source = null;
             GameManager.positions["monster"] = null;
+            
         }
-        public async void Roll(Monster? monster)
+        public async void Roll()
         {
             MessageBox.Show("Roll");
             RollNumber = new Random().Next(1, 7);
             GameTable.FirstPanel.Visibility = Visibility.Hidden;
             GameTable.RollResult.Visibility = Visibility.Visible;
             while(GameManager.LastCalledMethod != "Flee") await Task.Delay(500);
-            Flee(monster);
+            Flee();
 
         }
         public void Death()
-        { 
-
+        {
+            MessageBox.Show("You died");
+            GameTable.ToMainMenu(null, null);
         }
 
 
