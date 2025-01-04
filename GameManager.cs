@@ -191,7 +191,6 @@ namespace Munchkin
             if (Stadia == Stadia.Start)
             {
                 Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
-                user.SellDoublePrice = true;
                 while(doorsToOpen != 0 || treasuresToTake != 0)
                 {
                     Tips = $"Take {doorsToOpen} doors and\n {treasuresToTake} treasures";
@@ -202,6 +201,7 @@ namespace Munchkin
             }
             if (Stadia == Stadia.OpenDoors)
             {
+                user.SellDoublePrice = true;
                 Tips = "Open the DOOR!";
                 doorsToOpen = 1;
                 while(LastCalledMethod != "OpenDoor")
@@ -237,15 +237,6 @@ namespace Munchkin
                 user.Discarded = 0;
                 Stadia = Stadia.TakeTreasures;
             }
-            if(Stadia == Stadia.DiscardCards)
-            {
-                Tips = $"Discard cards until\n you have {user.Limit} \nof them";
-                while(user.Hand.Count > user.Limit)
-                {
-                    await Task.Delay(500);
-                }
-                Stadia = Stadia.OpenDoors;
-            }
             if (Stadia == Stadia.TakeTreasures)
             {
                 Tips = "Take treasures";
@@ -256,7 +247,17 @@ namespace Munchkin
                 }
                 Stadia = Stadia.DiscardCards;
             }
-                await Start();
+            if (Stadia == Stadia.DiscardCards)
+            {
+                Tips = $"Discard cards until\n you have {user.Limit} \nof them";
+                while(user.Hand.Count > user.Limit)
+                {
+                    await Task.Delay(500);
+                }
+                Stadia = Stadia.OpenDoors;
+            }
+            
+            await Start();
         }
         
 

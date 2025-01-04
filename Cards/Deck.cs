@@ -228,7 +228,7 @@ namespace Munchkin.Cards
             {
                 if (user != null)
                 {
-                    gameManager.Stadia = Stadia.OpenDoors;
+                    gameManager.Stadia = Stadia.DiscardCards;
                     gameManager.discardDoors.Add(gameManager.CurrentMonster);
                     gameManager.CurrentMonster = null;
                     gameManager.Table.monster.Source = null;
@@ -476,7 +476,7 @@ namespace Munchkin.Cards
             treasure16.Condition = delegate(User? user)
             {
                 if (user != null)
-                    if (user.FirstClass != Class.Thief && user.SecondClass != Class.Thief) return true;
+                    if (user.FirstClass != Class.Thief && user.SecondClass != Class.Thief && user.Accessory == null) return true;
                 return false;
             };
             treasure16.Discard = delegate (User? user)

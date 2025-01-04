@@ -290,6 +290,11 @@ namespace Munchkin
                 MessageBox.Show("You can't use this card");
                 return;
             }
+            else if(selectedCard is Monster && gameManager.Stadia != Stadia.Choice)
+            {
+                MessageBox.Show("You can't use this card");
+                return;
+            }
             else
             {
                 if (selectedCard is Monster)
