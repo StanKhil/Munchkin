@@ -378,7 +378,20 @@ namespace Munchkin
                 user.Discarded++;
                 user.Power += user.Discarded / 3;
             }
+            if (gameManager.Stadia == Stadia.Battle && (user.FirstClass == Class.Wizard || user.SecondClass == Class.Wizard)) user.Discarded++;
+
             user.Hand.Remove(card);
+            if((user.FirstClass == Class.Wizard || user.SecondClass == Class.Wizard) && user.Hand.Count == 0 && user.Discarded >= 3)
+            {
+                gameManager.Tips = "You charmed the\nmonster";
+                gameManager.treasuresToTake = gameManager.CurrentMonster.Treasusers;
+                fightPanel.Visibility = Visibility.Hidden;
+                gameManager.discardDoors.Add(gameManager.CurrentMonster);
+                gameManager.CurrentMonster = null;
+                monster.Source = null;
+                gameManager.positions["monster"] = null;
+                gameManager.Stadia = Stadia.TakeTreasures;
+            }
         }
 
         public void Sell(object sender, RoutedEventArgs e)

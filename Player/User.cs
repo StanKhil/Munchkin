@@ -253,7 +253,6 @@ namespace Munchkin.Player
                 }
             }
         }
-
         public int Power
         {
             get => power;
@@ -264,9 +263,6 @@ namespace Munchkin.Player
                 
             }
         }
-
-       
-
         public Armor? Body
         {
             get => body;
@@ -304,7 +300,6 @@ namespace Munchkin.Player
                 }
             }
         }
-
         public Footgear? Legs
         {
             get => legs;
@@ -500,7 +495,6 @@ namespace Munchkin.Player
                 }
             }
         }
-
         public bool IsHalfBlood
         {
             get => isHalfBlood;
@@ -565,6 +559,11 @@ namespace Munchkin.Player
             if (RollNumber < RollMin && (firstRace == Race.Hafling || secondRace == Race.Hafling)) GameManager.Tips = "You are Hafling.\nYou can discard\n a card and flee\nagain";
             GameManager.LastCalledMethod = "";
             while (GameManager.LastCalledMethod == "") await Task.Delay(500);
+            if(FirstClass == Class.Wizard || SecondClass == Class.Wizard)
+            {
+                if (Discarded > 3) RollNumber += 3;
+                else RollNumber += Discarded;
+            }
             if (GameManager.LastCalledMethod == "Discard" && (firstRace == Race.Hafling || secondRace == Race.Hafling)) Roll();
             else if(GameManager.LastCalledMethod == "Flee") Flee();
         }
