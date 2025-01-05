@@ -429,6 +429,7 @@ namespace Munchkin.Player
                 if (state != value)
                 {
                     state = value;
+                    GameTable.OnClassChanged();
                     OnPropertyChanged();
                 }
             }
@@ -441,6 +442,7 @@ namespace Munchkin.Player
                 if (firstClass != value)
                 {
                     firstClass = value;
+                    GameTable.OnClassChanged();
                     OnPropertyChanged();
                 }
             }
@@ -454,6 +456,7 @@ namespace Munchkin.Player
                 if (secondClass != value)
                 {
                     secondClass = value;
+                    GameTable.OnClassChanged();
                     OnPropertyChanged();
                 }
             }
@@ -466,6 +469,7 @@ namespace Munchkin.Player
                 if (firstRace != value)
                 {
                     firstRace = value;
+                    GameTable.OnClassChanged();
                     OnPropertyChanged();
                 }
             }
@@ -478,6 +482,7 @@ namespace Munchkin.Player
                 if (secondRace != value)
                 {
                     secondRace = value;
+                    GameTable.OnClassChanged();
                     OnPropertyChanged();
                 }
             }

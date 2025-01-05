@@ -117,15 +117,16 @@ namespace Munchkin
         }
         public void ProvideTreasure()
         {
+            if (gameManager.Deck.Treasures.Count == 0)
+            {
+                gameManager.Deck.UpdateTreasures();
+            }
             if (user.Hand.Count == 10)
             {
                 MessageBox.Show("You cannot take more cards");
                 return;
             }
-            if(gameManager.Deck.Treasures.Count == 0)
-            {
-                gameManager.Deck.UpdateTreasures();
-            }
+
 
             int cardNumber = new Random().Next(0, gameManager.Deck.Treasures.Count);
             Card card = gameManager.Deck.Treasures[cardNumber];
@@ -176,6 +177,10 @@ namespace Munchkin
         }
         public void ProvideDoor()
         {
+            if (gameManager.Deck.Doors.Count == 0)
+            {
+                gameManager.Deck.UpdateDoors();
+            }
             if (gameManager.Stadia == Stadia.OpenDoors)
             {
                 gameManager.LastCalledMethod = "OpenDoor";
@@ -187,10 +192,7 @@ namespace Munchkin
                 return;
             }
 
-            if (gameManager.Deck.Doors.Count == 0)
-            {
-                gameManager.Deck.UpdateDoors();
-            }
+
 
             int cardNumber = new Random().Next(0, gameManager.Deck.Doors.Count);
             Card selectedCard = gameManager.Deck.Doors[cardNumber];
@@ -290,7 +292,7 @@ namespace Munchkin
                 MessageBox.Show("You can't use this card");
                 return;
             }
-            else if(selectedCard is Monster && gameManager.Stadia != Stadia.Choice)
+            else if (selectedCard is Monster && gameManager.Stadia != Stadia.Choice)
             {
                 MessageBox.Show("You can't use this card");
                 return;
@@ -364,16 +366,16 @@ namespace Munchkin
                 if (card.Discard != null) card.Discard(user);
             }
             gameManager.positions[path] = null;
-            if(card is Treasure)
+            if (card is Treasure)
             {
                 gameManager.discardTreasures.Add(card as Treasure);
             }
-            else if(card is Door)
+            else if (card is Door)
             {
                 gameManager.discardDoors.Add(card as Door);
             }
 
-            if(gameManager.Stadia == Stadia.Battle && (user.FirstClass == Class.Warrior || user.SecondClass == Class.Warrior))
+            if (gameManager.Stadia == Stadia.Battle && (user.FirstClass == Class.Warrior || user.SecondClass == Class.Warrior))
             {
                 user.Discarded++;
                 user.Power += user.Discarded / 3;
@@ -381,7 +383,7 @@ namespace Munchkin
             if (gameManager.Stadia == Stadia.Battle && (user.FirstClass == Class.Wizard || user.SecondClass == Class.Wizard)) user.Discarded++;
 
             user.Hand.Remove(card);
-            if((user.FirstClass == Class.Wizard || user.SecondClass == Class.Wizard) && user.Hand.Count == 0 && user.Discarded >= 3)
+            if ((user.FirstClass == Class.Wizard || user.SecondClass == Class.Wizard) && user.Hand.Count == 0 && user.Discarded >= 3)
             {
                 gameManager.Tips = "You charmed the\nmonster";
                 gameManager.treasuresToTake = gameManager.CurrentMonster.Treasusers;
@@ -408,7 +410,7 @@ namespace Munchkin
             if (gameManager.positions[path] is Treasure && user.Level != 9)
             {
                 user.Money += (gameManager.positions[path] as Treasure).Price;
-                if((user.FirstRace == Race.Hafling || user.SecondRace == Race.Hafling) && user.SellDoublePrice)
+                if ((user.FirstRace == Race.Hafling || user.SecondRace == Race.Hafling) && user.SellDoublePrice)
                 {
                     user.Money += (gameManager.positions[path] as Treasure).Price;
                     user.SellDoublePrice = false;
@@ -439,6 +441,16 @@ namespace Munchkin
             gameManager.LastCalledMethod = "Flee";
         }
 
-        
+        public void OnClassChanged()
+        {
+            if(user.Weapon1 != null) if (!user.Weapon1.Condition(user)) user.Weapon1.Discard(user);
+            if(user.Weapon2 != null) if(!user.Weapon2.Condition(user)) user.Weapon2.Discard(user);
+            if(user.Body != null) if(!user.Body.Condition(user)) user.Body.Discard(user);
+            if(user.Head != null) if(!user.Head.Condition(user)) user.Head.Discard(user);
+            if(user.Legs != null) if(!user.Legs.Condition(user)) user.Legs.Discard(user);
+            if (user.Accessory != null) if (!user.Accessory.Condition(user))user.Accessory.Discard(user);
+            
+            
+        }
     }
 }

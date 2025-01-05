@@ -773,7 +773,7 @@ namespace Munchkin.Cards
             };
             door8.BadStuff = delegate (User? user)
             {
-                if (user != null && user.Level <= 5) user.Death();
+                if (user != null && user.Level > 5) user.Death();
             };
             door8.Condition = null;
             door8.Discard = null;
@@ -1115,7 +1115,7 @@ namespace Munchkin.Cards
             door19.Condition = delegate (User? user)
             {
                 if (user != null)
-                    if (user.IsSuperMunchkin == false) return true;
+                    if (user.IsSuperMunchkin == false && (user.FirstClass == null || user.SecondClass == null)) return true;
                 return false;
             };
             door19.Discard = delegate (User? user)
@@ -1139,7 +1139,7 @@ namespace Munchkin.Cards
             door20.Condition = delegate (User? user)
             {
                 if (user != null)
-                    if (user.IsHalfBlood == false) return true;
+                    if (user.IsHalfBlood == false && (user.FirstRace == null || user.SecondRace == null)) return true;
                 return false;
             };
             door20.Discard = delegate (User? user)
