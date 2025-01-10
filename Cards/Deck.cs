@@ -160,7 +160,7 @@ namespace Munchkin.Cards
             treasure3.Condition = delegate (User? user)
             {
                 if (user != null)
-                    if ((user.FirstClass == Class.Thief || user.SecondClass == Class.Thief) && (user.Weapon1 != null || user.Weapon2 != null)) return true;
+                    if ((user.FirstClass == Class.Thief || user.SecondClass == Class.Thief) && (user.Weapon1 == null || user.Weapon2 == null)) return true;
                 return false;
             }; ;
             treasure3.Discard = delegate (User? user)
@@ -627,13 +627,15 @@ namespace Munchkin.Cards
             };
             door0.BadStuff = delegate (User? user)
             {
-                int roll = new Random().Next();
-                if (roll <= 2) user.Death();
-                else
+                if(user != null)
                 {
-                    user.Level -= roll;
-                    if (user.Level <= 0) user.Level = 1;
-                };
+                    if (user.RollNumber <= 2) user.Death();
+                    else
+                    {
+                        user.Level -= user.RollNumber;
+                        if (user.Level <= 0) user.Level = 1;
+                    };
+                }
             };
             door0.Condition = null;
             door0.Discard = null;
