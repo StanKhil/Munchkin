@@ -775,7 +775,7 @@ namespace Munchkin.Cards
             };
             door8.BadStuff = delegate (User? user)
             {
-                if (user != null && user.Level > 5) user.Death();
+                if (user != null) user.Death();
             };
             door8.Condition = null;
             door8.Discard = null;
